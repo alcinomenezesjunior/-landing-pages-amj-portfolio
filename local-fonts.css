@@ -1,0 +1,178 @@
+/* =========================================================
+   local-fonts.css (v4)
+   Fontes alojadas localmente com font-display: swap
+   ✅ ADICIONADO: Inter (v19) e Playfair Display (v39) para /lppme
+   Mantido: Inter (v20), Montserrat (v31), RemixIcon para /lpagencia
+   ========================================================= */
+
+/* --- Inter (Regular, Medium, SemiBold, Bold) --- */
+/* Usado por /lppme (Regular, Bold) e /lpagencia (Regular, Medium, SemiBold) */
+@font-face {
+  font-display: swap;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400; /* Regular */
+  src: url('/fonts/inter-v19-latin-regular.woff2') format('woff2');
+}
+@font-face {
+  font-display: swap;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500; /* Medium - Usado por /lpagencia */
+  src: url('/fonts/inter-v20-latin-500.woff2') format('woff2');
+}
+@font-face {
+  font-display: swap;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600; /* SemiBold - Usado por /lpagencia */
+  src: url('/fonts/inter-v19-latin-600.woff2') format('woff2');
+}
+@font-face {
+  font-display: swap;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 700; /* Bold - Usado por /lppme */
+  /* NOTA: Não tens inter-v19-700.woff2 no teu print.
+     Se precisares mesmo deste peso, terás de o descarregar.
+     Vou apontar para o 600 como fallback por agora.
+     Se o descarregares, muda o URL abaixo. */
+  src: url('/fonts/inter-v19-latin-600.woff2') format('woff2');
+}
+
+/* --- Playfair Display (Bold) --- */
+/* Usado por /lppme */
+@font-face {
+  font-display: swap;
+  font-family: 'Playfair Display';
+  font-style: normal;
+  font-weight: 700; /* Bold */
+  /* Apontei para o v39 que está no teu servidor */
+  src: url('/fonts/playfair-display-v39-latin-700.woff2') format('woff2');
+}
+
+/* --- Montserrat (SemiBold, Bold, ExtraBold, Black) --- */
+/* Usado por /lpagencia */
+@font-face {
+  font-display: swap;
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 600;
+  src: url('/fonts/montserrat-v31-latin-600.woff2') format('woff2');
+}
+@font-face {
+  font-display: swap;
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 700;
+  src: url('/fonts/montserrat-v31-latin-700.woff2') format('woff2');
+}
+@font-face {
+  font-display: swap;
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 800;
+  src: url('/fonts/montserrat-v31-latin-800.woff2') format('woff2');
+}
+@font-face {
+  font-display: swap;
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 900;
+  src: url('/fonts/montserrat-v31-latin-900.woff2') format('woff2');
+}
+
+/* --- Remixicon --- */
+@font-face {
+  font-display: swap;
+  font-family: 'remixicon';
+  font-style: normal;
+  font-weight: 400;
+  src: url('/fonts/fonts-remixicon/remixicon.woff2') format('woff2');
+}
+
+/* Classes base Remixicon + Ícones Usados em AMBAS as páginas */
+[class^="ri-"], [class*=" ri-"] {
+  font-family: 'remixicon' !important; /* !important necessário aqui */
+  font-style: normal;
+  font-weight: normal; /* Sempre normal para fontes de ícones */
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1; /* Previne espaçamento extra */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Ícones /lpagencia */
+.ri-shield-check-line:before { content: "\f116"; }
+.ri-flashlight-line:before { content: "\ed56"; }
+.ri-emotion-unhappy-line:before { content: "\ecb9"; }
+.ri-search-line:before { content: "\f0c5"; }
+.ri-time-line:before { content: "\f1e3"; }
+.ri-money-euro-circle-line:before { content: "\ef5c"; }
+.ri-team-line:before { content: "\f1b0"; }
+.ri-search-eye-line:before { content: "\f0be"; }
+.ri-magic-line:before { content: "\ee81"; }
+/* .ri-line-chart-line:before { content: "\ee3f"; } - Usado em ambas */
+.ri-advertisement-line:before { content: "\ea11"; }
+/* .ri-whatsapp-line:before { content: "\f27f"; } - Usado em ambas */
+ .ri-dashboard-line:before { content: "\eba4"; } - Usado em /lpagencia (Metodologia)
+.ri-mail-line:before { content: "\ee85"; }
+.ri-add-box-line:before { content: "\ea0a"; }
+.ri-advertisement-fill:before { content: "\ea10"; }
+.ri-file-copy-2-line:before { content: "\ed14"; }
+/* .ri-robot-2-line:before { content: "\f04e"; } - Usado em ambas */
+.ri-customer-service-2-line:before { content: "\eba2"; }
+.ri-star-line:before { content: "\f14b"; }
+.ri-add-box-fill:before { content: "\ea09"; }
+.ri-rocket-line:before { content: "\f06a"; }
+.ri-file-copy-fill:before { content: "\ed15"; }
+.ri-robot-3-line:before { content: "\f051"; }
+.ri-bar-chart-box-line:before { content: "\ea9c"; }
+.ri-vip-crown-line:before { content: "\f268"; }
+.ri-badge-line:before { content: "\ea86"; }
+.ri-cpu-line:before { content: "\eb84"; }
+.ri-road-map-line:before { content: "\f060"; }
+.ri-computer-line:before { content: "\eb6d"; }
+.ri-file-text-line:before { content: "\ed30"; }
+.ri-community-line:before { content: "\eb6c"; }
+.ri-check-double-line:before { content: "\eb23"; }
+/* .ri-whatsapp-fill:before { content: "\f27e"; } - Usado em ambas */
+/* .ri-close-line:before { content: "\eb59"; } - Usado em ambas */
+.ri-stack-line:before { content: "\f150"; } /* Adicionado para /lpagencia */
+
+/* Ícones /lppme (Adicionar apenas os que FALTAM) */
+.ri-award-line:before { content: "\ea8a"; }
+.ri-arrow-right-up-line:before { content: "\ea70"; }
+.ri-line-chart-line:before { content: "\ee3f"; } /* Já estava? */
+.ri-funds-line:before { content: "\ed8f"; }
+.ri-user-star-line:before { content: "\f244"; }
+.ri-robot-2-line:before { content: "\f04e"; } /* Já estava? */
+/* .ri-shield-check-line:before { content: "\f116"; } - Já estava */
+.ri-bar-chart-2-line:before { content: "\ea98"; }
+.ri-arrow-right-line:before { content: "\ea6e"; }
+.ri-rocket-2-line:before { content: "\f06c"; }
+.ri-hand-coin-line:before { content: "\edbd"; }
+.ri-user-settings-line:before { content: "\f243"; }
+.ri-settings-3-line:before { content: "\f0f5"; }
+.ri-shield-star-line:before { content: "\f119"; }
+.ri-dashboard-3-line:before { content: "\eba6"; }
+/* .ri-search-eye-line:before { content: "\f0be"; } - Já estava */
+.ri-compass-3-line:before { content: "\eb71"; }
+.ri-calendar-check-line:before { content: "\eb0b"; }
+.ri-loader-4-line:before { content: "\ee54"; } /* Para o botão de submit */
+.ri-spin:before {
+    animation: remixicon-spin 1s infinite linear;
+    display: inline-block;
+}
+@keyframes remixicon-spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+.ri-whatsapp-line:before { content: "\f27f"; } /* Já estava? */
+.ri-whatsapp-fill:before { content: "\f27e"; } /* Já estava? */
+.ri-close-line:before { content: "\eb59"; } /* Já estava? */
+.ri-check-circle-line:before { content: "\eb2d"; } /* Para mensagens de sucesso */
+.ri-close-circle-line:before { content: "\eb58"; } /* Para mensagens de erro */
+
+/* Adicione outros ícones específicos do /lppme se necessário */
