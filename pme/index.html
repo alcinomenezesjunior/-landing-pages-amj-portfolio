@@ -583,6 +583,10 @@
                         <p>Análise aprofundada da sua posição digital atual, com recomendações estratégicas personalizadas.</p>
                     </div>
                    <form id="leadForm" action="#" method="POST">
+                        <!-- Identificação de origem para webhook N8N -->
+                        <input type="hidden" name="origem" value="LP_Consultoria_PME">
+                        <input type="hidden" name="landing_page" value="Consultoria PME">
+
                         <div class="form-group">
                             <label for="nome">Nome Completo *</label>
                             <input id="nome" name="nome" type="text" required autocomplete="name">
@@ -752,16 +756,16 @@ document.addEventListener("DOMContentLoaded", function () {
         return;
       }
 
-      // 5. Envia os dados para o Make
+      // 5. Envia os dados para o webhook N8N único
       try {
-        await fetch('https://hook.eu1.make.com/7he7b47l9xah1l4v7j579yxgmyxkc6ht', {
+        await fetch('https://mjrmkt.app.n8n.cloud/webhook/leads-geral', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(data )
+          body: JSON.stringify(data)
         });
       } catch (error) {
         // Não mostra erro para o usuário, só redireciona
-        console.error('Error sending data to Make:', error);
+        console.error('Error sending data to webhook:', error);
       }
 
       // 6. ✅ Redirecionamento final CORRIGIDO (adicionado /lppme/ ao URL)

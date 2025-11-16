@@ -213,7 +213,10 @@
           </article>
           <aside class="card" id="formulario">
             <form class="form" id="leadForm" method="post" action="/processa-lead.php" novalidate>
-              <input type="hidden" name="origem" value="agentes-ia">
+              <!-- Identificação de origem para webhook N8N -->
+              <input type="hidden" name="origem" value="LP_Agentes_IA">
+              <input type="hidden" name="landing_page" value="Agentes de IA Empresarial">
+
               <h3 style="margin:0 0 1rem;font-size:1.15rem">📊 Análise Gratuita do Seu Caso</h3>
               <div class="row">
                 <div>
