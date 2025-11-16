@@ -1,0 +1,978 @@
+{
+  "name": "1_AMJ_Lead_System_v3.2_WEBHOOK_UNICO",
+  "nodes": [
+    {
+      "parameters": {
+        "path": "leads-geral",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "webhook-trigger",
+      "name": "🎯 Webhook - Captura Lead (ÚNICO)",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1.1,
+      "position": [
+        250,
+        300
+      ],
+      "webhookId": "amj-lead-capture-webhook-unified"
+    },
+    {
+      "parameters": {
+        "content": "## 📥 FASE 1: CAPTURA DE LEADS - WEBHOOK ÚNICO\n\n**Objetivo:** Receber leads das 4 landing pages\n\n**Origens Suportadas:**\n- LP_Agencia_Trafego (Agência Tráfego Pago)\n- LP_Agentes_IA (Agentes IA Empresarial)\n- LP_Chatbot_Estetica (Chatbot Estética)\n- LP_Consultoria_PME (Consultoria PME)\n\n**Dados Capturados:**\n- Nome, Email, Instagram, WhatsApp\n- Origem (código e nome da LP)\n- Timestamp\n- Dados técnicos (device, browser, OS, localização)\n\n**Próximo Passo:** Validação e enriquecimento",
+        "height": 320,
+        "width": 350,
+        "color": 4
+      },
+      "id": "sticky-fase1",
+      "name": "Sticky Note - Fase 1",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        220,
+        120
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combinationMode": "multiplex",
+        "options": {}
+      },
+      "id": "merge-webhook-data",
+      "name": "🔄 Merge - Dados Webhook",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 2.1,
+      "position": [
+        450,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Validação e formatação de dados do lead - WEBHOOK ÚNICO\nconst items = $input.all();\nconst output = [];\n\nfor (const item of items) {\n  const data = item.json;\n  \n  // ===== PROCESSAMENTO DE ORIGEM (NOVO) =====\n  const origemCodigo = data.origem || 'LP_Desconhecida';\n  const paginaOrigem = data.landing_page || 'Não especificada';\n  \n  // Mapear código de origem para descrição amigável\n  const origemMap = {\n    'LP_Agencia_Trafego': 'Landing Page Agência - Tráfego Pago',\n    'LP_Agentes_IA': 'Landing Page Agentes de IA',\n    'LP_Chatbot_Estetica': 'Landing Page Chatbot Estética',\n    'LP_Consultoria_PME': 'Landing Page Consultoria PME'\n  };\n  \n  const origemDescricao = origemMap[origemCodigo] || paginaOrigem;\n  \n  // ===== PROCESSAMENTO WHATSAPP =====\n  // Formata WhatsApp para padrão internacional\n  let whatsapp = data.whatsapp || data.telefone || '';\n  whatsapp = whatsapp.replace(/\\D/g, ''); // Remove não-numéricos\n  \n  if (whatsapp && !whatsapp.startsWith('351')) {\n    whatsapp = '351' + whatsapp; // Adiciona código Portugal\n  }\n  \n  // Gera Link WhatsApp\n  const whatsappLink = whatsapp ? `https://wa.me/${whatsapp}` : '';\n  \n  // ===== DADOS TÉCNICOS =====\n  const userAgent = data.userAgent || '';\n  const dispositivo = userAgent.includes('Mobile') ? 'Mobile' : 'Desktop';\n  const navegador = userAgent.includes('Chrome') ? 'Chrome' : \n                    userAgent.includes('Firefox') ? 'Firefox' : \n                    userAgent.includes('Safari') ? 'Safari' : 'Outro';\n  const os = userAgent.includes('Windows') ? 'Windows' : \n             userAgent.includes('Mac') ? 'macOS' : \n             userAgent.includes('Linux') ? 'Linux' : \n             userAgent.includes('Android') ? 'Android' : \n             userAgent.includes('iOS') ? 'iOS' : 'Outro';\n  \n  // ===== OUTPUT COMPLETO =====\n  output.push({\n    json: {\n      timestamp: new Date().toISOString(),\n      nome: data.nome || '',\n      email: data.email || '',\n      instagram: data.instagram || '',\n      whatsapp: whatsapp,\n      whatsappLink: whatsappLink,\n      status: 'Novo',\n      dataContacto: '',\n      meioContacto: '',\n      notasEnriquecimento: '',\n      leadScore: 0,\n      emailEnviado: 'Não',\n      whatsappEnviado: 'Não',\n      ultimaInteracao: new Date().toISOString(),\n      interesse: data.interesse || '',\n      servico: data.servico || '',\n      // ===== CAMPOS DE ORIGEM (NOVOS) =====\n      origem: origemDescricao,\n      origemCodigo: origemCodigo,\n      paginaOrigem: paginaOrigem,\n      // ===== OUTROS CAMPOS =====\n      valorProposta: '',\n      probabilidadeConversao: '',\n      observacoes: '',\n      dispositivo: dispositivo,\n      navegador: navegador,\n      os: os,\n      pais: data.country || 'Portugal',\n      distrito: data.region || '',\n      cidade: data.city || '',\n      provedor: data.isp || '',\n      referrer: data.referrer || 'Direto',\n      idioma: data.language || 'pt-PT'\n    }\n  });\n}\n\nreturn output;"
+      },
+      "id": "code-validate-format",
+      "name": "⚙️ Code - Validar e Formatar (WEBHOOK ÚNICO)",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        650,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## 🔍 FASE 2: ENRIQUECIMENTO COM IA\n\n**Objetivo:** Analisar e enriquecer dados do lead\n\n**Agente IA:**\n- Modelo: Perplexity Sonar\n- Análise de perfil\n- Identificação de necessidades\n- Pesquisa de mercado local\n\n**Output:** Notas estruturadas sobre o lead",
+        "height": 280,
+        "width": 320,
+        "color": 5
+      },
+      "id": "sticky-fase2",
+      "name": "Sticky Note - Fase 2",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        820,
+        140
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.perplexity.ai/chat/completions",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": []
+        },
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"model\": \"llama-3.1-sonar-large-128k-online\",\n  \"messages\": [\n    {\n      \"role\": \"system\",\n      \"content\": \"Você é um analista de mercado especializado em clínicas de estética em Portugal. Use suas capacidades de pesquisa online para encontrar informações atualizadas sobre o lead e o mercado.\"\n    },\n    {\n      \"role\": \"user\",\n      \"content\": \"Analise este lead de clínica de estética e faça uma pesquisa completa:\\n\\n**DADOS DO LEAD:**\\nNome: {{ $json.nome }}\\nEmail: {{ $json.email }}\\nInstagram: {{ $json.instagram }}\\nWhatsApp: {{ $json.whatsapp }}\\nCidade: {{ $json.cidade }}, {{ $json.distrito }}\\nInteresse: {{ $json.interesse }}\\nServiço: {{ $json.servico }}\\nDispositivo: {{ $json.dispositivo }}\\nOrigem: {{ $json.paginaOrigem }} ({{ $json.origemCodigo }})\\n\\n**TAREFAS DE PESQUISA:**\\n\\n1. **Pesquise sobre a pessoa/clínica:**\\n   - Se o Instagram foi fornecido, tente encontrar informações sobre o perfil\\n   - Tipo de negócio (clínica estabelecida, profissional solo, novo negócio)\\n   - Presença digital existente\\n\\n2. **Contexto do mercado local:**\\n   - Pesquise sobre o mercado de estética em {{ $json.cidade }}\\n   - Concorrência na região\\n   - Tendências atuais (2024-2025)\\n\\n3. **Análise de necessidades:**\\n   - Com base no interesse manifestado: {{ $json.interesse }}\\n   - Dores típicas de clínicas deste porte\\n   - Oportunidades de automação específicas\\n\\n4. **Recomendações táticas:**\\n   - Qual pacote AMJ seria mais adequado? (Essencial €690+€179/mês, Pro €990+€279/mês, Enterprise €1490+€390/mês)\\n   - Pontos de dor prioritários a abordar\\n   - Ângulo de abordagem recomendado\\n\\n**FORMATO DE RESPOSTA:**\\nForneça uma análise estruturada em português de Portugal (máximo 600 palavras) com:\\n\\n### 📊 Perfil do Lead\\n[Descrição do negócio/profissional]\\n\\n### 🎯 Necessidades Identificadas\\n[Lista de 3-4 necessidades principais]\\n\\n### 💡 Oportunidades de Automação\\n[Como AMJ pode ajudar especificamente]\\n\\n### 🎁 Pacote Recomendado\\n[Essencial/Pro/Enterprise e porquê]\\n\\n### 📝 Abordagem Sugerida\\n[Como iniciar o contato - tom, ângulo, pontos-chave]\\n\\n**IMPORTANTE:**\\n- Use informações reais encontradas online quando disponível\\n- Se não encontrar informações específicas, faça inferências baseadas nos dados fornecidos e no mercado geral\\n- Foque em insights ACIONÁVEIS para vendas\\n- Seja conciso mas completo\"\n    }\n  ],\n  \"temperature\": 0.6,\n  \"max_tokens\": 1000\n}",
+        "options": {}
+      },
+      "id": "perplexity-enrichment",
+      "name": "🔍 Perplexity - Enriquecimento Lead",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        850,
+        300
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "perplexity-api-key",
+          "name": "Perplexity API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Extrai análise do Perplexity e formata\nconst items = $input.all();\nconst output = [];\n\nfor (const item of items) {\n  let perplexityResponse;\n  \n  // Tenta extrair a resposta do Perplexity\n  try {\n    if (item.json.choices && item.json.choices[0]) {\n      perplexityResponse = item.json.choices[0].message.content;\n    } else if (item.json.message && item.json.message.content) {\n      perplexityResponse = item.json.message.content;\n    } else {\n      perplexityResponse = 'Análise não disponível - lead capturado para análise manual.';\n    }\n  } catch (error) {\n    perplexityResponse = 'Erro ao processar análise Perplexity - lead capturado para revisão.';\n  }\n  \n  // Pega dados do lead do input anterior\n  const leadData = $('⚙️ Code - Validar e Formatar (WEBHOOK ÚNICO)').first().json;\n  \n  output.push({\n    json: {\n      ...leadData,\n      notasEnriquecimento: perplexityResponse\n    }\n  });\n}\n\nreturn output;"
+      },
+      "id": "code-parse-perplexity",
+      "name": "⚙️ Code - Parse Perplexity",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1050,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## 🎯 FASE 3: LEAD SCORING\n\n**Objetivo:** Calcular pontuação do lead\n\n**Agente IA:**\n- Modelo: GPT-4 Turbo\n- Critérios: Dados, Qualidade, Geografia, Interesse, Comportamento, Análise Perplexity\n\n**Classificação:**\n- 80-100: Quente 🔥\n- 50-79: Morno 🟡\n- 0-49: Frio ❄️",
+        "height": 320,
+        "width": 320,
+        "color": 6
+      },
+      "id": "sticky-fase3",
+      "name": "Sticky Note - Fase 3",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1220,
+        140
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.openai.com/v1/chat/completions",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"model\": \"gpt-4-turbo-preview\",\n  \"messages\": [\n    {\n      \"role\": \"system\",\n      \"content\": \"Você é um especialista em lead scoring para o mercado B2B de automação em Portugal. Analise leads de forma objetiva e atribua pontuações baseadas em dados concretos.\"\n    },\n    {\n      \"role\": \"user\",\n      \"content\": \"Calcule o Lead Score deste potencial cliente de automação WhatsApp:\\n\\n**DADOS DO LEAD:**\\nNome: {{ $json.nome }}\\nEmail: {{ $json.email }}\\nInstagram: {{ $json.instagram }}\\nWhatsApp: {{ $json.whatsapp }}\\nCidade: {{ $json.cidade }}, {{ $json.distrito }}\\nDispositivo: {{ $json.dispositivo }}\\nNavegador: {{ $json.navegador }}\\nInteresse: {{ $json.interesse }}\\nServiço: {{ $json.servico }}\\nReferrer: {{ $json.referrer }}\\nOrigem: {{ $json.paginaOrigem }} ({{ $json.origemCodigo }})\\n\\n**ANÁLISE PERPLEXITY:**\\n{{ $json.notasEnriquecimento }}\\n\\n**CRITÉRIOS DE PONTUAÇÃO (Total: 100 pontos):**\\n\\n**1. COMPLETUDE DE DADOS (20 pontos):**\\n- Nome completo válido: +5pts\\n- Email profissional/válido: +5pts\\n- WhatsApp no formato correto: +5pts\\n- Instagram fornecido: +5pts\\n\\n**2. QUALIDADE DO CONTATO (25 pontos):**\\n- Instagram ativo/profissional: +10pts\\n- WhatsApp validado: +10pts\\n- Email corporativo (não Gmail/Hotmail): +5pts\\n\\n**3. CONTEXTO GEOGRÁFICO (15 pontos):**\\n- Grande centro urbano (Lisboa, Porto, Braga, Coimbra): +10pts\\n- Cidade média: +7pts\\n- Área turística (Algarve, Madeira): +5pts\\n\\n**4. INTERESSE E ESPECIFICIDADE (20 pontos):**\\n- Interesse muito específico/detalhado: +15pts\\n- Serviço claramente definido: +10pts\\n- Mencionou problema/dor específica: +5pts\\n\\n**5. COMPORTAMENTO DIGITAL (10 pontos):**\\n- Acesso mobile (típico de empreendedor ativo): +5pts\\n- Tráfego referenciado (não direto): +5pts\\n\\n**6. ANÁLISE PERPLEXITY (10 pontos):**\\n- Alta urgência detectada: +5pts\\n- Presença digital estabelecida: +3pts\\n- Mercado aquecido na região: +2pts\\n\\n**SUA TAREFA:**\\nRetorne APENAS um objeto JSON válido (sem markdown, sem explicações) com esta estrutura EXATA:\\n\\n{\\n  \\\"leadScore\\\": [número de 0-100],\\n  \\\"classificacao\\\": \\\"Quente 🔥\\\" ou \\\"Morno 🟡\\\" ou \\\"Frio ❄️\\\",\\n  \\\"probabilidadeConversao\\\": \\\"XX-YY%\\\",\\n  \\\"pontosPorCategoria\\\": {\\n    \\\"completudeDados\\\": [0-20],\\n    \\\"qualidadeContato\\\": [0-25],\\n    \\\"contextoGeografico\\\": [0-15],\\n    \\\"interesseEspecificidade\\\": [0-20],\\n    \\\"comportamentoDigital\\\": [0-10],\\n    \\\"analisePerplexity\\\": [0-10]\\n  },\\n  \\\"justificativa\\\": \\\"Breve explicação de 2-3 linhas do score\\\",\\n  \\\"proximosPassos\\\": \\\"Recomendação tática de abordagem\\\"\\n}\\n\\n**CLASSIFICAÇÃO:**\\n- 80-100 pontos = Quente 🔥 (Probabilidade: 70-90%)\\n- 50-79 pontos = Morno 🟡 (Probabilidade: 40-70%)\\n- 0-49 pontos = Frio ❄️ (Probabilidade: 10-40%)\\n\\n**IMPORTANTE:**\\n- Seja rigoroso mas justo\\n- Baseie-se em DADOS, não em suposições\\n- JSON deve ser válido e parseável\\n- NÃO adicione markdown (```json)\\n- Retorne APENAS o JSON\"\n    }\n  ],\n  \"temperature\": 0.3,\n  \"max_tokens\": 500\n}",
+        "options": {}
+      },
+      "id": "gpt4-lead-scoring",
+      "name": "🎯 GPT-4 - Lead Scoring",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1250,
+        300
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "openai-api-key",
+          "name": "OpenAI API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Parse Lead Score do GPT-4\nconst items = $input.all();\nconst output = [];\n\nfor (const item of items) {\n  let scoringData;\n  \n  try {\n    const gpt4Response = item.json.choices[0].message.content;\n    \n    // Remove markdown se houver\n    let cleanJson = gpt4Response.replace(/```json\\n?/g, '').replace(/```\\n?/g, '').trim();\n    \n    // Parse JSON\n    scoringData = JSON.parse(cleanJson);\n  } catch (error) {\n    // Fallback se JSON inválido\n    scoringData = {\n      leadScore: 50,\n      classificacao: 'Morno 🟡',\n      probabilidadeConversao: '40-70%',\n      justificativa: 'Score calculado com dados parciais - análise manual recomendada',\n      proximosPassos: 'Revisar manualmente e ajustar abordagem'\n    };\n  }\n  \n  // Pega dados anteriores do lead\n  const leadData = $('⚙️ Code - Parse Perplexity').first().json;\n  \n  // Monta observações detalhadas\n  const observacoes = `Score: ${scoringData.leadScore}/100 | ${scoringData.classificacao} | ${scoringData.justificativa}`;\n  \n  output.push({\n    json: {\n      ...leadData,\n      leadScore: scoringData.leadScore,\n      status: scoringData.classificacao,\n      probabilidadeConversao: scoringData.probabilidadeConversao,\n      observacoes: observacoes\n    }\n  });\n}\n\nreturn output;"
+      },
+      "id": "code-parse-scoring",
+      "name": "⚙️ Code - Parse Lead Score",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1450,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "https://docs.google.com/spreadsheets/d/YOUR_SHEET_ID",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Leads",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "timestamp": "={{ $json.timestamp }}",
+            "nome": "={{ $json.nome }}",
+            "email": "={{ $json.email }}",
+            "instagram": "={{ $json.instagram }}",
+            "whatsapp": "={{ $json.whatsapp }}",
+            "status": "={{ $json.status }}",
+            "dataContacto": "={{ $json.dataContacto }}",
+            "meioContacto": "={{ $json.meioContacto }}",
+            "notasEnriquecimento": "={{ $json.notasEnriquecimento }}",
+            "leadScore": "={{ $json.leadScore }}",
+            "emailEnviado": "={{ $json.emailEnviado }}",
+            "whatsappEnviado": "={{ $json.whatsappEnviado }}",
+            "ultimaInteracao": "={{ $json.ultimaInteracao }}",
+            "interesse": "={{ $json.interesse }}",
+            "servico": "={{ $json.servico }}",
+            "origem": "={{ $json.origem }}",
+            "origemCodigo": "={{ $json.origemCodigo }}",
+            "paginaOrigem": "={{ $json.paginaOrigem }}",
+            "valorProposta": "={{ $json.valorProposta }}",
+            "probabilidadeConversao": "={{ $json.probabilidadeConversao }}",
+            "observacoes": "={{ $json.observacoes }}",
+            "linkWhatsapp": "={{ $json.whatsappLink }}",
+            "dispositivo": "={{ $json.dispositivo }}",
+            "navegador": "={{ $json.navegador }}",
+            "os": "={{ $json.os }}",
+            "pais": "={{ $json.pais }}",
+            "distrito": "={{ $json.distrito }}",
+            "cidade": "={{ $json.cidade }}",
+            "provedor": "={{ $json.provedor }}",
+            "referrer": "={{ $json.referrer }}",
+            "idioma": "={{ $json.idioma }}"
+          }
+        },
+        "options": {}
+      },
+      "id": "sheets-save-lead",
+      "name": "📊 Google Sheets - Salvar Lead (COM ORIGEM)",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.4,
+      "position": [
+        1650,
+        300
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "google-sheets-oauth",
+          "name": "Google Sheets OAuth2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## 📧 FASE 4: EMAIL AUTOMÁTICO\n\n**Objetivo:** Enviar primeiro email personalizado\n\n**Processo:**\n1. IA (Claude) gera email customizado\n2. Notificação Telegram para aprovação\n3. Aguarda resposta humana\n4. Envia se aprovado\n\n**Timing:** Imediato após scoring\n\n**Próximo:** Email 2 em 24h",
+        "height": 300,
+        "width": 320,
+        "color": 3
+      },
+      "id": "sticky-fase4",
+      "name": "Sticky Note - Fase 4",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1820,
+        140
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.anthropic.com/v1/messages",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "anthropic-version",
+              "value": "2023-06-01"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"model\": \"claude-sonnet-4-20250514\",\n  \"max_tokens\": 2000,\n  \"temperature\": 0.8,\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"Você é um copywriter português especializado em emails de vendas B2B para clínicas de estética. Seu estilo é profissional mas caloroso, consultivo e empático.\\n\\n**CONTEXTO DO NEGÓCIO AMJ:**\\nVendemos automação de WhatsApp para clínicas de estética em Portugal. Nosso foco é resolver problemas de comunicação, perda de clientes por demora nas respostas, e aumentar conversões através de automação inteligente com IA.\\n\\n**PACOTES AMJ:**\\n- Essencial: €690 setup + €179/mês\\n- Pro: €990 setup + €279/mês\\n- Enterprise: €1490 setup + €390/mês\\n\\n**DADOS DO LEAD:**\\nNome: {{ $json.nome }}\\nEmail: {{ $json.email }}\\nCidade: {{ $json.cidade }}, {{ $json.distrito }}\\nInstagram: {{ $json.instagram }}\\nInteresse manifestado: {{ $json.interesse }}\\nServiço específico: {{ $json.servico }}\\nLead Score: {{ $json.leadScore }}/100\\nClassificação: {{ $json.status }}\\nOrigem: {{ $json.paginaOrigem }} ({{ $json.origemCodigo }})\\n\\n**ANÁLISE COMPLETA DO LEAD (Perplexity):**\\n{{ $json.notasEnriquecimento }}\\n\\n**ANÁLISE DE SCORING (GPT-4):**\\n{{ $json.observacoes }}\\n\\n---\\n\\n**SUA MISSÃO:**\\nCrie um email de boas-vindas ALTAMENTE PERSONALIZADO que soe genuinamente escrito por um humano português. Este é o PRIMEIRO contato - deve construir confiança antes de vender.\\n\\n**ESTRUTURA OBRIGATÓRIA:**\\n\\n**ASSUNTO:** (Crie 1 opção criativa, personalizada com nome e cidade)\\nExemplo: \\\"{{ $json.nome }}, como anda a gestão de clientes em {{ $json.cidade }}?\\\"\\n\\n**CORPO DO EMAIL:**\\n\\n**1. ABERTURA ULTRA-PERSONALIZADA (3-4 linhas)**\\n- Cumprimento pelo nome\\n- Referência ESPECÍFICA à cidade ou região\\n- Conexão com o interesse manifestado: {{ $json.interesse }}\\n- Tom: Como se conhecesse a pessoa há algum tempo\\n\\n**2. EMPATIA COM DESAFIO ESPECÍFICO (4-5 linhas)**\\n- Identifique UMA dor específica baseada na análise Perplexity\\n- Use dados reais: 'Clínicas em Portugal perdem 30-40% dos leads por resposta lenta no WhatsApp'\\n- Conte brevemente uma história de outra clínica similar (sem nomes)\\n- Crie sensação de 'ele entende mesmo o meu problema'\\n\\n**3. CURIOSIDADE SEM PITCH (3-4 linhas)**\\n- Mencione que trabalha com clínicas de estética em Portugal\\n- Foco em resultados (não em produto): 'Ajudo clínicas a responder todos os WhatsApp em menos de 2 minutos, 24/7'\\n- NÃO mencionar preços ou pacotes ainda\\n- Plantar semente de solução\\n\\n**4. SOCIAL PROOF SUTIL (2-3 linhas)**\\n- Mencione sucesso com clínicas portuguesas (sem nomes específicos)\\n- Número concreto: 'Clínicas reduziram 60% do tempo gasto em WhatsApp'\\n- Deve soar factual, não comercial\\n\\n**5. CALL-TO-ACTION SUAVE (2-3 linhas)**\\n- Ofereça demonstração gratuita de 15min\\n- Frase: 'Quer ver como funcionaria na sua clínica em {{ $json.cidade }}?'\\n- Link: [PLACEHOLDER_CALENDAR_LINK]\\n- Alternativa: 'Responda este email com 'SIM' e agendamos'\\n\\n**6. ASSINATURA PROFISSIONAL MAS CALOROSA**\\nUm abraço,\\nAlcino Menezes Júnior\\nFundador da AMJ Automação & IA\\nEspecialista em Automação para Clínicas de Estética\\nWhatsApp: +351 926 698 959\\nalcinomenezesjunior.com\\n\\n**P.S.** [Adicione um P.S. relevante baseado na análise do lead - pode ser uma curiosidade, estatística ou pergunta provocativa]\\n\\n---\\n\\n**DIRETRIZES DE TOM E ESTILO:**\\n\\n✅ **FAZER:**\\n- Usar português de Portugal natural (você/sua, não tu/tua)\\n- Parecer escrito por humano, não por IA\\n- Personalizar com detalhes específicos do lead\\n- Ser consultivo, empático e profissional\\n- Máximo 450 palavras\\n- Parágrafos curtos (2-4 linhas)\\n- Uma emoção: interesse genuíno em ajudar\\n\\n❌ **NÃO FAZER:**\\n- Linguagem muito formal/corporativa\\n- Paredes de texto\\n- Excesso de adjetivos\\n- Emojis no corpo (só no assunto se fizer sentido)\\n- Mencionar preços neste primeiro email\\n- Frases feitas ou clichês\\n- Tom de vendedor desesperado\\n\\n**IMPORTANTE:**\\n- Este email será enviado após aprovação humana via Telegram\\n- Deve ter taxa de resposta alta (>15%)\\n- Lead deve pensar: 'Esta pessoa entende o meu negócio'\\n- Foco em VALOR e CONFIANÇA, não em venda imediata\\n\\n---\\n\\n**OUTPUT ESPERADO:**\\nForneça o email completo (assunto + corpo) pronto para enviar. Não adicione explicações, comentários ou markdown. Apenas o email puro em texto.\\n\\nCOMECE AGORA:\"\n    }\n  ]\n}",
+        "options": {}
+      },
+      "id": "claude-email-generation",
+      "name": "✉️ Claude - Gerar Email 1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1850,
+        300
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "anthropic-api-key",
+          "name": "Anthropic Claude API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Parse email gerado pelo Claude\nconst items = $input.all();\nconst output = [];\n\nfor (const item of items) {\n  let emailContent;\n  \n  try {\n    // Claude retorna no formato diferente do OpenAI\n    emailContent = item.json.content[0].text;\n  } catch (error) {\n    emailContent = 'Erro ao gerar email - revisão manual necessária.';\n  }\n  \n  // Separa assunto do corpo\n  const lines = emailContent.split('\\n').filter(line => line.trim().length > 0);\n  let subject = '';\n  let body = '';\n  let foundBody = false;\n  \n  for (let i = 0; i < lines.length; i++) {\n    const line = lines[i];\n    \n    if (line.toLowerCase().includes('assunto:') && !subject) {\n      subject = line.replace(/.*assunto:/i, '').trim();\n    } else if (line.toLowerCase().includes('corpo do email:') || line.toLowerCase().includes('corpo:')) {\n      foundBody = true;\n      continue;\n    } else if (foundBody && line.trim().length > 0) {\n      body += line + '\\n';\n    } else if (!subject && !foundBody && i === 0) {\n      // Primeira linha pode ser o assunto\n      subject = line.trim();\n    } else if (i > 0 && !foundBody) {\n      body += line + '\\n';\n    }\n  }\n  \n  // Fallback se não encontrou marcadores claros\n  if (!subject && lines.length > 0) {\n    subject = lines[0].substring(0, 100); // Primeiros 100 chars\n  }\n  \n  if (!body) {\n    body = lines.slice(1).join('\\n');\n  }\n  \n  // Limpa formatação markdown se houver\n  body = body.replace(/\\*\\*/g, '').replace(/\\*/g, '').trim();\n  subject = subject.replace(/\\*\\*/g, '').replace(/\\*/g, '').replace(/\"/g, '').trim();\n  \n  // Pega dados do lead\n  const leadData = $('⚙️ Code - Parse Lead Score').first().json;\n  \n  output.push({\n    json: {\n      ...leadData,\n      emailSubject: subject,\n      emailBody: body\n    }\n  });\n}\n\nreturn output;"
+      },
+      "id": "code-parse-claude-email",
+      "name": "⚙️ Code - Parse Email Claude",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2050,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "chatId": "YOUR_TELEGRAM_CHAT_ID",
+        "text": "=🔔 **NOVO LEAD AMJ - APROVAÇÃO NECESSÁRIA**\n\n**Lead #{{ $json.leadScore }}** - {{ $json.status }}\n\n👤 **Nome:** {{ $json.nome }}\n📧 **Email:** {{ $json.email }}\n📱 **WhatsApp:** {{ $json.whatsapp }}\n📍 **Localização:** {{ $json.cidade }}, {{ $json.distrito }}\n🎯 **Interesse:** {{ $json.interesse }}\n🌐 **Origem:** {{ $json.paginaOrigem }}\n\n**📊 Score:** {{ $json.leadScore }}/100\n**🎲 Conversão:** {{ $json.probabilidadeConversao }}\n\n**📝 ANÁLISE IA:**\n{{ $json.notasEnriquecimento }}\n\n---\n\n**✉️ EMAIL GERADO:**\n\n**Assunto:** {{ $json.emailSubject }}\n\n{{ $json.emailBody }}\n\n---\n\n**APROVAR ENVIO?**\n\n✅ Digite: `/aprovar email {{ $json.email }}`\n❌ Digite: `/rejeitar email {{ $json.email }}`\n✏️ Editar: `/editar email {{ $json.email }}`",
+        "additionalFields": {
+          "parseMode": "Markdown"
+        }
+      },
+      "id": "telegram-approval",
+      "name": "📲 Telegram - Pedir Aprovação",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        2250,
+        300
+      ],
+      "credentials": {
+        "telegramApi": {
+          "id": "telegram-bot-credentials",
+          "name": "Telegram Bot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {}
+      },
+      "id": "telegram-trigger",
+      "name": "📱 Telegram - Receber Resposta",
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        2050,
+        500
+      ],
+      "webhookId": "telegram-approval-webhook",
+      "credentials": {
+        "telegramApi": {
+          "id": "telegram-bot-credentials",
+          "name": "Telegram Bot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.message.text }}",
+              "operation": "contains",
+              "value2": "/aprovar email"
+            }
+          ]
+        }
+      },
+      "id": "if-approved",
+      "name": "❓ IF - Email Aprovado?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        2250,
+        500
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Extrai email do comando Telegram\nconst items = $input.all();\nconst output = [];\n\nfor (const item of items) {\n  const command = item.json.message.text;\n  const emailMatch = command.match(/\\/aprovar email (.+)/);\n  \n  if (emailMatch) {\n    output.push({\n      json: {\n        approvedEmail: emailMatch[1].trim()\n      }\n    });\n  }\n}\n\nreturn output;"
+      },
+      "id": "code-extract-email",
+      "name": "⚙️ Code - Extrair Email Aprovado",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2450,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "documentId": {
+          "__rl": true,
+          "value": "https://docs.google.com/spreadsheets/d/YOUR_SHEET_ID",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Leads",
+          "mode": "name"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "C",
+              "lookupValue": "={{ $json.approvedEmail }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "sheets-lookup-lead",
+      "name": "🔍 Sheets - Buscar Lead Aprovado",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.4,
+      "position": [
+        2650,
+        400
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "google-sheets-oauth",
+          "name": "Google Sheets OAuth2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fromEmail": "contato@alcinomenezesjunior.com",
+        "toEmail": "={{ $json.email }}",
+        "subject": "={{ $json.emailSubject }}",
+        "emailType": "html",
+        "message": "={{ $json.emailBody }}",
+        "options": {
+          "senderName": "Alcino Menezes Júnior - AMJ Automação"
+        }
+      },
+      "id": "email-send",
+      "name": "📧 Email - Enviar ao Lead",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        2850,
+        400
+      ],
+      "credentials": {
+        "smtp": {
+          "id": "smtp-hostinger",
+          "name": "SMTP Hostinger"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "https://docs.google.com/spreadsheets/d/YOUR_SHEET_ID",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Leads",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "emailEnviado": "Sim - Email 1",
+            "ultimaInteracao": "={{ $now.toISO() }}",
+            "meioContacto": "Email",
+            "dataContacto": "={{ $now.toFormat('dd/MM/yyyy HH:mm') }}"
+          }
+        },
+        "options": {
+          "usePathForKeyRow": true,
+          "keyRow": "={{ $json.rowNumber }}"
+        }
+      },
+      "id": "sheets-update-sent",
+      "name": "✅ Sheets - Marcar Email Enviado",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.4,
+      "position": [
+        3050,
+        400
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "google-sheets-oauth",
+          "name": "Google Sheets OAuth2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "YOUR_TELEGRAM_CHAT_ID",
+        "text": "=✅ **EMAIL ENVIADO COM SUCESSO**\n\n👤 Lead: {{ $json.nome }}\n📧 Email: {{ $json.email }}\n⏰ Enviado: {{ $now.toFormat('dd/MM/yyyy HH:mm') }}\n\n🎯 Próximos Passos:\n- Email 2: Automático em 24h\n- WhatsApp: Automático após Email 2 (48h)\n\n📊 Status atualizado no Google Sheets"
+      },
+      "id": "telegram-confirm",
+      "name": "✅ Telegram - Confirmar Envio",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        3250,
+        400
+      ],
+      "credentials": {
+        "telegramApi": {
+          "id": "telegram-bot-credentials",
+          "name": "Telegram Bot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "YOUR_TELEGRAM_CHAT_ID",
+        "text": "=❌ **EMAIL REJEITADO**\n\n👤 Lead: {{ $json.nome }}\n📧 Email: {{ $json.email }}\n\n💡 Você pode:\n1. Enviar email manualmente\n2. Aguardar novo lead\n3. Editar e reenviar"
+      },
+      "id": "telegram-reject",
+      "name": "❌ Telegram - Email Rejeitado",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        2450,
+        600
+      ],
+      "credentials": {
+        "telegramApi": {
+          "id": "telegram-bot-credentials",
+          "name": "Telegram Bot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## 🎉 FASE 5: ATIVAÇÃO DE FOLLOW-UPS\n\n**Objetivo:** Iniciar sequências automáticas\n\n**Workflows Ativados:**\n1. ✉️ Email 2 (24h)\n2. 📱 WhatsApp Twilio (48h)\n3. 🔄 Nurturing (leads mornos)\n\n**Critério:** Baseado no Lead Score\n\n**Status:** Sistema completo ativo",
+        "height": 280,
+        "width": 320,
+        "color": 7
+      },
+      "id": "sticky-fase5",
+      "name": "Sticky Note - Fase 5",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        3420,
+        140
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "number": [
+            {
+              "value1": "={{ $json.leadScore }}",
+              "operation": "largerEqual",
+              "value2": 50
+            }
+          ]
+        }
+      },
+      "id": "if-hot-lead",
+      "name": "🔥 IF - Lead Quente/Morno?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        3450,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "workflowId": "={{ 'AMJ_Email_Sequence_2' }}",
+        "fields": {
+          "values": [
+            {
+              "name": "leadEmail",
+              "value": "={{ $json.email }}"
+            },
+            {
+              "name": "leadScore",
+              "value": "={{ $json.leadScore }}"
+            }
+          ]
+        }
+      },
+      "id": "trigger-email2",
+      "name": "⏰ Execute - Email Sequence 2",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1,
+      "position": [
+        3650,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "workflowId": "={{ 'AMJ_WhatsApp_Twilio_Followup' }}",
+        "fields": {
+          "values": [
+            {
+              "name": "leadEmail",
+              "value": "={{ $json.email }}"
+            },
+            {
+              "name": "leadWhatsapp",
+              "value": "={{ $json.whatsapp }}"
+            }
+          ]
+        }
+      },
+      "id": "trigger-whatsapp",
+      "name": "📱 Execute - WhatsApp Followup",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1,
+      "position": [
+        3650,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "workflowId": "={{ 'AMJ_Lead_Nurturing' }}",
+        "fields": {
+          "values": [
+            {
+              "name": "leadEmail",
+              "value": "={{ $json.email }}"
+            },
+            {
+              "name": "leadScore",
+              "value": "={{ $json.leadScore }}"
+            }
+          ]
+        }
+      },
+      "id": "trigger-nurturing",
+      "name": "🌱 Execute - Lead Nurturing",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1,
+      "position": [
+        3650,
+        600
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ {\n  \"success\": true,\n  \"message\": \"Lead capturado e processado com sucesso!\",\n  \"leadEmail\": $json.email,\n  \"leadScore\": $json.leadScore,\n  \"status\": $json.status,\n  \"origem\": $json.origemCodigo,\n  \"timestamp\": $now.toISO()\n} }}",
+        "options": {
+          "responseCode": 200
+        }
+      },
+      "id": "webhook-response",
+      "name": "✅ Webhook Response - Sucesso",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        3850,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## 📋 INSTRUÇÕES DE CONFIGURAÇÃO\n\n**1. Google Sheets:**\n- Criar planilha \"Leads captados\"\n- ADICIONAR COLUNAS: origemCodigo, paginaOrigem\n- Copiar ID do URL\n- Colar em todos nodes Google Sheets\n\n**2. Credenciais API:**\n- Perplexity API Key\n- OpenAI API Key\n- Anthropic API Key\n\n**3. Telegram Bot:**\n- Criar bot com @BotFather\n- Copiar token\n- Obter Chat ID\n\n**4. Testar:**\n- Enviar lead teste de cada LP\n- Verificar Google Sheets (origemCodigo)\n- Aprovar no Telegram\n- Confirmar email recebido",
+        "height": 420,
+        "width": 350,
+        "color": 2
+      },
+      "id": "sticky-instructions",
+      "name": "Sticky Note - Instruções",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        180,
+        600
+      ]
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "🎯 Webhook - Captura Lead (ÚNICO)": {
+      "main": [
+        [
+          {
+            "node": "🔄 Merge - Dados Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "🔄 Merge - Dados Webhook": {
+      "main": [
+        [
+          {
+            "node": "⚙️ Code - Validar e Formatar (WEBHOOK ÚNICO)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "⚙️ Code - Validar e Formatar (WEBHOOK ÚNICO)": {
+      "main": [
+        [
+          {
+            "node": "🔍 Perplexity - Enriquecimento Lead",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "🔍 Perplexity - Enriquecimento Lead": {
+      "main": [
+        [
+          {
+            "node": "⚙️ Code - Parse Perplexity",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "⚙️ Code - Parse Perplexity": {
+      "main": [
+        [
+          {
+            "node": "🎯 GPT-4 - Lead Scoring",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "🎯 GPT-4 - Lead Scoring": {
+      "main": [
+        [
+          {
+            "node": "⚙️ Code - Parse Lead Score",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "⚙️ Code - Parse Lead Score": {
+      "main": [
+        [
+          {
+            "node": "📊 Google Sheets - Salvar Lead (COM ORIGEM)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "📊 Google Sheets - Salvar Lead (COM ORIGEM)": {
+      "main": [
+        [
+          {
+            "node": "✉️ Claude - Gerar Email 1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "✉️ Claude - Gerar Email 1": {
+      "main": [
+        [
+          {
+            "node": "⚙️ Code - Parse Email Claude",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "⚙️ Code - Parse Email Claude": {
+      "main": [
+        [
+          {
+            "node": "📲 Telegram - Pedir Aprovação",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "📱 Telegram - Receber Resposta": {
+      "main": [
+        [
+          {
+            "node": "❓ IF - Email Aprovado?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "❓ IF - Email Aprovado?": {
+      "main": [
+        [
+          {
+            "node": "⚙️ Code - Extrair Email Aprovado",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "❌ Telegram - Email Rejeitado",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "⚙️ Code - Extrair Email Aprovado": {
+      "main": [
+        [
+          {
+            "node": "🔍 Sheets - Buscar Lead Aprovado",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "🔍 Sheets - Buscar Lead Aprovado": {
+      "main": [
+        [
+          {
+            "node": "📧 Email - Enviar ao Lead",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "📧 Email - Enviar ao Lead": {
+      "main": [
+        [
+          {
+            "node": "✅ Sheets - Marcar Email Enviado",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "✅ Sheets - Marcar Email Enviado": {
+      "main": [
+        [
+          {
+            "node": "✅ Telegram - Confirmar Envio",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "✅ Telegram - Confirmar Envio": {
+      "main": [
+        [
+          {
+            "node": "🔥 IF - Lead Quente/Morno?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "🔥 IF - Lead Quente/Morno?": {
+      "main": [
+        [
+          {
+            "node": "⏰ Execute - Email Sequence 2",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "📱 Execute - WhatsApp Followup",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "🌱 Execute - Lead Nurturing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "⏰ Execute - Email Sequence 2": {
+      "main": [
+        [
+          {
+            "node": "✅ Webhook Response - Sucesso",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "📱 Execute - WhatsApp Followup": {
+      "main": [
+        [
+          {
+            "node": "✅ Webhook Response - Sucesso",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "🌱 Execute - Lead Nurturing": {
+      "main": [
+        [
+          {
+            "node": "✅ Webhook Response - Sucesso",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "amj-v3.2-webhook-unico",
+  "meta": {
+    "instanceId": "amj-production",
+    "templateCreatedBy": "Claude Code AI Assistant"
+  },
+  "id": "amj-lead-system-v32-webhook-unico",
+  "tags": [
+    {
+      "id": "amj-automation",
+      "name": "AMJ Automation"
+    },
+    {
+      "id": "lead-management",
+      "name": "Lead Management"
+    },
+    {
+      "id": "webhook-unico",
+      "name": "Webhook Único"
+    }
+  ]
+}

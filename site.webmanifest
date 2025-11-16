@@ -1,0 +1,22 @@
+{
+  "name": "Alcino Menezes Junior - Estratégia Digital",
+  "short_name": "AMJ",
+  "icons": [
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/images/logo-amj-mark.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "theme_color": "#003366",
+  "background_color": "#f8fafc",
+  "display": "standalone",
+  "start_url": "/"
+}

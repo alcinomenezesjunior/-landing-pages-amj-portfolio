@@ -1,0 +1,41 @@
+// config/webhooks.js
+// Configuração centralizada de webhooks para todas as landing pages
+// ⚠️ ATENÇÃO: Este arquivo contém URLs sensíveis e NÃO deve ser commitado no Git
+
+const WEBHOOK_CONFIG = {
+  // Webhook único N8N para receber todos os leads
+  url: 'https://mjrmkt.app.n8n.cloud/webhook/leads-geral',
+
+  // Identificadores de origem para cada landing page
+  // Estes valores devem corresponder aos campos hidden nos formulários HTML
+  origens: {
+    agencia: 'LP_Agencia_Trafego',
+    agentesIA: 'LP_Agentes_IA',
+    chatbotEstetica: 'LP_Chatbot_Estetica',
+    pme: 'LP_Consultoria_PME'
+  },
+
+  // Nomes descritivos das landing pages (para campo landing_page)
+  nomes: {
+    agencia: 'Agência Local - Tráfego Pago',
+    agentesIA: 'Agentes de IA Empresarial',
+    chatbotEstetica: 'Chatbot para Estética',
+    pme: 'Consultoria PME'
+  },
+
+  // Webhook de fallback (caso o principal falhe)
+  fallbackUrl: null, // Pode configurar webhook alternativo aqui
+
+  // Timeout para requisições (ms)
+  timeout: 10000
+};
+
+// Exportar para uso nos scripts
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = WEBHOOK_CONFIG;
+}
+
+// Para uso direto no browser (ES6 modules não suportados em todos navegadores)
+if (typeof window !== 'undefined') {
+  window.WEBHOOK_CONFIG = WEBHOOK_CONFIG;
+}

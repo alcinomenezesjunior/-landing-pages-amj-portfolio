@@ -1,0 +1,108 @@
+# =========================
+# ROOT .HTACCESS - Alcino Menezes Junior
+# Última atualização: 28/10/2025
+# =========================
+
+# --- Desativar listagem de diretórios ---
+Options -Indexes
+
+# --- Definir página de índice padrão ---
+DirectoryIndex index.html
+
+# --- REWRITES ---
+RewriteEngine On
+
+# 1) Forçar HTTPS (301)
+RewriteCond %{HTTPS} !=on
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# 2) Remover "index.html" da URL (301)
+RewriteCond %{THE_REQUEST} /index\.html\s [NC]
+RewriteRule ^index\.html$ / [R=301,L]
+RewriteCond %{THE_REQUEST} /([^/]+)/index\.html\s [NC]
+RewriteRule ^([^/]+)/index\.html$ /$1/ [R=301,L]
+
+# 3) URLs legados: redirecionar .html para versões sem extensão (301)
+RewriteRule ^pme\.html$ /pme/ [R=301,L]
+RewriteRule ^agencia\.html$ /agencia/ [R=301,L]
+RewriteRule ^agentes-ia\.html$ /agentes-ia/ [R=301,L]
+
+# 4) ✅ NOVO: Redirecionar lpagencia e lppme para nova estrutura
+RewriteRule ^lpagencia/?$ /agencia [R=301,L]
+RewriteRule ^lppme/?$ /pme [R=301,L]
+
+# 5) ✅ NOVO: Adicionar trailing slash nas URLs principais (SEO)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_URI} !/\.(html|php|css|js|jpg|jpeg|png|webp|svg|gif|ico)$ [NC]
+RewriteCond %{REQUEST_URI} !(.*)/$
+RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1/ [L,R=301]
+
+# --- CACHE / EXPIRATION ---
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType image/jpeg "access plus 1 year"
+  ExpiresByType image/gif "access plus 1 year"
+  ExpiresByType image/png "access plus 1 year"
+  ExpiresByType image/webp "access plus 1 year"
+  ExpiresByType image/svg+xml "access plus 1 year"
+  ExpiresByType text/css "access plus 1 month"
+  ExpiresByType application/javascript "access plus 1 month"
+  ExpiresByType application/x-javascript "access plus 1 month"
+  ExpiresByType application/pdf "access plus 1 month"
+  ExpiresByType application/x-shockwave-flash "access plus 1 month"
+  ExpiresByType image/x-icon "access plus 1 year"
+  ExpiresByType font/woff2 "access plus 1 year"
+  ExpiresDefault "access plus 2 days"
+</IfModule>
+
+# --- COMPRESSÃO GZIP/DEFLATE ---
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE application/javascript
+  AddOutputFilterByType DEFLATE application/rss+xml
+  AddOutputFilterByType DEFLATE application/vnd.ms-fontobject
+  AddOutputFilterByType DEFLATE application/x-font
+  AddOutputFilterByType DEFLATE application/x-font-opentype
+  AddOutputFilterByType DEFLATE application/x-font-truetype
+  AddOutputFilterByType DEFLATE application/x-font-ttf
+  AddOutputFilterByType DEFLATE application/x-javascript
+  AddOutputFilterByType DEFLATE application/xhtml+xml
+  AddOutputFilterByType DEFLATE application/xml
+  AddOutputFilterByType DEFLATE font/opentype
+  AddOutputFilterByType DEFLATE font/otf
+  AddOutputFilterByType DEFLATE font/ttf
+  AddOutputFilterByType DEFLATE image/svg+xml
+  AddOutputFilterByType DEFLATE image/x-icon
+  AddOutputFilterByType DEFLATE text/css
+  AddOutputFilterByType DEFLATE text/html
+  AddOutputFilterByType DEFLATE text/javascript
+  AddOutputFilterByType DEFLATE text/plain
+  AddOutputFilterByType DEFLATE text/xml
+  # Compatibilidade
+  BrowserMatch ^Mozilla/4 gzip-only-text/html
+  BrowserMatch ^Mozilla/4\.0[678] no-gzip
+  BrowserMatch \bMSIE !no-gzip !gzip-only-text/html
+  Header append Vary User-Agent
+</IfModule>
+
+# --- SECURITY HEADERS ---
+<IfModule mod_headers.c>
+  Header set X-Content-Type-Options "nosniff"
+  Header set X-Frame-Options "SAMEORIGIN"
+  Header set Strict-Transport-Security "max-age=31536000"
+  Header set X-XSS-Protection "1; mode=block"
+  Header set Referrer-Policy "strict-origin-when-cross-origin"
+
+  # ✅ NOVO: Content Security Policy (ajustar conforme necessário)
+  # Header set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://consent.cookiebot.com https://load.pme.alcinomenezesjunior.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:;"
+</IfModule>
+
+# --- BLOQUEIO DE HOTLINKING (Protege imagens) ---
+<IfModule mod_rewrite.c>
+  RewriteCond %{HTTP_REFERER} !^$
+  RewriteCond %{HTTP_REFERER} !^https://(www\.)?alcinomenezesjunior\.com [NC]
+  RewriteRule \.(jpg|jpeg|png|gif|webp|svg)$ - [F,L]
+</IfModule>
+
+# --- ERROR PAGES (Opcional) ---
+# ErrorDocument 404 /404.html
+# ErrorDocument 500 /500.html
