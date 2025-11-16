@@ -221,12 +221,53 @@
     }
   }
 
+  // ---------- Form Webhook Handler
+  function initFormWebhook() {
+    const form = $('#leadForm');
+    if (!form) return;
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      // Validação básica
+      const inputs = $$('input[required], select[required]', form);
+      let isValid = true;
+      inputs.forEach(input => {
+        if (!input.value) isValid = false;
+      });
+
+      if (!isValid) {
+        alert('Por favor, preencha todos os campos obrigatórios.');
+        return;
+      }
+
+      try {
+        const formData = new FormData(form);
+        const data = Object.fromEntries(formData.entries());
+        data.timestamp = new Date().toISOString();
+
+        await fetch('https://mjrmkt.app.n8n.cloud/webhook/leads-geral', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+
+        // Redirecionar após sucesso
+        window.location.href = '/obrigado.html';
+      } catch (error) {
+        console.error('Erro ao enviar formulário:', error);
+        alert('Erro ao enviar. Por favor, tente novamente.');
+      }
+    });
+  }
+
   // ---------- Init
   onReady(() => {
     initCountdown();
     applyWhatsAppHrefDefaults();
     initWhatsAppTracking();
     initLazyLoading();
+    initFormWebhook();
   });
 
 })();

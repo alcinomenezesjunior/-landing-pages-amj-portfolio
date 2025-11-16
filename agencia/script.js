@@ -45,7 +45,7 @@
     const form = $('#leadForm');
     if (!form) return;
 
-    form.addEventListener('submit', (e) => {
+    form.addEventListener('submit', async (e) => {
       let ok = true;
       $$('input[required], select[required]', form).forEach(el => {
         const invalid = (el.type === 'checkbox' && !el.checked) || (!el.value && el.type !== 'checkbox');
@@ -60,13 +60,37 @@
           event: 'form_validation_error',
           form_name: 'leadForm'
         });
-      } else {
+        return;
+      }
+
+      // Prevenir submit padrão para enviar ao webhook N8N primeiro
+      e.preventDefault();
+
+      // Enviar para webhook N8N
+      try {
+        const formData = new FormData(form);
+        const data = Object.fromEntries(formData.entries());
+        data.timestamp = new Date().toISOString();
+
+        await fetch('https://mjrmkt.app.n8n.cloud/webhook/leads-geral', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+
         // GTM tracking sucesso
         pushToDataLayer({
           event: 'form_submit_success',
           form_name: 'leadForm',
           lead_source: 'trafego_pago_estetica'
         });
+
+        // Redirecionar após sucesso
+        window.location.href = 'https://www.alcinomenezesjunior.com/obrigado.html';
+      } catch (error) {
+        console.error('Erro ao enviar para webhook:', error);
+        // Em caso de erro, permitir submit normal do formulário como fallback
+        form.submit();
       }
     });
 
