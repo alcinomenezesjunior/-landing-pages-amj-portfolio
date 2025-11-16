@@ -1,0 +1,29 @@
+# Configurações sensíveis (webhooks, API keys, etc)
+config/webhooks.js
+config/*.js
+
+# Arquivos de sistema
+.DS_Store
+Thumbs.db
+
+# Editores
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+npm-debug.log*
+
+# Dependencies (se usar npm futuramente)
+node_modules/
+
+# Build outputs
+dist/
+build/
+
+# Temporários
+*.tmp
+*.temp
