@@ -516,6 +516,14 @@ label {
   flex-shrink: 0;
 }
 
+.promo-deadline {
+  color: #FFFFFF !important;
+  font-size: 1rem;
+  font-weight: 500;
+  margin: 1.5rem 0;
+  opacity: 1;
+}
+
 /* === COST CARD (Secção 5.5) === */
 .cost-card {
   max-width: 700px;
@@ -822,6 +830,14 @@ label {
   flex-wrap: wrap;
 }
 
+.timer-intro {
+  color: #FFFFFF !important;
+  font-size: 0.95rem;
+  font-weight: 500;
+  margin: 0.5rem 0;
+  opacity: 1;
+}
+
 /* Timer styles moved to line ~1848 (organized by context) */
 
 /* === FINAL CTA === */
@@ -911,39 +927,6 @@ details p {
 
 .foot a:hover {
   color: #fff;
-}
-
-/* === WHATSAPP FLOAT === */
-.wa-float {
-  position: fixed;
-  right: 16px;
-  bottom: 20px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 56px;
-  height: 56px;
-  background: #25D366;
-  color: #fff;
-  border-radius: 50%;
-  box-shadow: 0 8px 28px rgba(37, 211, 102, .4);
-  text-decoration: none;
-  transition: all .2s ease;
-  z-index: 100;
-}
-
-.wa-float:hover {
-  transform: scale(1.1);
-  box-shadow: 0 12px 36px rgba(37, 211, 102, .5);
-}
-
-.wa-float i {
-  font-size: 1.5rem;
-}
-
-.wa-float:focus-visible {
-  outline: 2px solid #128C7E;
-  outline-offset: 2px;
 }
 
 /* === A11Y === */
@@ -1183,10 +1166,6 @@ details p {
   body {
     padding-bottom: 80px;
   }
-  
-  .wa-float {
-    bottom: 90px; /* Sobe para não ficar em cima do sticky cta */
-  }
 
   .plan-badges {
     top: 8px;
@@ -1348,7 +1327,7 @@ details p {
 img { display:block; height:auto; max-width:100%; }
 .section { content-visibility:auto; contain-intrinsic-size: 1000px 800px; }
 .hero { content-visibility: visible; }
-.sticky-cta, .wa-float { will-change: transform; transform: translateZ(0); }
+.sticky-cta { will-change: transform; transform: translateZ(0); }
 .exit-popup { contain: layout paint style; }
 
 
@@ -1570,13 +1549,6 @@ img { display:block; height:auto; max-width:100%; }
   flex-direction: column;
   gap: 0.75rem;
   margin: 2rem 0 1rem;
-}
-
-.popup__footer {
-  text-align: center;
-  font-size: 0.875rem;
-  color: #9ca3af;
-  margin-top: 1.5rem;
 }
 
 /* Responsive */
