@@ -54,6 +54,7 @@ body {
 
 .section {
   padding: 3.5rem 0;
+  min-height: 200px; /* Prevents CLS during content loading */
 }
 
 .section.alt {
@@ -77,7 +78,7 @@ body {
 }
 
 .section--purple {
-  background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
+  background: linear-gradient(135deg, #6d28d9 0%, #7c3aed 100%);
   color: #FFFFFF;
 }
 
@@ -89,22 +90,7 @@ body {
   color: #1a1a2e;
 }
 
-.section--dark h2,
-.section--dark h3,
-.section--purple h2,
-.section--purple h3 {
-  color: #FFFFFF;
-}
-
-.section--white p,
-.section--light p {
-  color: #4b5563;
-}
-
-.section--dark p,
-.section--purple p {
-  color: #e5e7eb;
-}
+/* Note: Detailed color rules moved to comprehensive section below (line ~1766) */
 
 .h1 {
   font-size: clamp(1.8rem, 3.2vw, 2.5rem);
@@ -1763,45 +1749,81 @@ img { display:block; height:auto; max-width:100%; }
   }
 }
 
-/* Correção de contraste: Textos visíveis em todos os fundos */
-.section--dark, .section--dark * {
-  color: #FFFFFF !important;
-}
+/* Correção de contraste: Textos visíveis em todos os fundos (específicos, AA compliant) */
 
-.section--white, .section--white *,
-.section--light, .section--light * {
-  color: #1a1a2e !important;
-}
-
-.section--purple, .section--purple * {
-  color: #FFFFFF !important;
-}
-
-/* Seção: Como Funciona (Simples e Rápido) */
-section:has(h2:contains("Como Funciona")),
+/* Seções escuras: headings brancos, body cinza claro */
 .section--dark h2,
 .section--dark h3,
-.section--dark p,
-.section--dark li,
-.section--dark .step-title,
-.section--dark .step-description {
-  color: #FFFFFF !important;
+.section--dark h4,
+.section--dark h5,
+.section--dark h6,
+.section--dark strong,
+.section--dark .step-title {
+  color: #FFFFFF;
 }
 
-/* Seção: Black November 2025 (oferta roxa) */
+.section--dark p,
+.section--dark li,
+.section--dark span,
+.section--dark em,
+.section--dark a,
+.section--dark label,
+.section--dark .step-description {
+  color: #e5e7eb;
+}
+
+/* Seções brancas/claras: headings escuros, body cinza médio */
+.section--white h2,
+.section--white h3,
+.section--white h4,
+.section--white h5,
+.section--white h6,
+.section--white strong,
+.section--light h2,
+.section--light h3,
+.section--light h4,
+.section--light h5,
+.section--light h6,
+.section--light strong {
+  color: #1a1a2e;
+}
+
+.section--white p,
+.section--white li,
+.section--white span,
+.section--white em,
+.section--white label,
+.section--light p,
+.section--light li,
+.section--light span,
+.section--light em,
+.section--light label {
+  color: #4b5563;
+}
+
+/* Seções roxas: headings brancos, body cinza claro */
 .section--purple h2,
 .section--purple h3,
-.section--purple p,
+.section--purple h4,
+.section--purple h5,
+.section--purple h6,
 .section--purple strong,
 .section--purple .offer-text,
-.section--purple .price,
-.section--purple ul,
-.section--purple li {
-  color: #FFFFFF !important;
+.section--purple .price {
+  color: #FFFFFF;
+}
+
+.section--purple p,
+.section--purple li,
+.section--purple span,
+.section--purple em,
+.section--purple a,
+.section--purple label,
+.section--purple ul {
+  color: #e5e7eb;
 }
 
 /* Seção: Perguntas Frequentes */
-.faq h2,
 .faq h3,
 .faq-question,
 .faq-answer,
@@ -1812,16 +1834,14 @@ section:has(h2:contains("Como Funciona")),
   color: #FFFFFF !important;
 }
 
-/* Timer/Countdown (números do relógio) */
-.countdown,
-.timer,
-.countdown-item,
-.countdown-number,
-.countdown-label,
-.time-unit,
-.timer-digit,
-.timer-label,
-[class*="countdown"] *,
-[class*="timer"] * {
-  color: #FFFFFF !important;
+/* Timer/Countdown (apenas na seção roxa) */
+.section--purple .countdown,
+.section--purple .timer,
+.section--purple .countdown-item,
+.section--purple .countdown-number,
+.section--purple .countdown-label,
+.section--purple .time-unit,
+.section--purple .timer-digit,
+.section--purple .timer-label {
+  color: #FFFFFF;
 }
