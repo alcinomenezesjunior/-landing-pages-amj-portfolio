@@ -1776,3 +1776,52 @@ img { display:block; height:auto; max-width:100%; }
 .section--purple, .section--purple * {
   color: #FFFFFF !important;
 }
+
+/* Seção: Como Funciona (Simples e Rápido) */
+section:has(h2:contains("Como Funciona")),
+.section--dark h2,
+.section--dark h3,
+.section--dark p,
+.section--dark li,
+.section--dark .step-title,
+.section--dark .step-description {
+  color: #FFFFFF !important;
+}
+
+/* Seção: Black November 2025 (oferta roxa) */
+.section--purple h2,
+.section--purple h3,
+.section--purple p,
+.section--purple strong,
+.section--purple .offer-text,
+.section--purple .price,
+.section--purple ul,
+.section--purple li {
+  color: #FFFFFF !important;
+}
+
+/* Seção: Perguntas Frequentes */
+.faq h2,
+.faq h3,
+.faq-question,
+.faq-answer,
+.faq-item,
+.accordion-title,
+.accordion-content,
+.accordion p {
+  color: #FFFFFF !important;
+}
+
+/* Timer/Countdown (números do relógio) */
+.countdown,
+.timer,
+.countdown-item,
+.countdown-number,
+.countdown-label,
+.time-unit,
+.timer-digit,
+.timer-label,
+[class*="countdown"] *,
+[class*="timer"] * {
+  color: #FFFFFF !important;
+}
