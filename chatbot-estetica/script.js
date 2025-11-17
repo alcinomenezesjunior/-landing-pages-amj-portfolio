@@ -46,6 +46,32 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.style.overflow = '';
   };
 
+  // Função específica para fechar popup de exit-intent
+  window.closeExitPopup = () => {
+    const popup = document.getElementById('exitPopup');
+    if (popup) {
+      closePopup(popup);
+    }
+  };
+
+  // Função para tracking de cliques no botão WhatsApp Demo
+  window.trackWhatsAppDemo = (event) => {
+    // Google Analytics tracking (se gtag existir)
+    if (typeof gtag !== 'undefined') {
+      gtag('event', 'click', {
+        'event_category': 'Demo',
+        'event_label': 'WhatsApp Bot Test',
+        'value': 1
+      });
+    }
+
+    // Console log para debug
+    console.log('WhatsApp Demo clicked - redirecting to wa.me/351926698959');
+
+    // Permitir navegação normal
+    return true;
+  };
+
   // Funções de info do dispositivo
   const getDeviceType = () => {
     const w = Math.min(window.screen.width, window.innerWidth);
