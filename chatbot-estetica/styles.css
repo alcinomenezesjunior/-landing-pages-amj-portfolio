@@ -279,7 +279,17 @@ label {
   border-radius: 10px;
   background: #fff;
   font-size: .95rem;
+  color: #1C1C1C; /* Ensure text color is dark for contrast */
 }
+
+/* Placeholder styling for WCAG AA compliance (4.5:1 contrast ratio) */
+.form input::placeholder,
+.form select::placeholder,
+.form textarea::placeholder {
+  color: #6B7280; /* --text-weak: sufficient contrast on white background */
+  opacity: 1; /* Override browser default opacity */
+}
+
 .form textarea {
   width: 100%;
   resize: vertical;
