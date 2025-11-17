@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
+<title>Chatbot para Estúdios de Estética — Atendimento e Marcação Automática</title>
+<meta content="Receciona, explica serviços e marca automaticamente no WhatsApp. Chatbot para estúdios de estética e micropigmentação — simples, rápido e RGPD-ready." name="description"/>
+<link href="https://www.alcinomenezesjunior.com/chatbot-estetica" rel="canonical"/>
+<meta content="index,follow" name="robots"/>
+<meta content="website" property="og:type"/>
+<meta content="Chatbot para Estúdios de Estética — Atendimento e Marcação Automática" property="og:title"/>
+<meta content="Pare de perder clientes por resposta lenta. O teu estúdio passa a marcar no WhatsApp 24/7." property="og:description"/>
+<meta content="https://www.alcinomenezesjunior.com/chatbot-estetica" property="og:url"/>
+<meta content="https://www.alcinomenezesjunior.com/images/hero-dashboard.webp" property="og:image"/>
+<link href="/images/logo-amj-mark.svg" rel="icon" type="image/svg+xml"/>
+<link href="/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
+<link href="/site.webmanifest" rel="manifest"/>
+<link crossorigin="" href="https://load.pme.alcinomenezesjunior.com" rel="preconnect"/>
+<link crossorigin="" href="https://consent.cookiebot.com" rel="preconnect"/>
+<link crossorigin="" href="https://cdn.jsdelivr.net" rel="preconnect"/>
+<link crossorigin="" href="https://n8n.alcinomenezesjunior.com" rel="preconnect"/>
+<link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet"/>
+<link as="style" href="/local-fonts.css?v=5" onload="this.onload=null;this.rel='stylesheet'" rel="preload"/>
+<noscript><link href="/local-fonts.css?v=5" rel="stylesheet"/></noscript>
+<link href="/chatbot-estetica/styles.css?v=9" rel="stylesheet"/>
+<script data-blockingmode="auto" data-cbid="b491a799-a43f-4927-8d6b-8b340b5b6e36" defer="" id="Cookiebot" src="https://consent.cookiebot.com/uc.js" type="text/javascript"></script>
+<script>
+    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});
+      var f=d.getElementsByTagName(s)[0],j=d.createElement(s);j.async=true;
+      j.src="https://load.pme.alcinomenezesjunior.com/5zygpoqqs.js?"+i;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','dc0gf5s=aWQ9R1RNLUs3VkpKREY1&ne=mam');
+  </script>
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "serviceType": "Chatbot de Atendimento WhatsApp",
+    "name": "Chatbot para Estúdios de Estética",
+    "description": "Atendimento e marcação automática no WhatsApp para estúdios de estética e micropigmentação. Sistema 24/7 que nunca perde um cliente por resposta lenta.",
+    "url": "https://www.alcinomenezesjunior.com/chatbot-estetica",
+    "provider": {
+      "@type": "Organization",
+      "name": "AMJ Automação & IA",
+      "url": "https://www.alcinomenezesjunior.com"
+    },
+    "areaServed": {
+      "@type": "Country",
+      "name": "Portugal"
+    },
+    "availableChannel": {
+      "@type": "ServiceChannel",
+      "serviceUrl": "https://www.alcinomenezesjunior.com/chatbot-estetica"
+    },
+    "offers": [
+      {
+        "@type": "Offer",
+        "name": "Plano Essencial",
+        "description": "Marcação automática para 1 serviço",
+        "price": "690",
+        "priceCurrency": "EUR",
+        "priceSpecification": {
+          "@type": "UnitPriceSpecification",
+          "price": "690",
+          "priceCurrency": "EUR",
+          "unitText": "Setup único"
+        },
+        "additionalProperty": {
+          "@type": "PropertyValue",
+          "name": "Mensalidade",
+          "value": "179",
+          "unitCode": "EUR"
+        }
+      },
+      {
+        "@type": "Offer",
+        "name": "Plano Pro",
+        "description": "Multi-serviços automático (mais popular)",
+        "price": "990",
+        "priceCurrency": "EUR",
+        "priceSpecification": {
+          "@type": "UnitPriceSpecification",
+          "price": "990",
+          "priceCurrency": "EUR",
+          "unitText": "Setup único"
+        },
+        "additionalProperty": {
+          "@type": "PropertyValue",
+          "name": "Mensalidade",
+          "value": "279",
+          "unitCode": "EUR"
+        }
+      },
+      {
+        "@type": "Offer",
+        "name": "Plano Enterprise",
+        "description": "Para clínicas multi-profissionais",
+        "price": "1490",
+        "priceCurrency": "EUR",
+        "priceSpecification": {
+          "@type": "UnitPriceSpecification",
+          "price": "1490",
+          "priceCurrency": "EUR",
+          "unitText": "Setup único"
+        },
+        "additionalProperty": {
+          "@type": "PropertyValue",
+          "name": "Mensalidade",
+          "value": "390",
+          "unitCode": "EUR"
+        }
+      }
+    ]
+  }
+  </script>
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "AMJ Automação & IA",
+    "url": "https://www.alcinomenezesjunior.com",
+    "logo": "https://www.alcinomenezesjunior.com/images/logo-amj.svg",
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "contactType": "Suporte Técnico",
+      "email": "contacto@alcinomenezesjunior.com",
+      "telephone": "+351-926-698-959",
+      "availableLanguage": "Portuguese"
+    }
+  }
+  </script>
+<style>
+    .hero{position:relative;isolation:isolate;display:flex;align-items:center;padding:4rem 0}
+    .hero::before{
+      content:"";position:absolute;inset:0;z-index:-2;
+      background:linear-gradient(135deg,#151521 0%,#262643 50%,#1B1B2E 100%);
+    }
+    .hero::after{
+      content:"";position:absolute;inset:0;z-index:-1;opacity:.12;
+      background-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160"><g fill="none" stroke="%23ffffff" stroke-width="1"><circle cx="24" cy="24" r="6"/><rect x="70" y="14" width="20" height="20" rx="6"/><path d="M120 18h22M131 18v22"/><circle cx="120" cy="120" r="10"/><rect x="16" y="106" width="28" height="28" rx="10"/></g></svg>');
+      background-size:160px 160px;
+    }
+    @media (max-width:920px){.hero{min-height:auto;padding:2.2rem 0 2.8rem}}
+  </style>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/></head>
+<body>
+<noscript><iframe height="0" src="https://load.pme.alcinomenezesjunior.com/ns.html?id=GTM-K7VJJDF5" style="display:none;visibility:hidden" width="0"></iframe></noscript>
+<header class="header" role="banner">
+<div class="container">
+<nav aria-label="Principal" class="nav">
+<a aria-label="AMJ Automação &amp; IA" class="brand" href="#top">
+<img alt="AMJ Automação &amp; IA" class="brand__logo site-logo" height="52" src="/images/logo-amj.svg" width="240"/>
+<span class="name">AMJ Automação &amp; IA</span>
+</a>
+</nav>
+</div>
+</header>
+<main id="top">
+<section aria-labelledby="h1" class="hero">
+<div class="container hero__wrap">
+<article class="hero__copy">
+<span class="badge badge--highlight">🔥 Black November 2025 — Oferta Limitada ao Mês</span>
+<h1 class="h1 hero__title" id="h1">
+            Nunca Mais Percas Uma Cliente Por Responder Tarde no WhatsApp
+          </h1>
+<p class="sub hero__subtitle">
+            Enquanto atendes clientes ou dormes, o chatbot responde perguntas,
+            explica serviços e <strong>marca diretamente na tua Google Agenda</strong>.
+          </p>
+<div class="hero__trust-bar">
+<p class="trust">
+<i class="ri-shield-check-line"></i> Setup em até 14 dias
+            </p>
+<p class="trust">
+<i class="ri-customer-service-line"></i> Suporte PT 24h
+            </p>
+</div>
+</article>
+<aside class="card" id="formulario">
+<form class="form" id="leadForm" novalidate="">
+<input name="origem" type="hidden" value="LP_Chatbot_Estetica"/>
+  <input name="landing_page" type="hidden" value="Chatbot para Estética"/>
+<h3 class="form__title">📋 Análise Gratuita do Teu Estúdio</h3>
+<div class="row">
+<div>
+<label for="nome">Nome *</label>
+<input autocomplete="name" id="nome" name="nome" required="" type="text"/>
+</div>
+<div>
+<label for="email">E-mail *</label>
+<input autocomplete="email" id="email" name="email" required="" type="email"/>
+</div>
+</div>
+<div class="row">
+<div>
+<label for="whatsapp">WhatsApp *</label>
+<input id="whatsapp" inputmode="tel" name="whatsapp" placeholder="+351 9xx xxx xxx" required="" type="tel"/>
+<p class="micro">Formato sugerido: 9 dígitos (p.ex. 912 345 678)</p>
+</div>
+<div>
+<label for="instagram">Instagram *</label>
+<div class="input-with-icon">
+<span aria-hidden="true" class="input-icon">@</span>
+<input class="input-padded" id="instagram" name="instagram" placeholder="estetica.beleza" required="" type="text"/>
+</div>
+</div>
+</div>
+<div class="qualify-box qualify-box--yellow">
+<label class="label-block">
+                Já utilizas alguma automação ou software de gestão? <span class="required-star">*</span>
+</label>
+<label class="radio-label">
+<input name="usa_automacao" required="" type="radio" value="sim"/>
+<span>Sim, uso software de agendamento/CRM</span>
+</label>
+<label class="radio-label">
+<input name="usa_automacao" type="radio" value="nao"/>
+<span>Não, tudo é manual</span>
+</label>
+</div>
+<div class="qualify-box qualify-box--blue">
+<label class="label-block" for="investimento_ferramentas">
+                Quanto investes mensalmente em ferramentas/software? <span class="required-star">*</span>
+</label>
+<select class="full-width" id="investimento_ferramentas" name="investimento_ferramentas" required="">
+<option value="">Seleciona uma opção...</option>
+<option value="0">€0 (não invisto)</option>
+<option value="25">€1 - €50/mês</option>
+<option value="75">€50 - €100/mês</option>
+<option value="150">€100 - €200/mês</option>
+<option value="300">€200+/mês</option>
+</select>
+<p class="micro">Ex.: WhatsApp Business API, Calendly, CRM, etc.</p>
+</div>
+<div class="qualify-box qualify-box--purple">
+<label class="label-block" for="desafio_principal">
+                Qual o teu maior desafio atual com marcações/atendimento? <span class="required-star">*</span>
+</label>
+<textarea class="full-width" id="desafio_principal" name="desafio_principal" placeholder="Ex.: Perco muito tempo a responder mensagens repetidas no WhatsApp. Às vezes demoro horas e acabo perdendo clientes..." required="" rows="4"></textarea>
+<p class="micro">Quanto mais detalhe, melhor personalizamos a solução.</p>
+</div>
+<div class="consent">
+<input id="consent" name="consent" required="" type="checkbox"/>
+<label for="consent">
+                Concordo com o tratamento dos dados conforme a
+                <a href="/privacidade.html" rel="noopener" target="_blank">Política de Privacidade</a>.
+              </label>
+</div>
+<div class="cta">
+<button class="btn" type="submit"><i class="ri-flashlight-line"></i> Enviar Candidatura</button>
+<p class="micro">✅ Análise gratuita em 24h • Proposta personalizada • Sem compromisso</p>
+</div>
+</form>
+</aside>
+</div>
+</section>
+<section class="section" id="problemas">
+<div class="container">
+<p class="text-center text-lead text-weak mb-1">
+          Reconheces alguma destas situações? 👇
+        </p>
+<h2 class="h2 text-center mb-2">As 3 Fugas de Clientes no Dia a Dia</h2>
+<ul aria-label="Dores comuns" class="bullets">
+<li><i aria-hidden="true" class="ri-time-line"></i><span><strong>Resposta lenta = cliente perdido.</strong> Quem responde primeiro, fecha. O bot responde em segundos — inclusive à noite.</span></li>
+<li><i aria-hidden="true" class="ri-question-answer-line"></i><span><strong>As mesmas perguntas sempre.</strong> Preço, contraindicações, duração, cuidados — tudo explicado automaticamente.</span></li>
+<li><i aria-hidden="true" class="ri-calendar-check-line"></i><span><strong>Marcação manual falha.</strong> Integração com <strong>Google Agenda</strong> para horários certos e lembretes.</span></li>
+</ul>
+</div>
+</section>
+<section class="section alt" id="demo">
+<div class="container">
+<h2 class="h2 text-center mb-1">
+          Vê Como Funciona na Prática
+        </h2>
+<p class="text-center text-lead mb-2">
+          Testa agora o chatbot de marcação (ambiente demo) 👇
+        </p>
+<div class="demo-card">
+<div class="demo-card__inner-box">
+<p class="demo-card__title"><strong>📱 Simula uma conversa real:</strong></p>
+<p class="demo-card__subtitle">
+              Vais experimentar em primeira mão como as tuas clientes vão interagir com o bot.
+            </p>
+</div>
+<a class="btn btn-demo-cta" href="https://wa.me/351926698959?text=Ol%C3%A1!%20Quero%20testar%20o%20chatbot%20de%20marca%C3%A7%C3%A3o%20%F0%9F%93%85" onclick="trackWhatsAppDemo(event)" rel="noopener noreferrer" target="_blank">
+<i class="ri-whatsapp-line"></i> Testar Bot no WhatsApp
+          </a>
+<div class="demo-card__features">
+<p class="demo-card__features-title">✅ O que vais ver:</p>
+<ul class="demo-card__features-list">
+<li>Resposta instantânea (mesmo fora de horas)</li>
+<li>Menu de serviços com preços e durações</li>
+<li>Verificação de horários disponíveis</li>
+<li>Confirmação automática + lembrete</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section class="section dark">
+<div class="container">
+<h2 class="h2 text-center">Como Funciona (Simples e Rápido)</h2>
+<div class="steps">
+<article class="step">
+<div class="step__icon">🔌</div>
+<h3>1. Conectamos (15 min)</h3>
+<p>Liga o teu WhatsApp Business à API oficial. Sem apps extra, sem complicações.</p>
+</article>
+<article class="step">
+<div class="step__icon">⚙️</div>
+<h3>2. Personalizamos (até 14 dias)</h3>
+<p>Configuramos serviços, preços, horários e integramos com a tua Google Agenda. Testes e ajustes até estar perfeito.</p>
+</article>
+<article class="step">
+<div class="step__icon">🚀</div>
+<h3>3. Lançamos (semana 3)</h3>
+<p>Começas a receber marcações automáticas. Ajustamos conforme o feedback real das tuas clientes.</p>
+</article>
+</div>
+</div>
+</section>
+<section class="section purple" id="oferta-novembro">
+<div class="container container--medium text-center">
+<span class="badge badge--large">🔥 Black November 2025</span>
+<h2 class="h2 mt-1">
+          Oferta Limitada ao Mês de Novembro
+        </h2>
+<p class="text-lead text-spaced">
+          Novembro é o mês ideal para automatizar o teu estúdio e começar 2026 com tudo em ordem. 
+          Durante este mês, oferecemos condições especiais:
+        </p>
+<div class="promo-card">
+<ul class="promo-list">
+<li class="promo-list__item">
+<span class="promo-list__number">1</span>
+<strong>30% desconto</strong> no setup (poupa €207–€447)
+            </li>
+<li class="promo-list__item">
+<span class="promo-list__number">2</span>
+<strong>30% desconto</strong> nos meses de novembro e dezembro de 2025 (poupa €53–€117)
+            </li>
+<li class="promo-list__item">
+<span class="promo-list__number">3</span>
+<strong>Consultoria Estratégica Grátis</strong> — 30 minutos (€297)
+            </li>
+</ul>
+</div>
+<p class="text-weak text-small">
+          ⏰ Oferta válida até ao final de Novembro
+        </p>
+<a class="btn btn--large mt-1" href="#formulario">
+<i class="ri-flashlight-line"></i> Aproveitar a Oferta
+        </a>
+</div>
+</section>
+<section class="section">
+<div class="container">
+<h2 class="h2 text-center mb-1">💰 O Custo Real de Contratar para o WhatsApp</h2>
+<p class="text-center text-lead text-weak text-spaced container--narrow">
+          Já pensaste quanto custaria contratar alguém <strong>só</strong> para responder mensagens e marcar no WhatsApp?
+        </p>
+<div class="cost-card">
+<table class="cost-table">
+<thead>
+<tr class="cost-table__header">
+<th>Item</th>
+<th>Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Salário mínimo nacional (2025)</td>
+<td class="text-right">€820/mês</td>
+</tr>
+<tr>
+<td>Seg. Social (23,75%)</td>
+<td class="text-right">€195/mês</td>
+</tr>
+<tr>
+<td>Subsídio de alimentação (~€6/dia × 22 dias)</td>
+<td class="text-right">€132/mês</td>
+</tr>
+<tr>
+<td>Seguro de acidentes de trabalho</td>
+<td class="text-right">€26/mês</td>
+</tr>
+<tr>
+<td>Férias e subsídio de Natal (÷12)</td>
+<td class="text-right">€100/mês</td>
+</tr>
+<tr class="cost-table__total">
+<td>Total mensal médio</td>
+<td class="text-right">~€1.273/mês</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="container--wide">
+<h3 class="text-center mb-1_5 font-large">⚖️ Automação vs Colaborador</h3>
+<div class="table-wrapper">
+<table class="compare-table">
+<thead>
+<tr>
+<th>Critério</th>
+<th class="col-positive">Automação com IA</th>
+<th class="col-neutral">Colaborador</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Custo mensal</strong></td>
+<td class="col-positive text-center cell-highlight">€287-327/mês (Essencial)</td>
+<td class="col-neutral text-center">~€1.273/mês</td>
+</tr>
+<tr>
+<td><strong>Disponibilidade</strong></td>
+<td class="col-positive text-center">24/7 (365 dias)</td>
+<td class="col-neutral text-center">8h/dia (dias úteis)</td>
+</tr>
+<tr>
+<td><strong>Tempo de resposta</strong></td>
+<td class="col-positive text-center">Instantâneo (segundos)</td>
+<td class="col-neutral text-center">Variável (minutos/horas)</td>
+</tr>
+<tr>
+<td><strong>Férias / baixas</strong></td>
+<td class="col-positive text-center">Nunca para</td>
+<td class="col-neutral text-center">22 dias férias + baixas</td>
+</tr>
+<tr>
+<td><strong>Responde fora de horas</strong></td>
+<td class="col-positive text-center">✅ Sim</td>
+<td class="col-neutral text-center">❌ Não</td>
+</tr>
+<tr>
+<td><strong>Formação / onboarding</strong></td>
+<td class="col-positive text-center">Incluído no setup</td>
+<td class="col-neutral text-center">Tempo + custo extra</td>
+</tr>
+<tr>
+<td><strong>Escalabilidade</strong></td>
+<td class="col-positive text-center">Ilimitada (mesmo custo)</td>
+<td class="col-neutral text-center">Limitada (precisa contratar mais)</td>
+</tr>
+<tr class="compare-table__total">
+<td>💡 Poupança anual</td>
+<td class="text-center" colspan="2">
+                    ~€11.000–12.000/ano (vs contratar colaborador a tempo inteiro)
+                  </td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="conclusion-box">
+<h4 class="conclusion-box__title">✅ Conclusão Prática</h4>
+<p class="text-lead">
+            Contratar um colaborador a tempo inteiro custa <strong>~€1.273/mês</strong> 
+            (sem contar férias, baixas e formação).<br/><br/>
+            Uma automação com IA:
+          </p>
+<ul class="conclusion-box__list">
+<li>✅ Trabalha 24/7 sem pausas</li>
+<li>✅ Nunca está doente ou de férias</li>
+<li>✅ Responde em segundos (não minutos)</li>
+<li>✅ Custa <strong>5x menos</strong> (~€287-327/mês no plano Essencial)</li>
+</ul>
+<p class="conclusion-box__note">
+            💡 Não é "substitui o teu colaborador" — é "evita ter de contratar mais um"
+          </p>
+</div>
+</div>
+</section>
+<section class="section alt" id="planos">
+<div class="container">
+<h2 class="h2 text-center mb-1">Planos Feitos para Estúdios</h2>
+<p class="text-center text-lead text-weak mb-3">
+          Preços com transparência total. Ferramentas pagas diretamente por ti.
+        </p>
+<div class="plans">
+<article class="plan">
+<div class="plan-badges"><span class="plan-badge total">Desde €287/mês (total)*</span></div>
+<h3>Essencial — Marcação Automática (1 serviço)</h3>
+<p class="price"><strong class="price--cta">€690</strong> <small>setup único</small></p>
+<p class="price"><strong>€179</strong><span class="price--period">/mês gestão AMJ</span></p>
+<ul>
+<li>✅ WhatsApp Cloud + fluxo de marcação simples</li>
+<li>✅ Google Calendar (livre/ocupado + criar eventos)</li>
+<li>✅ Confirmação e lembretes (T−24h / T−2h)</li>
+<li>✅ Registo em Google Sheets</li>
+<li>✅ Suporte por email</li>
+</ul>
+<details class="details-box">
+<summary class="details-box__summary">
+                💡 Como chegamos a €287/mês?
+              </summary>
+<div class="details-box__content">
+<table class="price-breakdown">
+<tr><td>Setup único:</td><td class="text-right"><strong>€690</strong></td></tr>
+<tr><td>Gestão AMJ:</td><td class="text-right">€179/mês</td></tr>
+<tr><td>Ferramentas (API+Make+VPS):</td><td class="text-right">€50-90/mês</td></tr>
+<tr class="price-breakdown__separator"><td colspan="2"><strong>Custo mensal médio (diluindo setup):</strong></td></tr>
+<tr><td class="sub-item">Setup (€690) ÷ 12 meses</td><td class="text-right sub-item">€57,50/mês</td></tr>
+<tr><td class="sub-item">Gestão + Ferramentas</td><td class="text-right sub-item">€229-269/mês</td></tr>
+<tr class="price-breakdown__total"><td><strong>Total mensal médio:</strong></td><td class="text-right"><strong>€287-327/mês*</strong></td></tr>
+<tr class="price-breakdown__annual"><td>Anual total (setup + 12m):</td><td class="text-right">€3.438–3.918</td></tr>
+</table>
+<p class="details-box__note">*Setup (€690) ÷ 12 = €57,50/mês</p>
+</div>
+</details>
+<a class="btn btn--ghost btn--full" href="#formulario">Quero este</a>
+</article>
+<article class="plan plan--featured">
+<div class="plan-badges">
+<span class="plan-badge">🔥 Mais Popular</span>
+<span class="plan-badge total">Desde €447/mês (total)*</span>
+</div>
+<h3>Pro — Multi-Serviços Automático</h3>
+<p class="price"><strong class="price--cta">€990</strong> <small>setup único</small></p>
+<p class="price"><strong>€279</strong><span class="price--period">/mês gestão AMJ</span></p>
+<ul>
+<li>✅ Tudo do Essencial + menu de serviços com durações distintas</li>
+<li>✅ Regras de buffers/feriados e distribuição inteligente</li>
+<li>✅ Notificações internas (WhatsApp/Telegram)</li>
+<li>✅ Relatório simples com KPIs</li>
+<li>✅ Suporte WhatsApp</li>
+</ul>
+<details class="details-box">
+<summary class="details-box__summary">
+                💡 Como chegamos a €447/mês?
+              </summary>
+<div class="details-box__content">
+<table class="price-breakdown">
+<tr><td>Setup único:</td><td class="text-right"><strong>€990</strong></td></tr>
+<tr><td>Gestão AMJ:</td><td class="text-right">€279/mês</td></tr>
+<tr><td>Ferramentas (API+Make+VPS):</td><td class="text-right">€85-134/mês</td></tr>
+<tr class="price-breakdown__separator"><td colspan="2"><strong>Custo mensal médio (diluindo setup):</strong></td></tr>
+<tr><td class="sub-item">Setup (€990) ÷ 12 meses</td><td class="text-right sub-item">€82,50/mês</td></tr>
+<tr><td class="sub-item">Gestão + Ferramentas</td><td class="text-right sub-item">€364-413/mês</td></tr>
+<tr class="price-breakdown__total"><td><strong>Total mensal médio:</strong></td><td class="text-right"><strong>€447-496/mês*</strong></td></tr>
+<tr class="price-breakdown__annual"><td>Anual total (setup + 12m):</td><td class="text-right">€5.358–5.946</td></tr>
+</table>
+<p class="details-box__note">*Setup (€990) ÷ 12 = €82,50/mês</p>
+</div>
+</details>
+<a class="btn btn--full" href="#formulario"><i class="ri-star-line"></i> Quero este</a>
+</article>
+<article class="plan">
+<div class="plan-badges">
+<span class="plan-badge clinic">Para Clínicas</span>
+<span class="plan-badge total">Desde €649/mês (total)*</span>
+</div>
+<h3>Enterprise — Para Clínicas Multi-Profissionais</h3>
+<p class="price"><strong class="price--cta">€1.490</strong> <small>setup único</small></p>
+<p class="price"><strong>€390</strong><span class="price--period">/mês gestão AMJ</span></p>
+<ul>
+<li>✅ Tudo do Pro + múltiplos profissionais/agendas</li>
+<li>✅ Distribuição por disponibilidade e prioridade</li>
+<li>✅ Fluxos avançados (no-show, depósitos, reviews)</li>
+<li>✅ Dashboards e relatórios (KPIs)</li>
+<li>✅ Integração BSP se necessário</li>
+</ul>
+<details class="details-box">
+<summary class="details-box__summary">
+                💡 Como chegamos a €649/mês?
+              </summary>
+<div class="details-box__content">
+<table class="price-breakdown">
+<tr><td>Setup único:</td><td class="text-right"><strong>€1.490</strong></td></tr>
+<tr><td>Gestão AMJ:</td><td class="text-right">€390/mês</td></tr>
+<tr><td>Ferramentas:</td><td class="text-right">€135-255/mês</td></tr>
+<tr class="price-breakdown__separator"><td colspan="2"><strong>Custo mensal médio (diluindo setup):</strong></td></tr>
+<tr><td class="sub-item">Setup (€1.490) ÷ 12 meses</td><td class="text-right sub-item">€124,17/mês</td></tr>
+<tr><td class="sub-item">Gestão + Ferramentas</td><td class="text-right sub-item">€525-645/mês</td></tr>
+<tr class="price-breakdown__total"><td><strong>Total mensal médio:</strong></td><td class="text-right"><strong>€649-769/mês*</strong></td></tr>
+<tr class="price-breakdown__annual"><td>Anual total (setup + 12m):</td><td class="text-right">€7.790–9.230</td></tr>
+</table>
+<p class="details-box__note">*Setup (€1.490) ÷ 12 = €124,17/mês</p>
+</div>
+</details>
+<a class="btn btn--full" href="#formulario"><i class="ri-calendar-line"></i> Agendar Diagnóstico</a>
+</article>
+</div>
+<div class="note">
+<p>ℹ️ Transparência total: WhatsApp Cloud API, plataforma de automação e servidor são <strong>100% da responsabilidade do cliente</strong>. A nossa mensalidade cobre gestão, suporte e otimização.</p>
+</div>
+<div class="mt-4">
+<h2 class="h2 text-center mb-2">🎯 Quem Deve Escolher Qual Plano</h2>
+<div class="table-wrapper">
+<table class="compare-table compare-table--plans">
+<thead>
+<tr>
+<th>Tipo de Negócio</th>
+<th>Essencial</th>
+<th>Pro</th>
+<th>Enterprise</th>
+</tr>
+</thead>
+<tbody>
+<tr class="compare-table__group-header">
+<td colspan="4">Profissionais Solo (1 serviço)</td>
+</tr>
+<tr>
+<td>Nail designer (só unhas)</td>
+<td class="text-center col-positive">✅ Ideal</td>
+<td class="text-center col-disabled">—</td>
+<td class="text-center col-disabled">—</td>
+</tr>
+<tr>
+<td>Barbeiro (1 serviço)</td>
+<td class="text-center col-positive">✅ Ideal</td>
+<td class="text-center col-disabled">—</td>
+<td class="text-center col-disabled">—</td>
+</tr>
+<tr>
+<td>Brow designer (sobrancelhas)</td>
+<td class="text-center col-positive">✅ Ideal</td>
+<td class="text-center col-disabled">—</td>
+<td class="text-center col-disabled">—</td>
+</tr>
+<tr class="compare-table__group-header">
+<td colspan="4">Profissionais com Múltiplos Serviços</td>
+</tr>
+<tr>
+<td>Micropigmentador (eyeliner, lábios, sobrancelhas)</td>
+<td class="text-center col-warning">⚠️ Limitado*</td>
+<td class="text-center col-positive">✅ Ideal</td>
+<td class="text-center col-disabled">—</td>
+</tr>
+<tr>
+<td>Esteticista (vários procedimentos)</td>
+<td class="text-center col-warning">⚠️ Limitado*</td>
+<td class="text-center col-positive">✅ Ideal</td>
+<td class="text-center col-disabled">—</td>
+</tr>
+<tr>
+<td>Cabeleireiro (vários serviços)</td>
+<td class="text-center col-warning">⚠️ Limitado*</td>
+<td class="text-center col-positive">✅ Ideal</td>
+<td class="text-center col-disabled">—</td>
+</tr>
+<tr class="compare-table__group-header">
+<td colspan="4">Clínicas e Centros Multi-Profissionais</td>
+</tr>
+<tr>
+<td>Clínica com 2-3 profissionais</td>
+<td class="text-center col-disabled">—</td>
+<td class="text-center col-disabled">—</td>
+<td class="text-center col-positive">✅ Ideal</td>
+</tr>
+<tr>
+<td>Clínica com 4+ profissionais</td>
+<td class="text-center col-disabled">—</td>
+<td class="text-center col-disabled">—</td>
+<td class="text-center col-positive">✅ Ideal</td>
+</tr>
+<tr>
+<td>Centro médico/estético</td>
+<td class="text-center col-disabled">—</td>
+<td class="text-center col-disabled">—</td>
+<td class="text-center col-positive">✅ Ideal</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="plan-footnote-box">
+<p>
+<strong>*Limitado</strong> = O plano funciona, mas terás de escolher apenas 1 serviço principal para automatizar completamente. 
+              Os outros serviços podem ser mencionados pelo bot, mas a marcação automática será apenas para o serviço configurado.
+            </p>
+<p class="plan-footnote-box__note">
+<strong>💡 Tens uma clínica com equipa?</strong> O plano Enterprise garante distribuição inteligente entre profissionais e evita conflitos de agenda.
+            </p>
+</div>
+<div class="text-center mt-2">
+<p class="text-lead mb-1">💬 Tens dúvidas sobre qual plano escolher?</p>
+<a class="btn" href="#formulario">
+<i class="ri-chat-3-line"></i> Falar com Consultor
+            </a>
+</div>
+</div>
+</div>
+</section>
+<section class="section dark" id="faq">
+<div class="container">
+<h2 class="h2 text-center">❓ Perguntas Frequentes</h2>
+<div class="faq-grid">
+<details open="">
+<summary><strong>Preciso de WhatsApp Business API?</strong></summary>
+<p>Para o chatbot funcionar 24/7 com marcações automáticas, sim. Usamos a API oficial do WhatsApp Business (não é o app normal que usas no telemóvel). Nós tratamos de toda a configuração técnica. O custo da API (€10-50/mês) é pago diretamente ao WhatsApp/Meta, conforme o volume de mensagens.</p>
+</details>
+<details>
+<summary><strong>Como funcionam as marcações?</strong></summary>
+<p>O bot verifica disponibilidade na tua Google Agenda e cria a marcação automaticamente. Recebes confirmação imediata e a cliente recebe lembretes 24h e 2h antes.</p>
+</details>
+<details>
+<summary><strong>E se a cliente quiser falar comigo?</strong></summary>
+<p>O bot encaminha para atendimento humano se estiveres online ou agenda retorno automático para o próximo horário comercial.</p>
+</details>
+<details>
+<summary><strong>Quando vejo resultados?</strong></summary>
+<p>Primeiras marcações na 1ª semana após lançamento. Rotina estável e otimizada em 30–45 dias com ajustes baseados no comportamento real das tuas clientes.</p>
+</details>
+<details>
+<summary><strong>E se não resultar? Há garantia?</strong></summary>
+<p>Sim. Se em 30 dias não tiveres pelo menos 10 interações qualificadas (pedidos de informação ou marcações), devolvemos 100% do valor da mensalidade do 1º mês. O setup não é reembolsável pois envolve trabalho técnico já realizado.</p>
+</details>
+<details>
+<summary><strong>Posso cancelar a qualquer momento?</strong></summary>
+<p>Sim, sem fidelização. Pedimos apenas aviso prévio de 30 dias. As ferramentas (API, Make, VPS) ficam na tua propriedade e podes continuar a usá-las por conta própria.</p>
+</details>
+</div>
+</div>
+</section>
+<section class="section purple" id="pioneiros">
+<div class="container">
+<div class="urgency" style="margin-bottom:3rem">
+<div class="urgency__copy">
+<h2 class="h2">⚡ Oferta Black November 2025</h2>
+<p><strong>Este mês</strong> com 30% desconto no setup + 30% desconto nos meses de novembro e dezembro de 2025 + Consultoria Estratégica Grátis — 30 minutos</p>
+<p class="text-weak mt-0_5">Oferta termina:</p>
+</div>
+<div class="urgency__timer">
+<div aria-label="Tempo restante da oferta" class="timer" data-deadline="2025-11-30T23:59:59" data-tz="Europe/Lisbon" role="timer">
+<div><span id="dd">00</span><small>Dias</small></div>
+<div><span id="hh">00</span><small>Horas</small></div>
+<div><span id="mm">00</span><small>Min</small></div>
+<div><span id="ss">00</span><small>Seg</small></div>
+</div>
+<p aria-hidden="true" class="timer-legend">Dias | Horas | Min | Seg</p>
+</div>
+</div>
+<div class="final">
+<h2 class="h2">Imagina Acordar Amanhã Com 3 Marcações Confirmadas</h2>
+<p class="text-lead text-spaced container--narrow">
+            Enquanto dormes, o bot está a responder dúvidas, a explicar procedimentos e a marcar na tua agenda. 
+            <strong>Zero esforço. Receita automática.</strong>
+</p>
+<a class="btn btn--large" href="#formulario">
+<i class="ri-calendar-check-line"></i> Quero Automatizar Agora
+          </a>
+<p class="final-micro">Ou fala comigo no WhatsApp 👇</p>
+<a class="cta-whatsapp" data-cta-type="whatsapp" data-wa-source="cta_final_estetica" href="#" id="whatsappCTA">
+            💬 WhatsApp Direto
+          </a>
+</div>
+</div>
+</section>
+</main>
+<footer class="footer">
+<div class="container foot">
+<p class="brandline">AMJ Automação &amp; IA — Estética e Micropigmentação</p>
+<nav aria-label="Legal" class="foot-links">
+<a href="/privacidade.html" rel="noopener" target="_blank">Política de Privacidade</a>
+<span aria-hidden="true">•</span>
+<a href="/cookies.html" rel="noopener" target="_blank">Política de Cookies</a>
+</nav>
+<p class="copy">© 2025 AMJ Automação &amp; IA. Todos os direitos reservados.</p>
+</div>
+</footer>
+<a aria-label="Falar no WhatsApp" class="wa-float js-wa" data-phone="+351926698959" data-wa-source="float_estetica" href="#" title="Falar no WhatsApp">
+<i aria-hidden="true" class="ri-whatsapp-fill"></i>
+</a>
+<div class="sticky-cta" id="sticky-cta">
+<a class="btn btn--full" href="#formulario">
+      🔥 Black November 2025 — Oferta Limitada
+    </a>
+</div>
+<div class="exit-popup" id="successPopup" style="display:none;">
+<div class="exit-popup__overlay"></div>
+<div aria-modal="true" class="exit-popup__content" role="dialog">
+<button aria-label="Fechar" class="exit-popup__close" id="successPopupClose"><i class="ri-close-line"></i></button>
+<h3 class="popup-title">✅ Candidatura recebida!</h3>
+<p class="popup-text">Queres ver como podemos <strong>automatizar TODO o teu negócio</strong> (anúncios + funil + CRM + bot)?</p>
+<a class="btn btn--success btn--full" href="/agencia"><i class="ri-sparkling-line"></i> Descobre os Nossos Serviços de Agência</a>
+<button class="btn btn--ghost btn--full mt-0_5" id="successPopupSecondaryClose">Não, obrigado (ficar só com o chatbot)</button>
+</div>
+</div>
+<div class="exit-popup" id="exitPopup" style="display:none;">
+<div class="exit-popup__overlay"></div>
+<div aria-modal="true" class="exit-popup__content" role="dialog">
+<button aria-label="Fechar" class="exit-popup__close" onclick="closeExitPopup()"><i class="ri-close-line"></i></button>
+<div class="mb-0_5">
+<span class="plan-badge clinic">Para Clínicas</span>
+</div>
+<h3 class="popup-title">✨ Queres atrair mais clientes para o teu estúdio?</h3>
+<p class="popup-text">
+      Criamos campanhas e automações que geram <strong>agendamentos todos os dias</strong> no WhatsApp.
+      Tu focas na estética, nós tratamos do marketing.
+    </p>
+<div class="cta-stack">
+<a class="btn btn--primary" href="/agencia">Ver planos da Agência</a>
+<a class="btn btn--outline btn--whatsapp" href="https://wa.me/351926698959?text=Ol%C3%A1!%20Quero%20saber%20mais%20sobre%20marketing%20para%20est%C3%A9tica%20%F0%9F%93%88" rel="noopener noreferrer" target="_blank">
+<i class="ri-whatsapp-line"></i>
+        Falar no WhatsApp
+      </a>
+<button class="btn btn--text" onclick="closeExitPopup()">Não agora</button>
+</div>
+<p class="popup-footer text-small text-weak mt-1">
+      💡 Descobre como podemos ajudar o teu estúdio a crescer de forma sustentável
+    </p>
+</div>
+</div>
+<div class="exit-popup agency" id="agencyPopup" style="display:none;">
+<div class="exit-popup__overlay"></div>
+<div aria-labelledby="agencyTitle" aria-modal="true" class="exit-popup__content center" role="dialog">
+<button aria-label="Fechar" class="exit-popup__close" id="agencyPopupClose">✕</button>
+<div class="mb-0_5">
+<span class="plan-badge clinic">Para Clínicas</span>
+</div>
+<h3 class="h3 mb-0_5" id="agencyTitle">✨ Queres atrair mais clientes para o teu estúdio?</h3>
+<p class="mb-1">
+        Criamos campanhas e automações que geram <strong>agendamentos todos os dias</strong> no WhatsApp.
+        Tu focas na estética, nós tratamos do marketing.
+      </p>
+<div class="cta-stack">
+<a class="btn" href="/agencia" id="agencyPrimary">Ver planos da Agência</a>
+<a class="btn btn--ghost btn--whatsapp" href="https://wa.me/351926698959?text=Ol%C3%A1%20AMJ!%20Quero%20saber%20mais%20sobre%20as%20campanhas%20para%20cl%C3%ADnicas%20de%20est%C3%A9tica." id="agencyWhatsapp">
+           Falar no WhatsApp
+         <svg aria-hidden="true" focusable="false" height="18" role="img" viewbox="0 0 24 24" width="18"><path d="M20.52 3.48A11.87 11.87 0 0012.06 0C5.45 0 .13 5.32.13 11.92c0 2.1.55 4.15 1.6 5.96L0 24l6.31-1.64a11.94 11.94 0 005.75 1.47h.01c6.61 0 11.93-5.32 11.93-11.93 0-3.19-1.24-6.19-3.48-8.42zM12.07 21.6h-.01a9.7 9.7 0 01-4.95-1.36l-.36-.21-3.75.98 1-3.65-.24-.37a9.74 9.74 0 01-1.5-5.23c0-5.37 4.37-9.74 9.74-9.74 2.6 0 5.04 1.01 6.88 2.85a9.65 9.65 0 012.86 6.88c0 5.38-4.37 9.85-9.67 9.85zm5.57-7.26c-.3-.15-1.78-.88-2.05-.98-.27-.1-.47-.15-.68.15-.2.3-.77.98-.95 1.18-.18.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.47-.88-.77-1.47-1.72-1.64-2.02-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.38-.02-.53-.07-.15-.68-1.64-.93-2.25-.24-.58-.5-.5-.68-.5-.17 0-.37-.02-.57-.02-.2 0-.53.08-.8.38s-1.05 1.03-1.05 2.5 1.08 2.9 1.23 3.1c.15.2 2.13 3.25 5.16 4.55.72.31 1.28.5 1.72.64.72.23 1.37.2 1.89.12.58-.09 1.78-.73 2.03-1.44.25-.71.25-1.32.17-1.44-.08-.12-.27-.2-.57-.35z" fill="currentColor"></path></svg></a>
+<a class="btn btn-minor" href="#" id="agencyDismiss" style="margin-top:.5rem">Não agora</a>
+</div>
+</div>
+</div>
+<script defer="" src="/chatbot-estetica/script.js?v=6"></script>
+</body>
+</html>
