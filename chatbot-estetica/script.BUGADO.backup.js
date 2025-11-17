@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // ========================================
   // 1. SELETORES GLOBAIS E ESTADO
   // ========================================
-  
+
   // Funções "Query Selector" (para facilitar)
   const $ = (s, c = document) => c.querySelector(s);
   const $$ = (s, c = document) => [...c.querySelectorAll(s)];
@@ -19,17 +19,17 @@ document.addEventListener('DOMContentLoaded', () => {
   // Variáveis de estado
   let formSubmitted = false;
   let exitPopupShown = false;
-  
+
   // Elementos principais
   const leadForm = $('#leadForm');
   const stickyCta = $('#sticky-cta');
-  
+
   // Popups
   const exitPopup = $('#exitPopup');
   const successPopup = $('#successPopup');
   const agencyPopup = $('#agencyPopup');
 
-  
+
   // ========================================
   // 2. FUNÇÕES AUXILIARES (Helpers)
   // ========================================
@@ -80,7 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!stickyCta || window.innerWidth > 768) {
       return;
     }
-    
+
     let shown = false;
     window.addEventListener('scroll', () => {
       if (!shown && window.scrollY > 800) {
@@ -89,7 +89,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }, { passive: true }); // Adiciona 'passive' para melhor performance de scroll
   }
-  
+
   /**
    * Módulo: Contador Regressivo
    * Inicia o contador da oferta "Black November".
@@ -97,7 +97,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function initCountdown() {
     const timerWrap = $('.timer');
     if (!timerWrap) return;
-    
+
     const dd = $('#dd'), hh = $('#hh'), mm = $('#mm'), ss = $('#ss');
     if (!dd || !hh || !mm || !ss) return;
 
@@ -110,14 +110,14 @@ document.addEventListener('DOMContentLoaded', () => {
         const now = new Date(new Date().toLocaleString('en-US', { timeZone: tz }));
         return new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 59);
       }
-      
+
       try {
         const targetDate = new Date(deadlineStr); // Ex: 2025-11-30T23:59:59
-        
+
         const nowInLisbon = new Date(new Date().toLocaleString('en-US', { timeZone: tz }));
         const localNow = new Date();
         const offsetDiff = (localNow.getTimezoneOffset() - nowInLisbon.getTimezoneOffset()) * 60000;
-        
+
         return new Date(targetDate.getTime() + offsetDiff);
 
       } catch(e) {
@@ -126,7 +126,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 59);
       }
     };
-    
+
     const target = getTargetDate();
     let timerId = null;
 
@@ -154,7 +154,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const d = Math.floor(diff / 86400); diff -= d * 86400;
       const h = Math.floor(diff / 3600); diff -= h * 3600;
       const m = Math.floor(diff / 60); diff -= m * 60;
-      
+
       dd.textContent = String(d).padStart(2, '0');
       hh.textContent = String(h).padStart(2, '0');
       mm.textContent = String(m).padStart(2, '0');
@@ -173,7 +173,7 @@ document.addEventListener('DOMContentLoaded', () => {
     $$('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', function(e) {
         const href = this.getAttribute('href');
-        
+
         if (href === '#' || href === '#top') {
           e.preventDefault();
           window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -200,7 +200,7 @@ document.addEventListener('DOMContentLoaded', () => {
    * Controla a lógica de abrir/fechar todos os popups.
    */
   function initPopups() {
-    
+
     // --- Lógica de fechar (comum a todos) ---
     $$('.exit-popup__overlay, .exit-popup__close').forEach(el => {
       el.addEventListener('click', (e) => {
@@ -250,7 +250,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (successPopup) {
       $('#successPopupSecondaryClose')?.addEventListener('click', () => closePopup(successPopup));
     }
-    
+
     // --- 3. Popup de Agência (Agency) ---
     if (agencyPopup) {
       $('#agencyDismiss')?.addEventListener('click', (e) => {
@@ -285,10 +285,10 @@ document.addEventListener('DOMContentLoaded', () => {
         btn.innerHTML = '<i class="ri-loader-4-line"></i> Enviando...';
       }
 
-      const wa = $('#whatsapp', leadForm); 
+      const wa = $('#whatsapp', leadForm);
       if (wa) wa.value = wa.value.replace(/[^\d]/g,'').slice(0,12);
-      
-      const ig = $('#instagram', leadForm); 
+
+      const ig = $('#instagram', leadForm);
       if (ig) ig.value = ig.value.replace(/[@\s]/g,'').toLowerCase();
 
       // 3. Montar Payload (os dados a enviar)
@@ -308,10 +308,10 @@ document.addEventListener('DOMContentLoaded', () => {
         timestamp: new Date().toISOString(),
         url_origem: location.href,
         url_referrer: document.referrer || 'Direto',
-        tipo_dispositivo: getDeviceType(), 
-        navegador: getBrowser(), 
+        tipo_dispositivo: getDeviceType(),
+        navegador: getBrowser(),
         sistema_operacional: getOS(),
-        resolucao_tela: `${screen.width}x${screen.height}`, 
+        resolucao_tela: `${screen.width}x${screen.height}`,
         idioma_navegador: navigator.language || 'N/A'
       };
 
@@ -331,8 +331,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       } catch(_) {}
 
-      // 6. Envio Resiliente dos Dados (para n8n)
-      const url = 'https://mjrmkt.app.n8n.cloud/webhook/chatbot-estetica';
+      // 6. Envio Resiliente dos Dados (para webhook N8N único)
+      const url = 'https://mjrmkt.app.n8n.cloud/webhook/leads-geral';
       let done = false;
 
       try {
@@ -373,14 +373,14 @@ document.addEventListener('DOMContentLoaded', () => {
   // ========================================
   // 4. INICIALIZAÇÃO
   // ========================================
-  
+
   // Correr todos os módulos
   initStickyCta();
   initCountdown();
   initSmoothScroll();
   initPopups();
   initForm();
-  
+
   console.log('🚀 Script Unificado v1.1 Carregado com sucesso!');
 
 }); // Fim do 'DOMContentLoaded'
@@ -455,4 +455,3 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 })();
 /* ==== /AMJ Mobile Exit-Intent Module ==== */
-
