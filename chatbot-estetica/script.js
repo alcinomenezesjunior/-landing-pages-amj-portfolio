@@ -204,7 +204,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Console log para debug
-    console.log('WhatsApp Demo clicked - redirecting to wa.me/351926698959');
 
     // Permitir navegação normal
     return true;
@@ -545,7 +544,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initPopups();
   initForm();
   
-  console.log('🚀 Script Unificado v1.1 Carregado com sucesso!');
 
 }); // Fim do 'DOMContentLoaded'
 
