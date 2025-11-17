@@ -30,9 +30,6 @@ body {
   background: var(--bg);
   color: var(--text);
   line-height: 1.6;
-  font-size: 16px; /* Mínimo 16px evita zoom no iOS */
-  -webkit-text-size-adjust: 100%; /* Evita auto-zoom em orientação */
-  -webkit-tap-highlight-color: rgba(168, 137, 230, 0.2); /* Feedback visual touch */
 }
 
 /* === LAYOUT UTILITÁRIO === */
@@ -106,8 +103,6 @@ body {
   color: #fff;
   border-radius: 12px;
   padding: .8rem 1.1rem;
-  min-height: 44px; /* Touch target mínimo (WCAG AAA) */
-  min-width: 44px;
   font-weight: 700;
   text-decoration: none;
   transition: all .2s ease;
@@ -248,11 +243,10 @@ label {
 .form select,
 .form textarea {
   padding: .7rem .8rem;
-  min-height: 44px; /* Touch-friendly */
   border: 1px solid var(--stroke);
   border-radius: 10px;
   background: #fff;
-  font-size: 16px; /* Evita zoom no iOS */
+  font-size: .95rem;
 }
 .form textarea {
   width: 100%;
