@@ -822,42 +822,7 @@ label {
   flex-wrap: wrap;
 }
 
-.timer {
-  display: flex;
-  gap: .5rem;
-  justify-content: flex-end;
-  flex-wrap: wrap;
-}
-
-.timer div {
-  background: #fff;
-  border: 1px solid var(--stroke, #e5e7eb);
-  border-radius: 12px;
-  padding: .6rem .5rem;
-  text-align: center;
-  min-width: 86px;
-  box-shadow: 0 2px 8px rgba(0,0,0,.05);
-}
-
-.timer span {
-  display: block;
-  font: 800 1.6rem/1 Montserrat, Inter, sans-serif;
-  color: var(--cta-dark);
-}
-
-.timer small {
-  display: block;
-  color: var(--text-weak);
-  margin-top: .1rem;
-}
-
-.timer-legend {
-  flex: 0 0 100%;
-  text-align: center;
-  font-size: .9rem;
-  color: var(--text-weak);
-  margin-top: .5rem;
-}
+/* Timer styles moved to line ~1848 (organized by context) */
 
 /* === FINAL CTA === */
 .final {
@@ -1377,121 +1342,7 @@ details p {
 .mb-2 { margin-bottom: 2rem; }
 .mb-3 { margin-bottom: 3rem; }
 
-/* ======================================== */
-/* CORREÇÃO: Estilos do "Dark Mode" (.alt) */
-/* ======================================== */
-
-/* 1. Define o fundo da secção como escuro */
-.section.dark {
-  background: #1a1a2e;
-  color: #E0E0E0; /* Texto claro por defeito */
-}
-
-/* 1b. Define o fundo da secção como roxo */
-.section.purple {
-  background: #7c3aed;
-  color: #FFFFFF;
-}
-
-/* 2. Ajusta os títulos e parágrafos nessas secções */
-.section.alt, .section.dark, .section.purple, .section.dark, .section.purple .h2,
-.section.alt, .section.dark, .section.purple, .section.dark, .section.purple .h3,
-.section.alt, .section.dark, .section.purple, .section.dark, .section.purple h4 {
-  color: #FFFFFF;
-}
-.section.alt, .section.dark, .section.purple, .section.dark, .section.purple p,
-.section.alt, .section.dark, .section.purple, .section.dark, .section.purple .sub,
-.section.alt, .section.dark, .section.purple, .section.dark, .section.purple .text-lead,
-.section.alt, .section.dark, .section.purple, .section.dark, .section.purple .text-weak,
-.section.alt, .section.dark, .section.purple, .section.dark, .section.purple .timer-legend {
-  color: #B5B7C4;
-  opacity: 1;
-}
-
-/* 3. Inverte o estilo dos "Cards" (que agora usam classes) */
-.section.alt, .section.dark, .section.purple, .section.dark, .section.purple .card, /* O formulário no hero */
-.section.alt, .section.dark, .section.purple, .section.dark, .section.purple .step,
-.section.alt, .section.dark, .section.purple, .section.dark, .section.purple .plan,
-.section.alt, .section.dark, .section.purple, .section.dark, .section.purple details,
-.section.alt, .section.dark, .section.purple, .section.dark, .section.purple .note,
-.section.alt, .section.dark, .section.purple, .section.dark, .section.purple .bullets li,
-.section.alt, .section.dark, .section.purple, .section.dark, .section.purple .demo-card,
-.section.alt, .section.dark, .section.purple, .section.dark, .section.purple .promo-card,
-.section.alt, .section.dark, .section.purple, .section.dark, .section.purple .cost-card,
-.section.alt, .section.dark, .section.purple, .section.dark, .section.purple .conclusion-box,
-.section.alt, .section.dark, .section.purple, .section.dark, .section.purple .crosssell-combo__inner-box {
-  background: #1B1B2B;
-  border: 1px solid #3A3A4D;
-  box-shadow: 0 12px 32px rgba(0, 0, 0, .2);
-  color: #E0E0E0;
-}
-
-/* 4. Ajusta texto DENTRO dos cards escuros */
-.section.alt, .section.dark, .section.purple, .section.dark, .section.purple .step h3,
-.section.alt, .section.dark, .section.purple, .section.dark, .section.purple .plan h3,
-.section.alt, .section.dark, .section.purple, .section.dark, .section.purple summary,
-.section.alt, .section.dark, .section.purple, .section.dark, .section.purple .bullets li strong,
-.section.alt, .section.dark, .section.purple, .section.dark, .section.purple .demo-card__features-title,
-.section.alt, .section.dark, .section.purple, .section.dark, .section.purple .conclusion-box__title,
-.section.alt, .section.dark, .section.purple, .section.dark, .section.purple .crosssell-combo__title {
-  color: #FFFFFF;
-}
-
-.section.alt, .section.dark, .section.purple, .section.dark, .section.purple .demo-card__subtitle,
-.section.alt, .section.dark, .section.purple, .section.dark, .section.purple .demo-card__features-list,
-.section.alt, .section.dark, .section.purple, .section.dark, .section.purple .cost-table,
-.section.alt, .section.dark, .section.purple, .section.dark, .section.purple .conclusion-box p,
-.section.alt, .section.dark, .section.purple, .section.dark, .section.purple .conclusion-box__note,
-.section.alt, .section.dark, .section.purple, .section.dark, .section.purple .plan ul li,
-.section.alt, .section.dark, .section.purple, .section.dark, .section.purple .price-breakdown {
-  color: #B5B7C4;
-}
-
-.section.alt, .section.dark, .section.purple, .section.dark, .section.purple .promo-list__number {
-  background: rgba(168, 137, 230, .15);
-  color: var(--cta);
-}
-
-.section.alt, .section.dark, .section.purple, .section.dark, .section.purple .demo-card__features {
-   background: rgba(168,137,230,.1);
-}
-
-/* 5. Inverte as Tabelas */
-.section.alt, .section.dark, .section.purple, .section.dark, .section.purple .cost-table__header { border-bottom-color: #3A3A4D; }
-.section.alt, .section.dark, .section.purple, .section.dark, .section.purple .cost-table__total { border-top-color: #3A3A4D; }
-
-.section.alt, .section.dark, .section.purple, .section.dark, .section.purple .compare-table thead th,
-.section.alt, .section.dark, .section.purple, .section.dark, .section.purple .compare-table thead tr {
-   background: #161622;
-}
-.section.alt, .section.dark, .section.purple, .section.dark, .section.purple .compare-table th, 
-.section.alt, .section.dark, .section.purple, .section.dark, .section.purple .compare-table td {
-  border-color: #3A3A4D;
-}
-.section.alt, .section.dark, .section.purple, .section.dark, .section.purple .compare-table tbody td.col-positive { background: #1A2E1C; color: #90EE90; }
-.section.alt, .section.dark, .section.purple, .section.dark, .section.purple .compare-table tbody td.col-neutral { background: #161622; }
-.section.alt, .section.dark, .section.purple, .section.dark, .section.purple .compare-table__total { background: #161622; }
-.section.alt, .section.dark, .section.purple, .section.dark, .section.purple .compare-table__group-header td { background: #161622; }
-.section.alt, .section.dark, .section.purple, .section.dark, .section.purple .plan-footnote-box { background: #161622; }
-.section.alt, .section.dark, .section.purple, .section.dark, .section.purple .plan-footnote-box__note { border-top-color: #3A3A4D; }
-.section.alt, .section.dark, .section.purple, .section.dark, .section.purple .details-box__content { background: #161622; }
-
-/* 6. Corrige o CTA do WhatsApp e o Timer */
-.section.alt, .section.dark, .section.purple, .section.dark, .section.purple .cta-whatsapp {
-  color: #E0E0E0;
-  background: rgba(37, 211, 102, .08);
-  border-color: var(--wa);
-}
-.section.alt, .section.dark, .section.purple, .section.dark, .section.purple .cta-whatsapp:hover {
-  background: var(--wa);
-  color: #fff;
-}
-.section.alt, .section.dark, .section.purple, .section.dark, .section.purple .timer div {
-  background: #1B1B2B;
-  border-color: #3A3A4D;
-}
-.section.alt, .section.dark, .section.purple, .section.dark, .section.purple .timer span { color: var(--cta); }
-.section.alt, .section.dark, .section.purple, .section.dark, .section.purple .timer small { color: #B5B7C4; }
+/* Old section.dark/section.purple rules removed - replaced with section--dark/section--purple system (line ~1610+) */
 
 /* Performance & stability additions */
 img { display:block; height:auto; max-width:100%; }
@@ -1749,99 +1600,143 @@ img { display:block; height:auto; max-width:100%; }
   }
 }
 
-/* Correção de contraste: Textos visíveis em todos os fundos (específicos, AA compliant) */
+/* ================================================================
+   SISTEMA DE CORES POR CONTEXTO - WCAG AA Compliant
+   ================================================================
+   Organizado por componente para evitar conflitos.
+   Ordem: Seções Base → Componentes Diretos → Componentes Brancos → Badges/Pills → Timer
+   ================================================================ */
 
-/* Seções escuras: headings brancos, body cinza claro */
-.section--dark h2,
-.section--dark h3,
-.section--dark h4,
-.section--dark h5,
-.section--dark h6,
-.section--dark strong,
-.section--dark .step-title {
+/* 1. SEÇÕES BASE - Cor padrão do texto direto (não afeta componentes internos) */
+.section--dark > .container > h2,
+.section--dark > .container > h3,
+.section--dark > .container > p:not(.step p):not(.promo-card p):not(details p) {
   color: #FFFFFF;
 }
 
-.section--dark p,
-.section--dark li,
-.section--dark span,
-.section--dark em,
-.section--dark a,
-.section--dark label,
-.section--dark .step-description {
-  color: #e5e7eb;
+.section--purple > .container > h2,
+.section--purple > .container > h3,
+.section--purple > .container > p:not(.promo-card p):not(.timer p),
+.section--purple > .container > .text-lead,
+.section--purple > .container > .text-weak {
+  color: #FFFFFF;
 }
 
-/* Seções brancas/claras: headings escuros, body cinza médio */
-.section--white h2,
-.section--white h3,
-.section--white h4,
-.section--white h5,
-.section--white h6,
-.section--white strong,
-.section--light h2,
-.section--light h3,
-.section--light h4,
-.section--light h5,
-.section--light h6,
-.section--light strong {
+.section--white > .container > h2,
+.section--white > .container > h3,
+.section--white > .container > p,
+.section--light > .container > h2,
+.section--light > .container > h3,
+.section--light > .container > p {
   color: #1a1a2e;
 }
 
-.section--white p,
-.section--white li,
-.section--white span,
-.section--white em,
-.section--white label,
-.section--light p,
-.section--light li,
-.section--light span,
-.section--light em,
-.section--light label {
-  color: #4b5563;
-}
-
-/* Seções roxas: headings brancos, body cinza claro */
-.section--purple h2,
-.section--purple h3,
-.section--purple h4,
-.section--purple h5,
-.section--purple h6,
-.section--purple strong,
-.section--purple .offer-text,
-.section--purple .price {
-  color: #FFFFFF;
-}
-
-.section--purple p,
-.section--purple li,
-.section--purple span,
-.section--purple em,
-.section--purple a,
-.section--purple label,
-.section--purple ul {
+/* 2. COMPONENTES ESPECÍFICOS EM SEÇÕES ESCURAS/ROXAS */
+.section--dark ul:not(.step ul):not(details ul) li,
+.section--purple ul:not(.promo-list) li {
   color: #e5e7eb;
 }
 
-/* Seção: Perguntas Frequentes */
-.faq h3,
-.faq-question,
-.faq-answer,
-.faq-item,
-.accordion-title,
-.accordion-content,
-.accordion p {
+/* 3. CARDS BRANCOS - Forçam texto escuro SEMPRE (sobrepõem seção) */
+.step,
+.plan,
+.promo-card,
+.cost-card,
+.conclusion-box,
+details {
+  background: #fff;
+}
+
+/* Texto dentro de cards brancos sempre escuro */
+.step h3,
+.step p,
+.plan h3,
+.plan p,
+.plan li,
+.promo-card,
+.promo-card strong,
+.promo-list__item,
+.cost-card,
+.cost-card p,
+.cost-card li,
+.conclusion-box,
+.conclusion-box p,
+details summary,
+details p,
+details strong {
+  color: #111827 !important; /* !important necessário para sobrepor regras de seção */
+}
+
+/* Números circulares da promo (cinza médio em fundo branco) */
+.promo-list__number {
+  background: #f3f4f6;
+  color: #6b7280 !important;
+  font-weight: 700;
+}
+
+/* 4. BADGES E PILLS ROXOS - Texto branco em fundos roxos */
+.badge,
+.plan-badge,
+.plan-badge.total,
+.popup__badge {
+  background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
+  color: #FFFFFF !important;
+  font-weight: 600;
+}
+
+.badge--large {
+  font-size: 1rem;
+  padding: 0.75rem 1.5rem;
+}
+
+/* Badge "Mais Popular" */
+.plan--featured .plan-badge {
+  background: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%);
   color: #FFFFFF !important;
 }
 
-/* Timer/Countdown (apenas na seção roxa) */
-.section--purple .countdown,
-.section--purple .timer,
-.section--purple .countdown-item,
-.section--purple .countdown-number,
-.section--purple .countdown-label,
-.section--purple .time-unit,
-.section--purple .timer-digit,
-.section--purple .timer-label {
-  color: #FFFFFF;
+/* 5. TIMER - Números fortes sem opacity */
+.timer {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.timer > div {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  padding: 1rem;
+  min-width: 80px;
+  text-align: center;
+}
+
+.timer span {
+  display: block;
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #FFFFFF !important;
+  line-height: 1;
+  margin-bottom: 0.25rem;
+}
+
+.timer small {
+  display: block;
+  font-size: 0.75rem;
+  color: #e5e7eb !important;
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+/* 6. FAQ - Texto legível em fundo escuro */
+.faq-grid {
+  max-width: 800px;
+  margin: 2rem auto 0;
+}
+
+/* FAQ details já herdam fundo branco de .details acima */
+details summary strong,
+details p {
+  color: #111827 !important;
 }

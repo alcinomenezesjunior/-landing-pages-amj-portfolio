@@ -57,6 +57,49 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   // Função universal para fechar popup (exposta globalmente)
+  let lastFocusedElement = null;
+
+  // Função para trapear foco dentro do popup (acessibilidade)
+  function trapFocus(popup) {
+    const focusableElements = popup.querySelectorAll(
+      'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+    );
+
+    if (focusableElements.length === 0) return;
+
+    const firstElement = focusableElements[0];
+    const lastElement = focusableElements[focusableElements.length - 1];
+
+    // Foca no primeiro elemento
+    firstElement.focus();
+
+    // Handler para Tab/Shift+Tab
+    const handleTabKey = (e) => {
+      if (e.key === 'Tab') {
+        if (e.shiftKey && document.activeElement === firstElement) {
+          e.preventDefault();
+          lastElement.focus();
+        } else if (!e.shiftKey && document.activeElement === lastElement) {
+          e.preventDefault();
+          firstElement.focus();
+        }
+      }
+    };
+
+    popup.addEventListener('keydown', handleTabKey);
+
+    // Guardar para remover depois
+    popup._focusTrapHandler = handleTabKey;
+  }
+
+  // Função para remover focus trap
+  function removeFocusTrap(popup) {
+    if (popup && popup._focusTrapHandler) {
+      popup.removeEventListener('keydown', popup._focusTrapHandler);
+      delete popup._focusTrapHandler;
+    }
+  }
+
   window.closePopup = function(popupId) {
     const popup = document.getElementById(popupId);
     if (popup) {
@@ -64,6 +107,13 @@ document.addEventListener('DOMContentLoaded', () => {
       popup.classList.remove('show');
       popup.style.display = 'none';
       document.body.style.overflow = '';
+
+      // Remove focus trap e restaura foco
+      removeFocusTrap(popup);
+      if (lastFocusedElement) {
+        lastFocusedElement.focus();
+        lastFocusedElement = null;
+      }
     }
   };
 
@@ -73,12 +123,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const popup = document.getElementById('exitPopupChatbot');
     if (popup) {
+      // Guarda elemento com foco atual
+      lastFocusedElement = document.activeElement;
+
       popup.classList.add('active');
       popup.classList.add('show');
       popup.style.display = 'flex';
       document.body.style.overflow = 'hidden';
       popupsState.chatbotShown = true;
       sessionStorage.setItem('chatbotPopupShown', 'true');
+
+      // Ativa focus trap
+      trapFocus(popup);
     }
   }
 
@@ -90,11 +146,19 @@ document.addEventListener('DOMContentLoaded', () => {
     // Abre popup agência
     const popup = document.getElementById('exitPopupAgencia');
     if (popup) {
+      // Guarda elemento com foco atual (se não houver lastFocused já)
+      if (!lastFocusedElement) {
+        lastFocusedElement = document.activeElement;
+      }
+
       popup.classList.add('active');
       popup.classList.add('show');
       popup.style.display = 'flex';
       document.body.style.overflow = 'hidden';
       popupsState.agenciaShown = true;
+
+      // Ativa focus trap
+      trapFocus(popup);
     }
   };
 
