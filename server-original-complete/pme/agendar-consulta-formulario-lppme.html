@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agendar Consultoria - Alcino Menezes Junior</title>
+
+  <script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="b491a799-a43f-4927-8d6b-8b340b5b6e36" data-blockingmode="auto" type="text/javascript"></script>
+  <script data-cookieconsent="ignore">
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag("consent", "default", {
+      ad_personalization: "denied",
+      ad_storage: "denied",
+      ad_user_data: "denied",
+      analytics_storage: "denied",
+      functionality_storage: "denied",
+      personalization_storage: "denied",
+      security_storage: "granted",
+      wait_for_update: 500
+    });
+    gtag("set", "ads_data_redaction", true);
+    gtag("set", "url_passthrough", false);
+  </script>
+
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s);j.async=true;j.src="https://load.pme.alcinomenezesjunior.com/5zygpoqqs.js?"+i;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','dc0gf5s=aWQ9R1RNLUs3VkpKREY1&ne=mam');</script>
+<!-- End Google Tag Manager -->
+ 
+  <meta name="robots" content="noindex, nofollow">
+
+  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="stylesheet" href="css/styles.css">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet">
+
+ <style>
+    /* Reset e Estilos Gerais */
+    * {
+      box-sizing: border-box;
+    }
+    body, html {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+    .obrigado-wrapper {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    .obrigado-container {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start; /* Alinha ao topo para melhor visualização em telemóveis */
+      text-align: center;
+      padding: 1rem; /* Padding base para telemóveis */
+    }
+    .agendamento-box {
+      margin-top: 1rem;
+      padding: 1.5rem; /* Padding base da caixa */
+      background-color: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 16px;
+      max-width: 600px;
+      width: 100%;
+      box-shadow: var(--shadow-lg);
+    }
+    .agendamento-box .section-subtitle {
+      margin-bottom: 1.5rem;
+      font-size: 1.1rem; /* Fonte ligeiramente mais pequena em telemóveis */
+      line-height: 1.6;
+      color: var(--text-secondary);
+    }
+    
+    /* Estilo do Iframe Padrão */
+    .zcal-iframe {
+      width: 100%;
+      max-width: 600px;
+      height: 800px; 
+      border: none;
+      border-radius: 8px;
+    }
+
+    /* AJUSTES ESPECÍFICOS PARA TELEMÓVEL (Ecrãs com largura até 600px) */
+    @media (max-width: 600px) {
+      .obrigado-container {
+        padding: 0; /* Remove o padding do contentor principal para dar 100% da largura */
+      }
+      .agendamento-box {
+        width: 100%;
+        margin-top: 0;
+        padding: 1rem; /* Reduz o padding interno da caixa */
+        border: none; /* Remove a borda para um look mais limpo e integrado */
+        box-shadow: none; /* Remove a sombra */
+        border-radius: 0;
+      }
+      .zcal-iframe {
+         height: 85vh; /* Usa 85% da altura do ecrã */
+         border-radius: 0;
+      }
+    }
+  </style>
+</head>
+<body class="pagina-obrigado">
+ <!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://load.pme.alcinomenezesjunior.com/ns.html?id=GTM-K7VJJDF5" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+  <div class="obrigado-wrapper">
+    <header class="header" style="position: static; background: white;">
+      <div class="container">
+        <nav class="nav">
+          <div class="logo">
+            <h2>Alcino Menezes Junior</h2>
+            <span class="logo-subtitle">Estrategista de Marketing Digital</span>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <main class="obrigado-container content-with-header">
+      <h1 class="section-title" id="obrigado-nome">Agende sua consultoria</h1>
+      <div class="agendamento-box">
+        <p class="section-subtitle">
+          Escolha o melhor horário na nossa agenda para garantir sua vaga exclusiva.
+        </p>
+
+        <!-- Estes parâmetros serão utilizados pelo JS para preencher o widget Zcal -->
+        <div data-name id="obrigado-name" style="display: none;"></div>
+        <div data-email id="obrigado-email" style="display: none;"></div>
+        <div data-phone id="obrigado-phone" style="display: none;"></div>
+
+        <!-- Widget Zcal via iframe, com JS para pré-preenchimento dos dados -->
+        <div id="zcal-widget"></div>
+
+        <p style="margin-top: 2rem; margin-bottom: 1rem; font-size: 1rem; color: #4a5568;">
+          Ou, se preferir, envie-me uma mensagem direta para começarmos a conversar já:
+        </p>
+
+        <a href="https://wa.me/351926698959" class="btn btn-outline" target="_blank" style="border-color: #25D366; color: #25D366;">
+          <i class="ri-whatsapp-line"></i> Iniciar Conversa no WhatsApp
+        </a>
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-bottom">
+          <p>&copy; 2025 Alcino de Magalhães Menezes Junior. Todos os direitos reservados.</p>
+          <div class="footer-links">
+            <a href="privacidade.html">Política de Privacidade</a>
+            <a href="cookies.html">Política de Cookies</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Este JS carrega o widget Zcal, preenche os dados do usuário e insere o iframe -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      try {
+        // Obtém parâmetros da URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const nome = urlParams.get('name') || '';
+        const email = urlParams.get('email') || '';
+        const phone = urlParams.get('phone') || '';
+
+        // Altera o h1 se tiver nome
+        if (nome) {
+          const h1 = document.getElementById('obrigado-nome');
+          const nomeFormatado = nome.trim().split(' ')
+            .map(n => n.charAt(0).toUpperCase() + n.slice(1))
+            .join(' ');
+          h1.textContent = `Olá, ${nomeFormatado}! Agende sua consultoria`;
+        }
+
+        // Exibe os dados (para testes)
+        document.getElementById('obrigado-name').textContent = nome;
+        document.getElementById('obrigado-email').textContent = email;
+        document.getElementById('obrigado-phone').textContent = phone;
+
+        // Monta a URL do Zcal já com os dados pré-preenchidos
+        const zcalBaseUrl = 'https://zcal.co/i/3TJm5N_B';
+        const zcalPrefilledUrl = `${zcalBaseUrl}?name=${encodeURIComponent(nome)}&email=${encodeURIComponent(email)}&a1=${encodeURIComponent(phone)}`;
+
+        // Insere o iframe do Zcal na página
+        document.getElementById('zcal-widget').innerHTML = `
+          <iframe class="zcal-iframe" src="${zcalPrefilledUrl}" frameborder="0" allowfullscreen></iframe>
+        `;
+      } catch (error) {
+        console.error("Erro ao carregar o widget de agendamento:", error);
+      }
+    });
+  </script>
+ 
+</body>
+</html>

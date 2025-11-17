@@ -1,0 +1,32 @@
+# robots.txt - Alcino Menezes Junior
+# Última atualização: 15/01/2025
+
+User-agent: *
+
+# Pastas que os bots devem ignorar
+Disallow: /backup_wordpress/
+Disallow: /manutenção/
+Disallow: /mjrmkt/
+Disallow: /css/
+Disallow: /js/
+Disallow: /fonts/
+
+# Páginas de agradecimento/confirmação (não indexar)
+Disallow: /obrigado-form.html
+Disallow: /obrigado-typebot.html
+Disallow: /agradecimento-form.html
+Disallow: /agradecimento-typebot.html
+Disallow: /agendar-consulta-email-typebot.html
+Disallow: /agendar-consulta-formulario-lppme.html
+
+# Permite acesso total às páginas principais
+Allow: /
+Allow: /agentes-ia
+Allow: /agencia
+Allow: /pme
+Allow: /chatbot-estetica
+Allow: /privacidade.html
+Allow: /cookies.html
+
+# Localização do sitemap
+Sitemap: https://www.alcinomenezesjunior.com/sitemap.xml
