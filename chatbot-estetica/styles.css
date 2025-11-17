@@ -1762,3 +1762,17 @@ img { display:block; height:auto; max-width:100%; }
     font-size: 1.5rem;
   }
 }
+
+/* Correção de contraste: Textos visíveis em todos os fundos */
+.section--dark, .section--dark * {
+  color: #FFFFFF !important;
+}
+
+.section--white, .section--white *,
+.section--light, .section--light * {
+  color: #1a1a2e !important;
+}
+
+.section--purple, .section--purple * {
+  color: #FFFFFF !important;
+}
