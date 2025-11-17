@@ -46,87 +46,13 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.style.overflow = '';
   };
 
-  // ========================================
-  // SISTEMA DE POPUPS EM CASCATA
-  // ========================================
-
-  // Estado global dos popups
-  let popupsState = {
-    chatbotShown: false,
-    agenciaShown: false
-  };
-
-  // Função universal para fechar popup (exposta globalmente)
-  window.closePopup = function(popupId) {
-    const popup = document.getElementById(popupId);
+  // Função específica para fechar popup de exit-intent
+  window.closeExitPopup = () => {
+    const popup = document.getElementById('exitPopup');
     if (popup) {
-      popup.classList.remove('active');
-      popup.classList.remove('show');
-      popup.style.display = 'none';
-      document.body.style.overflow = '';
+      closePopup(popup);
     }
   };
-
-  // Função para mostrar popup chatbot (primeiro - resgate)
-  function showChatbotPopup() {
-    if (popupsState.chatbotShown) return;
-
-    const popup = document.getElementById('exitPopupChatbot');
-    if (popup) {
-      popup.classList.add('active');
-      popup.classList.add('show');
-      popup.style.display = 'flex';
-      document.body.style.overflow = 'hidden';
-      popupsState.chatbotShown = true;
-      sessionStorage.setItem('chatbotPopupShown', 'true');
-    }
-  }
-
-  // Função para mostrar popup agência (segundo - se recusar chatbot)
-  window.showAgencyPopup = function() {
-    // Fecha popup chatbot
-    window.closePopup('exitPopupChatbot');
-
-    // Abre popup agência
-    const popup = document.getElementById('exitPopupAgencia');
-    if (popup) {
-      popup.classList.add('active');
-      popup.classList.add('show');
-      popup.style.display = 'flex';
-      document.body.style.overflow = 'hidden';
-      popupsState.agenciaShown = true;
-    }
-  };
-
-  // Função para scroll to planos
-  window.scrollToPlans = function() {
-    const planosSection = document.querySelector('#planos');
-    if (planosSection) {
-      planosSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-  };
-
-  // Exit intent detection
-  let exitIntentTriggered = false;
-
-  document.addEventListener('mouseleave', function(e) {
-    // Mouse saindo pelo topo da página
-    if (e.clientY <= 0 && !exitIntentTriggered) {
-      // Verifica se já mostrou nesta sessão
-      if (!sessionStorage.getItem('chatbotPopupShown')) {
-        showChatbotPopup();
-        exitIntentTriggered = true;
-      }
-    }
-  });
-
-  // Fechar com ESC
-  document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') {
-      window.closePopup('exitPopupChatbot');
-      window.closePopup('exitPopupAgencia');
-    }
-  });
 
   // Função para tracking de cliques no botão WhatsApp Demo
   window.trackWhatsAppDemo = (event) => {
