@@ -30,6 +30,9 @@ body {
   background: var(--bg);
   color: var(--text);
   line-height: 1.6;
+  font-size: 16px; /* Mínimo 16px evita zoom no iOS */
+  -webkit-text-size-adjust: 100%; /* Evita auto-zoom em orientação */
+  -webkit-tap-highlight-color: rgba(168, 137, 230, 0.2); /* Feedback visual touch */
 }
 
 /* === LAYOUT UTILITÁRIO === */
@@ -57,7 +60,7 @@ body {
 }
 
 .section.alt {
-  background: #F8F9FA;
+  background: var(--bg-soft);
 }
 
 .h1 {
@@ -103,6 +106,8 @@ body {
   color: #fff;
   border-radius: 12px;
   padding: .8rem 1.1rem;
+  min-height: 44px; /* Touch target mínimo (WCAG AAA) */
+  min-width: 44px;
   font-weight: 700;
   text-decoration: none;
   transition: all .2s ease;
@@ -243,10 +248,11 @@ label {
 .form select,
 .form textarea {
   padding: .7rem .8rem;
+  min-height: 44px; /* Touch-friendly */
   border: 1px solid var(--stroke);
   border-radius: 10px;
   background: #fff;
-  font-size: .95rem;
+  font-size: 16px; /* Evita zoom no iOS */
 }
 .form textarea {
   width: 100%;
@@ -1350,44 +1356,38 @@ details p {
 /* ======================================== */
 
 /* 1. Define o fundo da secção como escuro */
-.section.dark {
-  background: #1a1a2e;
+.section.alt {
+  background: #0E0E18;
   color: #E0E0E0; /* Texto claro por defeito */
 }
 
-/* 1b. Define o fundo da secção como roxo */
-.section.purple {
-  background: #7c3aed;
-  color: #FFFFFF;
-}
-
 /* 2. Ajusta os títulos e parágrafos nessas secções */
-.section.alt, .section.dark, .section.purple, .section.dark, .section.purple .h2,
-.section.alt, .section.dark, .section.purple, .section.dark, .section.purple .h3,
-.section.alt, .section.dark, .section.purple, .section.dark, .section.purple h4 {
+.section.alt .h2,
+.section.alt .h3,
+.section.alt h4 {
   color: #FFFFFF;
 }
-.section.alt, .section.dark, .section.purple, .section.dark, .section.purple p,
-.section.alt, .section.dark, .section.purple, .section.dark, .section.purple .sub,
-.section.alt, .section.dark, .section.purple, .section.dark, .section.purple .text-lead,
-.section.alt, .section.dark, .section.purple, .section.dark, .section.purple .text-weak,
-.section.alt, .section.dark, .section.purple, .section.dark, .section.purple .timer-legend {
+.section.alt p,
+.section.alt .sub,
+.section.alt .text-lead,
+.section.alt .text-weak,
+.section.alt .timer-legend {
   color: #B5B7C4;
   opacity: 1;
 }
 
 /* 3. Inverte o estilo dos "Cards" (que agora usam classes) */
-.section.alt, .section.dark, .section.purple, .section.dark, .section.purple .card, /* O formulário no hero */
-.section.alt, .section.dark, .section.purple, .section.dark, .section.purple .step,
-.section.alt, .section.dark, .section.purple, .section.dark, .section.purple .plan,
-.section.alt, .section.dark, .section.purple, .section.dark, .section.purple details,
-.section.alt, .section.dark, .section.purple, .section.dark, .section.purple .note,
-.section.alt, .section.dark, .section.purple, .section.dark, .section.purple .bullets li,
-.section.alt, .section.dark, .section.purple, .section.dark, .section.purple .demo-card,
-.section.alt, .section.dark, .section.purple, .section.dark, .section.purple .promo-card,
-.section.alt, .section.dark, .section.purple, .section.dark, .section.purple .cost-card,
-.section.alt, .section.dark, .section.purple, .section.dark, .section.purple .conclusion-box,
-.section.alt, .section.dark, .section.purple, .section.dark, .section.purple .crosssell-combo__inner-box {
+.section.alt .card, /* O formulário no hero */
+.section.alt .step,
+.section.alt .plan,
+.section.alt details,
+.section.alt .note,
+.section.alt .bullets li,
+.section.alt .demo-card,
+.section.alt .promo-card,
+.section.alt .cost-card,
+.section.alt .conclusion-box,
+.section.alt .crosssell-combo__inner-box {
   background: #1B1B2B;
   border: 1px solid #3A3A4D;
   box-shadow: 0 12px 32px rgba(0, 0, 0, .2);
@@ -1395,71 +1395,71 @@ details p {
 }
 
 /* 4. Ajusta texto DENTRO dos cards escuros */
-.section.alt, .section.dark, .section.purple, .section.dark, .section.purple .step h3,
-.section.alt, .section.dark, .section.purple, .section.dark, .section.purple .plan h3,
-.section.alt, .section.dark, .section.purple, .section.dark, .section.purple summary,
-.section.alt, .section.dark, .section.purple, .section.dark, .section.purple .bullets li strong,
-.section.alt, .section.dark, .section.purple, .section.dark, .section.purple .demo-card__features-title,
-.section.alt, .section.dark, .section.purple, .section.dark, .section.purple .conclusion-box__title,
-.section.alt, .section.dark, .section.purple, .section.dark, .section.purple .crosssell-combo__title {
+.section.alt .step h3,
+.section.alt .plan h3,
+.section.alt summary,
+.section.alt .bullets li strong,
+.section.alt .demo-card__features-title,
+.section.alt .conclusion-box__title,
+.section.alt .crosssell-combo__title {
   color: #FFFFFF;
 }
 
-.section.alt, .section.dark, .section.purple, .section.dark, .section.purple .demo-card__subtitle,
-.section.alt, .section.dark, .section.purple, .section.dark, .section.purple .demo-card__features-list,
-.section.alt, .section.dark, .section.purple, .section.dark, .section.purple .cost-table,
-.section.alt, .section.dark, .section.purple, .section.dark, .section.purple .conclusion-box p,
-.section.alt, .section.dark, .section.purple, .section.dark, .section.purple .conclusion-box__note,
-.section.alt, .section.dark, .section.purple, .section.dark, .section.purple .plan ul li,
-.section.alt, .section.dark, .section.purple, .section.dark, .section.purple .price-breakdown {
+.section.alt .demo-card__subtitle,
+.section.alt .demo-card__features-list,
+.section.alt .cost-table,
+.section.alt .conclusion-box p,
+.section.alt .conclusion-box__note,
+.section.alt .plan ul li,
+.section.alt .price-breakdown {
   color: #B5B7C4;
 }
 
-.section.alt, .section.dark, .section.purple, .section.dark, .section.purple .promo-list__number {
+.section.alt .promo-list__number {
   background: rgba(168, 137, 230, .15);
   color: var(--cta);
 }
 
-.section.alt, .section.dark, .section.purple, .section.dark, .section.purple .demo-card__features {
+.section.alt .demo-card__features {
    background: rgba(168,137,230,.1);
 }
 
 /* 5. Inverte as Tabelas */
-.section.alt, .section.dark, .section.purple, .section.dark, .section.purple .cost-table__header { border-bottom-color: #3A3A4D; }
-.section.alt, .section.dark, .section.purple, .section.dark, .section.purple .cost-table__total { border-top-color: #3A3A4D; }
+.section.alt .cost-table__header { border-bottom-color: #3A3A4D; }
+.section.alt .cost-table__total { border-top-color: #3A3A4D; }
 
-.section.alt, .section.dark, .section.purple, .section.dark, .section.purple .compare-table thead th,
-.section.alt, .section.dark, .section.purple, .section.dark, .section.purple .compare-table thead tr {
+.section.alt .compare-table thead th,
+.section.alt .compare-table thead tr {
    background: #161622;
 }
-.section.alt, .section.dark, .section.purple, .section.dark, .section.purple .compare-table th, 
-.section.alt, .section.dark, .section.purple, .section.dark, .section.purple .compare-table td {
+.section.alt .compare-table th, 
+.section.alt .compare-table td {
   border-color: #3A3A4D;
 }
-.section.alt, .section.dark, .section.purple, .section.dark, .section.purple .compare-table tbody td.col-positive { background: #1A2E1C; color: #90EE90; }
-.section.alt, .section.dark, .section.purple, .section.dark, .section.purple .compare-table tbody td.col-neutral { background: #161622; }
-.section.alt, .section.dark, .section.purple, .section.dark, .section.purple .compare-table__total { background: #161622; }
-.section.alt, .section.dark, .section.purple, .section.dark, .section.purple .compare-table__group-header td { background: #161622; }
-.section.alt, .section.dark, .section.purple, .section.dark, .section.purple .plan-footnote-box { background: #161622; }
-.section.alt, .section.dark, .section.purple, .section.dark, .section.purple .plan-footnote-box__note { border-top-color: #3A3A4D; }
-.section.alt, .section.dark, .section.purple, .section.dark, .section.purple .details-box__content { background: #161622; }
+.section.alt .compare-table tbody td.col-positive { background: #1A2E1C; color: #90EE90; }
+.section.alt .compare-table tbody td.col-neutral { background: #161622; }
+.section.alt .compare-table__total { background: #161622; }
+.section.alt .compare-table__group-header td { background: #161622; }
+.section.alt .plan-footnote-box { background: #161622; }
+.section.alt .plan-footnote-box__note { border-top-color: #3A3A4D; }
+.section.alt .details-box__content { background: #161622; }
 
 /* 6. Corrige o CTA do WhatsApp e o Timer */
-.section.alt, .section.dark, .section.purple, .section.dark, .section.purple .cta-whatsapp {
+.section.alt .cta-whatsapp {
   color: #E0E0E0;
   background: rgba(37, 211, 102, .08);
   border-color: var(--wa);
 }
-.section.alt, .section.dark, .section.purple, .section.dark, .section.purple .cta-whatsapp:hover {
+.section.alt .cta-whatsapp:hover {
   background: var(--wa);
   color: #fff;
 }
-.section.alt, .section.dark, .section.purple, .section.dark, .section.purple .timer div {
+.section.alt .timer div {
   background: #1B1B2B;
   border-color: #3A3A4D;
 }
-.section.alt, .section.dark, .section.purple, .section.dark, .section.purple .timer span { color: var(--cta); }
-.section.alt, .section.dark, .section.purple, .section.dark, .section.purple .timer small { color: #B5B7C4; }
+.section.alt .timer span { color: var(--cta); }
+.section.alt .timer small { color: #B5B7C4; }
 
 /* Performance & stability additions */
 img { display:block; height:auto; max-width:100%; }
