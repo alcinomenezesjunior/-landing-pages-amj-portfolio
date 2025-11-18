@@ -18,7 +18,39 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Variáveis de estado
   let formSubmitted = false;
-  let exitPopupShown = sessionStorage.getItem('chatbotPopupShown') === 'true';
+
+  // Sistema de expiração do popup (30 minutos)
+  const POPUP_COOLDOWN_MS = 30 * 60 * 1000; // 30 minutos
+
+  // Verifica se está em modo de teste via URL
+  const urlParams = new URLSearchParams(window.location.search);
+  const isTestMode = urlParams.has('test-popup');
+
+  // Verifica se o popup foi mostrado recentemente
+  function wasPopupShownRecently() {
+    if (isTestMode) {
+      console.log('[Exit-Intent] 🧪 Modo de teste ativo - sessionStorage ignorado');
+      return false;
+    }
+
+    const lastShown = sessionStorage.getItem('chatbotPopupShown');
+    if (!lastShown) return false;
+
+    const timestamp = parseInt(lastShown, 10);
+    const now = Date.now();
+    const elapsed = now - timestamp;
+
+    if (elapsed > POPUP_COOLDOWN_MS) {
+      // Expirou - limpar
+      sessionStorage.removeItem('chatbotPopupShown');
+      return false;
+    }
+
+    console.log(`[Exit-Intent] Popup foi mostrado há ${Math.floor(elapsed / 60000)} minutos`);
+    return true;
+  }
+
+  let exitPopupShown = wasPopupShownRecently();
   
   // Elementos principais
   const leadForm = $('#leadForm');
@@ -54,7 +86,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Estado global dos popups
   let popupsState = {
-    chatbotShown: sessionStorage.getItem('chatbotPopupShown') === 'true',
+    chatbotShown: wasPopupShownRecently(),
     agenciaShown: false
   };
 
@@ -121,10 +153,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Função para mostrar popup chatbot (primeiro - resgate)
   function showChatbotPopup() {
-    if (popupsState.chatbotShown) return;
+    console.log('[showChatbotPopup] Chamada recebida', {
+      chatbotShown: popupsState.chatbotShown
+    });
+
+    if (popupsState.chatbotShown) {
+      console.log('[showChatbotPopup] Bloqueado - popup já foi mostrado nesta sessão');
+      return;
+    }
 
     const popup = document.getElementById('exitPopupChatbot');
     if (popup) {
+      console.log('[showChatbotPopup] Abrindo popup...');
+
       // Guarda elemento com foco atual
       lastFocusedElement = document.activeElement;
 
@@ -133,11 +174,36 @@ document.addEventListener('DOMContentLoaded', () => {
       popup.style.display = 'flex';
       document.body.style.overflow = 'hidden';
       popupsState.chatbotShown = true;
-      sessionStorage.setItem('chatbotPopupShown', 'true');
+
+      // Guarda timestamp em vez de boolean para permitir expiração
+      sessionStorage.setItem('chatbotPopupShown', Date.now().toString());
+
+      console.log('[showChatbotPopup] ✓ Popup aberto com sucesso (expira em 30min)');
 
       // Ativa focus trap
       trapFocus(popup);
+    } else {
+      console.error('[showChatbotPopup] Elemento #exitPopupChatbot não encontrado!');
     }
+  }
+
+  // Expõe globalmente para permitir chamadas externas e testes
+  window.showChatbotPopup = showChatbotPopup;
+
+  // Função de debug para resetar o estado do popup
+  window.resetPopupState = function() {
+    sessionStorage.removeItem('chatbotPopupShown');
+    sessionStorage.removeItem('exit_shown');
+    popupsState.chatbotShown = false;
+    exitPopupShown = false;
+    console.log('✓ Estado do popup resetado - pode testar novamente');
+  };
+
+  // Informar ao utilizador sobre o modo de teste
+  if (isTestMode) {
+    console.log('%c🧪 MODO DE TESTE ATIVO', 'background: #4CAF50; color: white; font-size: 16px; padding: 8px;');
+    console.log('→ O popup vai aparecer sempre, ignorando sessionStorage');
+    console.log('→ Para sair do modo de teste, remova ?test-popup=1 do URL');
   }
 
   // Função para mostrar popup agência (segundo - se recusar chatbot)
@@ -351,10 +417,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- 1. Popup de Saída (Exit Intent) ---
     if (exitPopup) {
+      console.log('[Exit-Intent] Inicializado para desktop', {
+        exitPopupShown,
+        formSubmitted,
+        windowWidth: window.innerWidth
+      });
+
       // Desktop: mouseleave no topo da página
       document.documentElement.addEventListener('mouseleave', (e) => {
+        console.log('[Exit-Intent] mouseleave detectado', {
+          clientY: e.clientY,
+          exitPopupShown,
+          formSubmitted,
+          windowWidth: window.innerWidth
+        });
+
         // Verifica se o mouse saiu pelo topo da janela
         if (e.clientY < 0 && !exitPopupShown && !formSubmitted && window.innerWidth > 768) {
+          console.log('[Exit-Intent] Condições satisfeitas! Abrindo popup...');
           showChatbotPopup();
           exitPopupShown = true;
         }
@@ -364,6 +444,7 @@ document.addEventListener('DOMContentLoaded', () => {
       document.addEventListener('mouseout', (e) => {
         // Se o relatedTarget é null, o mouse saiu da janela
         if (!e.relatedTarget && !e.toElement && !exitPopupShown && !formSubmitted && window.innerWidth > 768) {
+          console.log('[Exit-Intent] mouseout detectado (fallback)');
           showChatbotPopup();
           exitPopupShown = true;
         }
