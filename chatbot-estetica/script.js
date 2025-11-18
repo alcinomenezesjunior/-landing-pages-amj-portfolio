@@ -18,7 +18,39 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Variáveis de estado
   let formSubmitted = false;
-  let exitPopupShown = sessionStorage.getItem('chatbotPopupShown') === 'true';
+
+  // Sistema de expiração do popup (30 minutos)
+  const POPUP_COOLDOWN_MS = 30 * 60 * 1000; // 30 minutos
+
+  // Verifica se está em modo de teste via URL
+  const urlParams = new URLSearchParams(window.location.search);
+  const isTestMode = urlParams.has('test-popup');
+
+  // Verifica se o popup foi mostrado recentemente
+  function wasPopupShownRecently() {
+    if (isTestMode) {
+      console.log('[Exit-Intent] 🧪 Modo de teste ativo - sessionStorage ignorado');
+      return false;
+    }
+
+    const lastShown = sessionStorage.getItem('chatbotPopupShown');
+    if (!lastShown) return false;
+
+    const timestamp = parseInt(lastShown, 10);
+    const now = Date.now();
+    const elapsed = now - timestamp;
+
+    if (elapsed > POPUP_COOLDOWN_MS) {
+      // Expirou - limpar
+      sessionStorage.removeItem('chatbotPopupShown');
+      return false;
+    }
+
+    console.log(`[Exit-Intent] Popup foi mostrado há ${Math.floor(elapsed / 60000)} minutos`);
+    return true;
+  }
+
+  let exitPopupShown = wasPopupShownRecently();
   
   // Elementos principais
   const leadForm = $('#leadForm');
@@ -54,7 +86,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Estado global dos popups
   let popupsState = {
-    chatbotShown: sessionStorage.getItem('chatbotPopupShown') === 'true',
+    chatbotShown: wasPopupShownRecently(),
     agenciaShown: false
   };
 
@@ -142,9 +174,11 @@ document.addEventListener('DOMContentLoaded', () => {
       popup.style.display = 'flex';
       document.body.style.overflow = 'hidden';
       popupsState.chatbotShown = true;
-      sessionStorage.setItem('chatbotPopupShown', 'true');
 
-      console.log('[showChatbotPopup] ✓ Popup aberto com sucesso');
+      // Guarda timestamp em vez de boolean para permitir expiração
+      sessionStorage.setItem('chatbotPopupShown', Date.now().toString());
+
+      console.log('[showChatbotPopup] ✓ Popup aberto com sucesso (expira em 30min)');
 
       // Ativa focus trap
       trapFocus(popup);
@@ -162,8 +196,15 @@ document.addEventListener('DOMContentLoaded', () => {
     sessionStorage.removeItem('exit_shown');
     popupsState.chatbotShown = false;
     exitPopupShown = false;
-    console.log('✓ Estado do popup resetado');
+    console.log('✓ Estado do popup resetado - pode testar novamente');
   };
+
+  // Informar ao utilizador sobre o modo de teste
+  if (isTestMode) {
+    console.log('%c🧪 MODO DE TESTE ATIVO', 'background: #4CAF50; color: white; font-size: 16px; padding: 8px;');
+    console.log('→ O popup vai aparecer sempre, ignorando sessionStorage');
+    console.log('→ Para sair do modo de teste, remova ?test-popup=1 do URL');
+  }
 
   // Função para mostrar popup agência (segundo - se recusar chatbot)
   window.showAgencyPopup = function() {
