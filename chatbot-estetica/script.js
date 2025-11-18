@@ -518,20 +518,19 @@ document.addEventListener('DOMContentLoaded', () => {
   // 4. INICIALIZAÇÃO
   // ========================================
 
-  // Inicializa todas as funcionalidades após o DOM estar pronto.
-  // A performance é mantida pelo 'defer' na tag <script> e pelo adiamento dos scripts de terceiros no HTML.
+  // Inicializa todas as funcionalidades após o DOM estar completamente carregado.
   initSmoothScroll();
   initForm();
   initStickyCta();
-  initCountdown(); // Chamar a função original diretamente
-  initPopups();    // Esta função já contém a lógica do exit-intent
-
-  // O módulo de exit-intent para mobile já é auto-executável e não precisa de chamada aqui.
+  initCountdown();
+  initPopups(); // Esta função contém a lógica do exit-intent para desktop.
 
 }); // Fim do 'DOMContentLoaded'
 
 
 /* ==== AMJ Mobile Exit-Intent Module (non-breaking) v1 ==== */
+// Este módulo é auto-executável e deve permanecer como está,
+// mas vamos garantir que ele aponta para o pop-up correto.
 (function(){
   if (typeof window === 'undefined') return;
   var isMobile = (window.innerWidth || 1024) <= 768;
@@ -542,18 +541,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
   var _openPopup = function(el){
     if (!el) return;
-    if (typeof window.openPopup === 'function') { window.openPopup(el); }
-    else { el.style.display = 'flex'; document.body.style.overflow = 'hidden'; }
+    // Usa a função global showChatbotPopup para manter a consistência e a gestão de foco.
+    if (typeof window.showChatbotPopup === 'function') {
+        window.showChatbotPopup();
+    } else {
+        el.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+    }
   };
 
   var isAnyPopupOpen = function(){
-    var open = document.querySelector('.exit-popup[style*="display: flex"]') || document.querySelector('.exit-popup.open');
+    var open = document.querySelector('.popup.active, .popup.show, .exit-popup[style*="display: flex"]');
     return !!open;
   };
 
   var showExit = function(){
     if (hasShown || isAnyPopupOpen()) return;
-    var el = document.getElementById('exitPopup');
+    // CORREÇÃO: O ID correto do popup de chatbot é 'exitPopupChatbot'.
+    var el = document.getElementById('exitPopupChatbot');
     if (!el) return;
     _openPopup(el);
     markShown();
@@ -565,7 +570,6 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   onReady(function(){
-    // 1) Idle timer (20s)
     var EXIT_IDLE_MS = 20000;
     var idleTimer;
     var resetIdle = function(){
@@ -577,7 +581,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     resetIdle();
 
-    // 2) Scroll up fast near top
     var lastY = window.scrollY || 0;
     window.addEventListener('scroll', function(){
       var y = window.scrollY || 0;
@@ -587,7 +590,6 @@ document.addEventListener('DOMContentLoaded', () => {
       lastY = y;
     }, { passive: true });
 
-    // 3) Back button single intercept
     try{
       history.pushState({ amjGuard: 1 }, '');
       window.addEventListener('popstate', function(){

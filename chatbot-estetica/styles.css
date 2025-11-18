@@ -506,13 +506,13 @@ label {
   text-align: left;
   margin: 0;
 }
-.section--purple .promo-card .promo-list .promo-list__item {
-  display: flex !important;
-  align-items: center !important; /* Força o alinhamento vertical */
-  gap: 1.25rem; /* Aumenta o espaçamento horizontal */
+.promo-list__item {
+  display: flex;
+  align-items: center; /* Alinha verticalmente o número e o texto */
+  gap: 1rem;
   margin: 1.25rem 0;
   font-size: 1.05rem;
-  line-height: 1.5; /* Melhora o espaçamento entre linhas de texto */
+  line-height: 1.5;
 }
 .promo-list__number {
   background: var(--accent);
@@ -1722,4 +1722,9 @@ details strong {
 details summary strong,
 details p {
   color: #111827 !important;
+}
+
+/* === OVERRIDE DE ALINHAMENTO FINAL === */
+.section--purple .promo-card .promo-list__item {
+    align-items: center !important;
 }
