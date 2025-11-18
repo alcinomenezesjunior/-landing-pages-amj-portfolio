@@ -27,3 +27,4 @@ build/
 # Temporários
 *.tmp
 *.temp
+*.bak
