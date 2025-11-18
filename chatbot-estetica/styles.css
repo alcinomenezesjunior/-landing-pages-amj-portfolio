@@ -508,23 +508,43 @@ label {
 }
 .promo-list__item {
   display: flex;
-  align-items: flex-start; /* Alinha o número com a primeira linha do texto */
+  align-items: flex-start;
   gap: 1rem;
   margin: 1.25rem 0;
   font-size: 1.05rem;
-  line-height: 1.5;
+  line-height: 1.6;
 }
+
+.promo-list__item:first-child {
+  margin-top: 0;
+}
+
+.promo-list__item:last-child {
+  margin-bottom: 0;
+}
+
 .promo-list__number {
   background: var(--accent);
   color: var(--cta-dark);
-  width: 32px;
-  height: 32px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: 800;
+  font-size: 1.1rem;
   flex-shrink: 0;
+}
+
+.promo-list__content {
+  flex: 1;
+  color: #1a1a2e;
+}
+
+.promo-list__content strong {
+  color: #1a1a2e;
+  font-weight: 700;
 }
 
 .promo-deadline {
@@ -1171,6 +1191,20 @@ details p {
   .crosssell-combo p {
     font-size: 1rem;
   }
+
+  /* Promo card em mobile */
+  .promo-card {
+    padding: 1.5rem;
+  }
+  .promo-list__item {
+    gap: 0.75rem;
+    font-size: 1rem;
+  }
+  .promo-list__number {
+    width: 32px;
+    height: 32px;
+    font-size: 1rem;
+  }
 }
 
 @media (max-width: 768px) {
@@ -1724,7 +1758,3 @@ details p {
   color: #111827 !important;
 }
 
-/* === OVERRIDE DE ALINHAMENTO FINAL === */
-.section--purple .promo-card .promo-list__item {
-    align-items: flex-start !important;
-}
