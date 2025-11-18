@@ -349,30 +349,44 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- 1. Popup de Saída (Exit Intent) ---
     if (exitPopup) {
-      document.addEventListener('mouseleave', (e) => {
-        if (e.clientY <= 0 && !exitPopupShown && !formSubmitted && window.innerWidth > 768) {
+      // Desktop: mouseleave no topo da página
+      document.documentElement.addEventListener('mouseleave', (e) => {
+        // Verifica se o mouse saiu pelo topo da janela
+        if (e.clientY < 0 && !exitPopupShown && !formSubmitted && window.innerWidth > 768) {
           openPopup(exitPopup);
           exitPopupShown = true;
-          // dataLayer.push... (se necessário)
+        }
+      });
+
+      // Alternativa: mouseout do document
+      document.addEventListener('mouseout', (e) => {
+        // Se o relatedTarget é null, o mouse saiu da janela
+        if (!e.relatedTarget && !e.toElement && !exitPopupShown && !formSubmitted && window.innerWidth > 768) {
+          openPopup(exitPopup);
+          exitPopupShown = true;
         }
       });
 
       // Botão Primário (ir para o formulário)
-      $('#exitPopupPrimary')?.addEventListener('click', (e) => {
-        e.preventDefault();
-        closePopup(exitPopup);
-        // Encontra o link 'a[href="#formulario"]' e simula um clique
-        // para ativar o smooth scroll
-        $('a[href="#formulario"]')?.click();
-      });
+      const primaryBtn = $('#exitPopupPrimary');
+      if (primaryBtn) {
+        primaryBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          closePopup(exitPopup);
+          const formLink = $('a[href="#formulario"]');
+          if (formLink) formLink.click();
+        });
+      }
 
       // Botão Secundário (abrir popup da agência)
-      $('#exitPopupSecondary')?.addEventListener('click', (e) => {
-        e.preventDefault();
-        closePopup(exitPopup);
-        openPopup(agencyPopup);
-        // dataLayer.push... (se necessário)
-      });
+      const secondaryBtn = $('#exitPopupSecondary');
+      if (secondaryBtn) {
+        secondaryBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          closePopup(exitPopup);
+          openPopup(agencyPopup);
+        });
+      }
     }
 
     // --- 2. Popup de Sucesso (Success) ---
