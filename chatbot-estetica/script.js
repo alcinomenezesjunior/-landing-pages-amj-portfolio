@@ -25,9 +25,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const stickyCta = $('#sticky-cta');
   
   // Popups
-  const exitPopup = $('#exitPopup');
+  const exitPopup = $('#exitPopupChatbot'); // Corrigido para corresponder ao HTML
   const successPopup = $('#successPopup');
-  const agencyPopup = $('#agencyPopup');
+  const agencyPopup = $('#exitPopupAgencia'); // Corrigido para corresponder ao HTML
 
   
   // ========================================
@@ -515,102 +515,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
   // ========================================
-  // 4. INICIALIZAÇÃO LAZY (Otimizada para Performance)
+  // 4. INICIALIZAÇÃO
   // ========================================
 
-  /**
-   * Lazy Init: Timer Countdown
-   * Só inicializa quando a seção fica visível ou após 3s (fallback)
-   */
-  function initCountdownLazy() {
-    const timerSection = $('#pioneiros');
-    if (!timerSection) return;
-
-    let initialized = false;
-
-    const init = () => {
-      if (initialized) return;
-      initialized = true;
-      initCountdown();
-    };
-
-    // Observa quando a seção do timer entra no viewport
-    if ('IntersectionObserver' in window) {
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            init();
-            observer.disconnect();
-          }
-        });
-      }, { rootMargin: '200px' }); // Carrega 200px antes de aparecer
-
-      observer.observe(timerSection);
-    } else {
-      // Fallback para navegadores sem IntersectionObserver
-      init();
-    }
-
-    // Fallback: inicia após 3s mesmo que não faça scroll
-    setTimeout(init, 3000);
-  }
-
-  /**
-   * Lazy Init: Exit Popup
-   * Só ativa após scroll significativo ou 5s de inatividade
-   */
-  function initExitPopupLazy() {
-    let initialized = false;
-
-    const init = () => {
-      if (initialized) return;
-      initialized = true;
-
-      // Exit intent detection (mouseleave)
-      document.addEventListener('mouseleave', function(e) {
-        if (e.clientY <= 0 && !exitIntentTriggered) {
-          if (!sessionStorage.getItem('chatbotPopupShown')) {
-            showChatbotPopup();
-            exitIntentTriggered = true;
-          }
-        }
-      });
-
-      // Fechar com ESC
-      document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape') {
-          window.closePopup('exitPopupChatbot');
-          window.closePopup('exitPopupAgencia');
-        }
-      });
-    };
-
-    // Ativa após scroll de 50vh ou 5s
-    let scrollInitialized = false;
-    const onScroll = () => {
-      if (!scrollInitialized && window.scrollY > window.innerHeight * 0.5) {
-        init();
-        scrollInitialized = true;
-        window.removeEventListener('scroll', onScroll);
-      }
-    };
-
-    window.addEventListener('scroll', onScroll, { passive: true });
-
-    // Fallback: ativa após 5s mesmo sem scroll
-    setTimeout(init, 5000);
-  }
-
-  // Correr módulos essenciais imediatamente
+  // Inicializa todas as funcionalidades após o DOM estar pronto.
+  // A performance é mantida pelo 'defer' na tag <script> e pelo adiamento dos scripts de terceiros no HTML.
   initSmoothScroll();
   initForm();
   initStickyCta();
+  initCountdown(); // Chamar a função original diretamente
+  initPopups();    // Esta função já contém a lógica do exit-intent
 
-  // Correr módulos não-críticos com lazy loading
-  initCountdownLazy();
-  initExitPopupLazy();
-  initPopups(); // Mantém estrutura de popups, mas exit-intent é lazy
-
+  // O módulo de exit-intent para mobile já é auto-executável e não precisa de chamada aqui.
 
 }); // Fim do 'DOMContentLoaded'
 

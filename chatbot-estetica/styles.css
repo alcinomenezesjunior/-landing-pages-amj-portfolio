@@ -506,13 +506,13 @@ label {
   text-align: left;
   margin: 0;
 }
-.promo-list__item {
-  display: flex;
-  align-items: center;
-  gap: .75rem;
+.section--purple .promo-card .promo-list .promo-list__item {
+  display: flex !important;
+  align-items: center !important; /* Força o alinhamento vertical */
+  gap: 1.25rem; /* Aumenta o espaçamento horizontal */
   margin: 1.25rem 0;
   font-size: 1.05rem;
-  line-height: 1.4;
+  line-height: 1.5; /* Melhora o espaçamento entre linhas de texto */
 }
 .promo-list__number {
   background: var(--accent);
