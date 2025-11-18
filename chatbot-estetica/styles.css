@@ -508,7 +508,7 @@ label {
 }
 .promo-list__item {
   display: flex;
-  align-items: center; /* Alinha verticalmente o número e o texto */
+  align-items: flex-start; /* Alinha o número com a primeira linha do texto */
   gap: 1rem;
   margin: 1.25rem 0;
   font-size: 1.05rem;
@@ -1726,5 +1726,5 @@ details p {
 
 /* === OVERRIDE DE ALINHAMENTO FINAL === */
 .section--purple .promo-card .promo-list__item {
-    align-items: center !important;
+    align-items: flex-start !important;
 }

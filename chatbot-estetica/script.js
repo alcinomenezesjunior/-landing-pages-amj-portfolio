@@ -241,37 +241,19 @@ document.addEventListener('DOMContentLoaded', () => {
   function initCountdown() {
     const timerWrap = $('.timer');
     if (!timerWrap) return;
-    
+
     const dd = $('#dd'), hh = $('#hh'), mm = $('#mm'), ss = $('#ss');
     if (!dd || !hh || !mm || !ss) return;
 
-    const getTargetDate = () => {
-      const deadlineStr = timerWrap.getAttribute('data-deadline'); // "2025-11-30T23:59:59"
-      const tz = timerWrap.getAttribute('data-tz') || 'Europe/Lisbon'; // "Europe/Lisbon"
+    // Lê o deadline do HTML (formato: "2025-11-30T23:59:59")
+    const deadlineStr = timerWrap.getAttribute('data-deadline');
+    if (!deadlineStr) {
+      [dd, hh, mm, ss].forEach(el => el.textContent = '00');
+      return;
+    }
 
-      if (!deadlineStr) {
-        // Fallback: fim do mês atual em Lisboa
-        const now = new Date(new Date().toLocaleString('en-US', { timeZone: tz }));
-        return new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 59);
-      }
-      
-      try {
-        const targetDate = new Date(deadlineStr); // Ex: 2025-11-30T23:59:59
-        
-        const nowInLisbon = new Date(new Date().toLocaleString('en-US', { timeZone: tz }));
-        const localNow = new Date();
-        const offsetDiff = (localNow.getTimezoneOffset() - nowInLisbon.getTimezoneOffset()) * 60000;
-        
-        return new Date(targetDate.getTime() + offsetDiff);
-
-      } catch(e) {
-        // Fallback em caso de data inválida
-        const now = new Date(new Date().toLocaleString('en-US', { timeZone: tz }));
-        return new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 59);
-      }
-    };
-    
-    const target = getTargetDate();
+    // Parse como UTC adicionando 'Z' (Lisbon em novembro está em WET = UTC+0)
+    const targetTime = new Date(deadlineStr + 'Z').getTime();
     let timerId = null;
 
     function lockOfferUI() {
@@ -280,32 +262,34 @@ document.addEventListener('DOMContentLoaded', () => {
         sec.classList.add('is-closed');
         const title = sec.querySelector('.h2');
         if (title) title.textContent = 'Oferta encerrada';
-        (function(){ const _b = sec.querySelector('.btn'); if(_b) _b.style.display = 'none'; })();
+        const btn = sec.querySelector('.btn');
+        if (btn) btn.style.display = 'none';
       }
-      [dd, hh, mm, ss].forEach(el => { if (el) el.textContent = '00'; });
+      [dd, hh, mm, ss].forEach(el => el.textContent = '00');
     }
 
     function tick() {
-      const now = new Date(new Date().toLocaleString('en-US', { timeZone: timerWrap.getAttribute('data-tz') || 'Europe/Lisbon' }));
-      let diff = Math.floor((target - now) / 1000);
+      const now = Date.now();
+      const diffSeconds = Math.floor((targetTime - now) / 1000);
 
-      if (diff <= 0) {
+      if (diffSeconds <= 0) {
         lockOfferUI();
         if (timerId) clearInterval(timerId);
         return;
-      } // <--- A CORREÇÃO ESTÁ AQUI. Esta '}' estava em falta.
+      }
 
-      const d = Math.floor(diff / 86400); diff -= d * 86400;
-      const h = Math.floor(diff / 3600); diff -= h * 3600;
-      const m = Math.floor(diff / 60); diff -= m * 60;
-      
-      dd.textContent = String(d).padStart(2, '0');
-      hh.textContent = String(h).padStart(2, '0');
-      mm.textContent = String(m).padStart(2, '0');
-      ss.textContent = String(diff).padStart(2, '0');
+      const days = Math.floor(diffSeconds / 86400);
+      const hours = Math.floor((diffSeconds % 86400) / 3600);
+      const minutes = Math.floor((diffSeconds % 3600) / 60);
+      const seconds = diffSeconds % 60;
+
+      dd.textContent = String(days).padStart(2, '0');
+      hh.textContent = String(hours).padStart(2, '0');
+      mm.textContent = String(minutes).padStart(2, '0');
+      ss.textContent = String(seconds).padStart(2, '0');
     }
 
-    tick(); // Corre imediatamente
+    tick(); // Executa imediatamente
     timerId = setInterval(tick, 1000); // Atualiza a cada segundo
   }
 
@@ -344,11 +328,12 @@ document.addEventListener('DOMContentLoaded', () => {
    * Controla a lógica de abrir/fechar todos os popups.
    */
   function initPopups() {
-    
+
     // --- Lógica de fechar (comum a todos) ---
-    $$('.exit-popup__overlay, .exit-popup__close').forEach(el => {
+    // Suporta ambas as convenções de nomenclatura: .exit-popup__ e .popup__
+    $$('.exit-popup__overlay, .exit-popup__close, .popup__overlay, .popup__close').forEach(el => {
       el.addEventListener('click', (e) => {
-        const popup = e.target.closest('.exit-popup');
+        const popup = e.target.closest('.exit-popup, .popup');
         if (popup) closePopup(popup);
       });
     });
