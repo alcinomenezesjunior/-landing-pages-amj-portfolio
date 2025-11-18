@@ -1,9 +1,6 @@
-/**
- * =================================================================
- * SCRIPT UNIFICADO v1.1 (Refatorado por Ajudante de Programação)
- * =================================================================
- * v1.1: Corrige um 'SyntaxError' (missing '}') na função initCountdown.
- */
+// SCRIPT UNIFICADO v1.1 - Refatorado por Ajudante de Programação
+// Última atualização: 2024
+// v1.1: Corrige um 'SyntaxError' (missing '}') na função initCountdown.
 
 // Espera que o HTML esteja pronto para executar o código
 document.addEventListener('DOMContentLoaded', () => {
