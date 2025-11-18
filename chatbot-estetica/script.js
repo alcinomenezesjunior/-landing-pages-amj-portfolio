@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Variáveis de estado
   let formSubmitted = false;
-  let exitPopupShown = false;
+  let exitPopupShown = sessionStorage.getItem('chatbotPopupShown') === 'true';
   
   // Elementos principais
   const leadForm = $('#leadForm');
@@ -42,6 +42,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const closePopup = (popupEl) => {
     if (!popupEl) return;
+    popupEl.classList.remove('active');
+    popupEl.classList.remove('show');
     popupEl.style.display = 'none';
     document.body.style.overflow = '';
   };
@@ -52,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Estado global dos popups
   let popupsState = {
-    chatbotShown: false,
+    chatbotShown: sessionStorage.getItem('chatbotPopupShown') === 'true',
     agenciaShown: false
   };
 
@@ -353,7 +355,7 @@ document.addEventListener('DOMContentLoaded', () => {
       document.documentElement.addEventListener('mouseleave', (e) => {
         // Verifica se o mouse saiu pelo topo da janela
         if (e.clientY < 0 && !exitPopupShown && !formSubmitted && window.innerWidth > 768) {
-          openPopup(exitPopup);
+          showChatbotPopup();
           exitPopupShown = true;
         }
       });
@@ -362,7 +364,7 @@ document.addEventListener('DOMContentLoaded', () => {
       document.addEventListener('mouseout', (e) => {
         // Se o relatedTarget é null, o mouse saiu da janela
         if (!e.relatedTarget && !e.toElement && !exitPopupShown && !formSubmitted && window.innerWidth > 768) {
-          openPopup(exitPopup);
+          showChatbotPopup();
           exitPopupShown = true;
         }
       });
