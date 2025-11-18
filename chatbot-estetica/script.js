@@ -555,7 +555,7 @@ document.addEventListener('DOMContentLoaded', () => {
       } catch(_) {}
 
       // 6. Envio Resiliente dos Dados (para n8n)
-      const url = 'https://mjrmkt.app.n8n.cloud/webhook/chatbot-estetica';
+      const url = 'https://n8n.alcinomenezesjunior.com/webhook/webhook-lead-capture';
       let done = false;
 
       try {
