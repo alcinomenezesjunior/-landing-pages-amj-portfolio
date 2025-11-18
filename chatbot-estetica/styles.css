@@ -1758,3 +1758,155 @@ details p {
   color: #111827 !important;
 }
 
+/* ================================================================
+   CORREÇÕES MOBILE - Tabela 4 colunas e Timer Black November
+   ================================================================ */
+
+/* Tabela "Quem Deve Escolher Qual Plano" - 4 colunas no mobile */
+@media (max-width: 768px) {
+  .compare-table--plans {
+    font-size: 0.7rem !important;
+    width: 100%;
+    table-layout: fixed;
+  }
+
+  .compare-table--plans th,
+  .compare-table--plans td {
+    padding: 0.4rem 0.3rem;
+    word-break: break-word;
+    hyphens: auto;
+  }
+
+  .compare-table--plans th:first-child {
+    min-width: auto;
+    width: 35%;
+  }
+
+  .compare-table--plans th {
+    width: auto;
+    font-size: 0.65rem;
+  }
+
+  .compare-table--plans td {
+    font-size: 0.7rem;
+  }
+
+  .compare-table__group-header td {
+    font-size: 0.75rem !important;
+    padding: 0.5rem 0.3rem !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .compare-table--plans {
+    font-size: 0.6rem !important;
+  }
+
+  .compare-table--plans th,
+  .compare-table--plans td {
+    padding: 0.3rem 0.2rem;
+  }
+
+  .compare-table--plans th {
+    font-size: 0.55rem;
+  }
+
+  .compare-table--plans td {
+    font-size: 0.6rem;
+  }
+
+  .compare-table--plans th:first-child {
+    width: 32%;
+  }
+}
+
+/* Seção Black November 2025 (#pioneiros) - Corrige overflow no mobile */
+@media (max-width: 768px) {
+  #pioneiros .container,
+  .section--purple .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    overflow-x: hidden;
+  }
+
+  .urgency {
+    gap: 1.5rem;
+  }
+
+  .urgency__copy {
+    text-align: center;
+  }
+
+  .urgency__timer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* Timer responsivo */
+  .timer {
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .timer > div {
+    min-width: 60px;
+    padding: 0.75rem 0.5rem;
+    flex: 1;
+    max-width: 70px;
+  }
+
+  .timer span {
+    font-size: 1.8rem;
+  }
+
+  .timer small {
+    font-size: 0.65rem;
+  }
+
+  .timer-legend {
+    font-size: 0.7rem;
+  }
+
+  /* Final CTA section */
+  .final {
+    padding: 0 0.5rem;
+  }
+
+  .final .h2 {
+    font-size: 1.3rem;
+    line-height: 1.3;
+  }
+
+  .final .text-lead {
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .timer > div {
+    min-width: 50px;
+    max-width: 60px;
+    padding: 0.5rem 0.3rem;
+  }
+
+  .timer span {
+    font-size: 1.5rem;
+  }
+
+  .timer small {
+    font-size: 0.55rem;
+  }
+
+  .urgency__copy .h2 {
+    font-size: 1.2rem;
+  }
+
+  .urgency__copy p {
+    font-size: 0.9rem;
+  }
+}
+
