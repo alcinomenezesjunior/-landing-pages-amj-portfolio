@@ -558,27 +558,33 @@ document.addEventListener('DOMContentLoaded', () => {
       const url = 'https://n8n.alcinomenezesjunior.com/webhook/webhook-lead-capture';
       let done = false;
 
+      // Método 1: fetch com CORS (preferencial - mais controlo)
       try {
-        // Método 1: sendBeacon (ideal, não bloqueia, funciona ao fechar a página)
-        if (navigator.sendBeacon) {
-          done = navigator.sendBeacon(url, new Blob([JSON.stringify(payload)], {type:'application/json'}));
-        }
-      } catch(_) {}
+        fetch(url, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain' }, // Evita preflight CORS
+          body: JSON.stringify(payload),
+          credentials: 'omit', // Não enviar cookies - evita erro CORS
+          keepalive: true,
+          cache: 'no-store'
+        }).catch(err => {
+          console.error('[AMJ] Erro ao enviar lead para n8n:', err.message);
+        });
+        done = true;
+      } catch (err) {
+        console.error('[AMJ] Erro ao enviar lead para n8n:', err.message);
+      }
 
+      // Método 2: sendBeacon como fallback (útil quando a página fecha)
       if (!done) {
         try {
-          // Método 2: fetch (fallback, mas com 'keepalive')
-          fetch(url, {
-            method: 'POST',
-            mode: 'no-cors',
-            keepalive: true,
-            headers: { 'Content-Type': 'text/plain' }, // 'text/plain' é comum para 'no-cors'
-            body: JSON.stringify(payload),
-            cache: 'no-store',
-            referrerPolicy: 'no-referrer'
-          });
-          done = true;
-        } catch(_) {}
+          if (navigator.sendBeacon) {
+            // Usar text/plain para evitar preflight CORS
+            done = navigator.sendBeacon(url, new Blob([JSON.stringify(payload)], {type: 'text/plain'}));
+          }
+        } catch (err) {
+          console.error('[AMJ] Erro no sendBeacon:', err.message);
+        }
       }
 
       // 7. Restaurar UI (após um pequeno delay)
