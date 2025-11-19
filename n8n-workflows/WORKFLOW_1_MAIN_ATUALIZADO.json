@@ -197,12 +197,12 @@
         "operation": "append",
         "documentId": {
           "__rl": true,
-          "value": "https://docs.google.com/spreadsheets/d/YOUR_SHEET_ID",
-          "mode": "url"
+          "value": "1YZ6oN42skTdjYT9uVAuLHXwAhlgxqe9gphygHtXuxzI",
+          "mode": "id"
         },
         "sheetName": {
           "__rl": true,
-          "value": "Leads",
+          "value": "leads",
           "mode": "name"
         },
         "columns": {
@@ -224,8 +224,6 @@
             "interesse": "={{ $json.interesse }}",
             "servico": "={{ $json.servico }}",
             "origem": "={{ $json.origem }}",
-            "origemCodigo": "={{ $json.origemCodigo }}",
-            "paginaOrigem": "={{ $json.paginaOrigem }}",
             "valorProposta": "={{ $json.valorProposta }}",
             "probabilidadeConversao": "={{ $json.probabilidadeConversao }}",
             "observacoes": "={{ $json.observacoes }}",
@@ -411,12 +409,12 @@
         "operation": "search",
         "documentId": {
           "__rl": true,
-          "value": "https://docs.google.com/spreadsheets/d/YOUR_SHEET_ID",
-          "mode": "url"
+          "value": "1YZ6oN42skTdjYT9uVAuLHXwAhlgxqe9gphygHtXuxzI",
+          "mode": "id"
         },
         "sheetName": {
           "__rl": true,
-          "value": "Leads",
+          "value": "leads",
           "mode": "name"
         },
         "filtersUI": {
@@ -475,12 +473,12 @@
         "operation": "update",
         "documentId": {
           "__rl": true,
-          "value": "https://docs.google.com/spreadsheets/d/YOUR_SHEET_ID",
-          "mode": "url"
+          "value": "1YZ6oN42skTdjYT9uVAuLHXwAhlgxqe9gphygHtXuxzI",
+          "mode": "id"
         },
         "sheetName": {
           "__rl": true,
-          "value": "Leads",
+          "value": "leads",
           "mode": "name"
         },
         "columns": {
