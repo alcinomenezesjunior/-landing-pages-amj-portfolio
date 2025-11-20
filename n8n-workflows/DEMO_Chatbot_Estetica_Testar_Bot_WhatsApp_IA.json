@@ -231,18 +231,20 @@
     },
     {
       "parameters": {
-        "operation": "update",
+        "operation": "appendOrUpdate",
         "documentId": {
           "__rl": true,
-          "value": "Bot_Demo_Chatbot_Estetica",
+          "value": "1i1G6ft07yJ1Wxmq6uU3P9DZa3V9387tYg5AvkZNPYmc",
           "mode": "list",
-          "cachedResultName": "Bot_Demo_Chatbot_Estetica"
+          "cachedResultName": "Bot_Demo_Chatbot_Estetica",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1i1G6ft07yJ1Wxmq6uU3P9DZa3V9387tYg5AvkZNPYmc/edit?usp=drivesdk"
         },
         "sheetName": {
           "__rl": true,
-          "value": "sessoes_bot",
+          "value": "gid=0",
           "mode": "list",
-          "cachedResultName": "sessoes_bot"
+          "cachedResultName": "sessoes_bot",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1i1G6ft07yJ1Wxmq6uU3P9DZa3V9387tYg5AvkZNPYmc/edit#gid=0"
         },
         "columns": {
           "mappingMode": "defineBelow",
@@ -414,12 +416,13 @@
     },
     {
       "parameters": {
-        "resume": "dateTime"
+        "resume": "specificTime",
+        "dateTime": "={{ $json.reminderTime }}"
       },
       "id": "1c3e6efd-a896-4317-9831-3c30918b0ffd",
       "name": "Wait – Reminder1",
       "type": "n8n-nodes-base.wait",
-      "typeVersion": 1,
+      "typeVersion": 1.1,
       "position": [
         4560,
         736
@@ -481,7 +484,7 @@
         "color": 4
       },
       "id": "4cbb3f0b-80d8-45ab-870b-fed5ed671231",
-      "name": "Sticky Note – Fase ",
+      "name": "Sticky Note – Fase 1",
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
@@ -497,7 +500,7 @@
         "color": 5
       },
       "id": "8d55a28c-f89b-460e-8e02-d67e550becd3",
-      "name": "Sticky Note – Fase 6",
+      "name": "Sticky Note – Fase 2",
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
@@ -513,7 +516,7 @@
         "color": 6
       },
       "id": "aab3daf5-7384-4453-be03-13fe3137a5a8",
-      "name": "Sticky Note – Fase 7",
+      "name": "Sticky Note – Fase 3",
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
@@ -529,7 +532,7 @@
         "color": 3
       },
       "id": "705de2eb-6285-466a-8452-b710355afbe2",
-      "name": "Sticky Note – Fase 8",
+      "name": "Sticky Note – Fase 4",
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
@@ -545,7 +548,7 @@
         "color": 7
       },
       "id": "b71361a6-c7f1-4ae8-9c31-34f02d9097a0",
-      "name": "Sticky Note – Fase 9",
+      "name": "Sticky Note – Fase 5",
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
@@ -555,7 +558,7 @@
     },
     {
       "parameters": {
-        "content": "# 🤖 DEMO CHATBOT ESTÉTICA – TESTAR BOT WHATSAPP IA\n\n**Objetivo:** Bot demo de marcação para landing page /chatbot-estetica\n\n**Fluxo:**\n1. Utilizador clica \"Testar Bot no WhatsApp\" na landing page\n2. WhatsApp abre com mensagem inicial\n3. Bot conversa em PT-PT, estilo recepcionista natural\n4. Sugere serviços, horários\n5. Confirma \"marcação demo\"\n6. Envia lembrete (1min depois, para demo)\n\n**Tech Stack:**\n• WhatsApp Cloud API\n• Google Sheets (sessão + estado)\n• Anthropic Claude API (claude-3-5-sonnet-latest)\n• Máquina de estados: inicio → a_explorar → a_escolher_servico → a_escolher_horario → confirmado",
+        "content": "# 🤖 DEMO CHATBOT ESTÉTICA – TESTAR BOT WHATSAPP IA\n\n**Objetivo:** Bot demo de marcação para landing page /chatbot-estetica\n\n**Fluxo:**\n1. Utilizador clica \"Testar Bot no WhatsApp\" na landing page\n2. WhatsApp abre com mensagem inicial\n3. Bot conversa em PT-PT, estilo recepcionista natural\n4. Sugere serviços, horários\n5. Confirma \"marcação demo\"\n6. Envia lembrete (1min depois, para demo)\n\n**Tech Stack:**\n• WhatsApp Cloud API\n• Google Sheets (sessão + estado)\n• Anthropic Claude API (claude-sonnet-4-20250514)\n• Máquina de estados: inicio → a_explorar → a_escolher_servico → a_escolher_horario → confirmado",
         "height": 440,
         "width": 580,
         "color": 2
@@ -629,7 +632,18 @@
     },
     "Code – Apply LLM Decision1": {
       "main": [
-        []
+        [
+          {
+            "node": "Google Sheets – Update Session1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "IF – Should Schedule Reminder1",
+            "type": "main",
+            "index": 0
+          }
+        ]
       ]
     },
     "Google Sheets – Update Session1": {
