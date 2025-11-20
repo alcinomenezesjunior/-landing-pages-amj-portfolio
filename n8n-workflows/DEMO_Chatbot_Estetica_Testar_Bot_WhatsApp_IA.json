@@ -8,44 +8,54 @@
         "responseMode": "responseNode",
         "options": {}
       },
-      "id": "node-webhook",
-      "name": "Webhook – Testar Bot",
+      "id": "c05927aa-5901-424a-8f03-ac5859f1859e",
+      "name": "Webhook – Testar Bot1",
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 1.1,
-      "position": [240, 300],
+      "position": [
+        2768,
+        640
+      ],
       "webhookId": "demo-chatbot-estetica"
     },
     {
       "parameters": {
-        "jsCode": "// FASE 1: Parse da mensagem recebida do WhatsApp Cloud API\n// Extrai o número do remetente e o texto da mensagem\n\nconst body = $input.item.json.body;\n\n// Verifica se é uma mensagem válida\nif (!body?.entry?.[0]?.changes?.[0]?.value?.messages?.[0]) {\n  return {\n    json: {\n      error: true,\n      message: 'Payload inválido do WhatsApp'\n    }\n  };\n}\n\nconst message = body.entry[0].changes[0].value.messages[0];\n\n// Verifica se é mensagem de texto\nif (message.type !== 'text') {\n  return {\n    json: {\n      whatsapp: message.from,\n      userMessage: '',\n      isTextMessage: false,\n      errorReply: 'Por agora só entendo mensagens de texto 😊'\n    }\n  };\n}\n\n// Normaliza o número de telefone (remove +, espaços, etc.)\nlet phoneNumber = message.from.replace(/[^0-9]/g, '');\n\n// Garante formato 3519XXXXXXXX (se começar com 9, adiciona 351)\nif (phoneNumber.startsWith('9') && phoneNumber.length === 9) {\n  phoneNumber = '351' + phoneNumber;\n}\n\n// Extrai o texto da mensagem\nconst messageText = message.text.body.trim();\n\nreturn {\n  json: {\n    whatsapp: phoneNumber,\n    userMessage: messageText,\n    isTextMessage: true,\n    rawFrom: message.from\n  }\n};"
+        "jsCode": "// FASE 1: Parse da mensagem recebida do WhatsApp Cloud API\n// OU payload simples de teste vindo do curl\n\nconst body = $input.item.json.body;\n\n// 1) TEST MODE: payload simples (o que estás a mandar pelo curl)\n// {\n//   \"whatsapp\": \"+351912345678\",\n//   \"mensagem\": \"Olá, quero marcar sobrancelha\",\n//   \"executionMode\": \"test\"\n// }\nif (body && body.whatsapp && body.mensagem) {\n  // Normaliza telefone (remove tudo que não for número)\n  let phoneNumber = body.whatsapp.replace(/[^0-9]/g, '');\n\n  // Se vier só 9 dígitos a começar por 9, assume PT (351)\n  if (phoneNumber.startsWith('9') && phoneNumber.length === 9) {\n    phoneNumber = '351' + phoneNumber;\n  }\n\n  const messageText = body.mensagem.trim();\n\n  return {\n    json: {\n      whatsapp: phoneNumber,\n      userMessage: messageText,\n      isTextMessage: true,\n      rawFrom: body.whatsapp,\n      raw: body,\n    },\n  };\n}\n\n// 2) MODO PRODUÇÃO: payload oficial do WhatsApp Cloud API\n// Estrutura esperada: entry[0].changes[0].value.messages[0]\nif (!body?.entry?.[0]?.changes?.[0]?.value?.messages?.[0]) {\n  return {\n    json: {\n      error: true,\n      message: 'Payload inválido do WhatsApp',\n      raw: body,\n    },\n  };\n}\n\nconst message = body.entry[0].changes[0].value.messages[0];\n\n// Verifica se é mensagem de texto\nif (message.type !== 'text') {\n  return {\n    json: {\n      whatsapp: message.from,\n      userMessage: '',\n      isTextMessage: false,\n      errorReply: 'Por agora só entendo mensagens de texto 😊',\n      raw: body,\n    },\n  };\n}\n\n// Normaliza o número de telefone (remove +, espaços, etc.)\nlet phoneNumber = message.from.replace(/[^0-9]/g, '');\n\n// Garante formato 3519XXXXXXXX (se começar com 9, adiciona 351)\nif (phoneNumber.startsWith('9') && phoneNumber.length === 9) {\n  phoneNumber = '351' + phoneNumber;\n}\n\n// Extrai o texto da mensagem\nconst messageText = message.text.body.trim();\n\nreturn {\n  json: {\n    whatsapp: phoneNumber,\n    userMessage: messageText,\n    isTextMessage: true,\n    rawFrom: message.from,\n    raw: body,\n  },\n};"
       },
-      "id": "node-parse-message",
-      "name": "Code – Parse WhatsApp Message",
+      "id": "a89a4293-b5ef-4787-a22c-06a096bcec8a",
+      "name": "Code – Parse WhatsApp Message1",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [460, 300]
+      "position": [
+        2992,
+        640
+      ]
     },
     {
       "parameters": {
         "operation": "appendOrUpdate",
         "documentId": {
           "__rl": true,
-          "value": "Bot_Demo_Chatbot_Estetica",
+          "value": "1i1G6ft07yJ1Wxmq6uU3P9DZa3V9387tYg5AvkZNPYmc",
           "mode": "list",
-          "cachedResultName": "Bot_Demo_Chatbot_Estetica"
+          "cachedResultName": "Bot_Demo_Chatbot_Estetica",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1i1G6ft07yJ1Wxmq6uU3P9DZa3V9387tYg5AvkZNPYmc/edit?usp=drivesdk"
         },
         "sheetName": {
           "__rl": true,
-          "value": "sessoes_bot",
+          "value": "gid=0",
           "mode": "list",
-          "cachedResultName": "sessoes_bot"
+          "cachedResultName": "sessoes_bot",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1i1G6ft07yJ1Wxmq6uU3P9DZa3V9387tYg5AvkZNPYmc/edit#gid=0"
         },
         "columns": {
           "mappingMode": "defineBelow",
           "value": {
             "whatsapp": "={{ $json.whatsapp }}"
           },
-          "matchingColumns": ["whatsapp"],
+          "matchingColumns": [
+            "whatsapp"
+          ],
           "schema": [
             {
               "id": "whatsapp",
@@ -54,7 +64,8 @@
               "defaultMatch": false,
               "display": true,
               "type": "string",
-              "canBeUsedToMatch": true
+              "canBeUsedToMatch": true,
+              "removed": false
             },
             {
               "id": "estado",
@@ -110,33 +121,39 @@
               "type": "string",
               "canBeUsedToMatch": false
             }
-          ]
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
         },
-        "options": {
-          "dataMode": "autoMapInputData"
-        }
+        "options": {}
       },
-      "id": "node-get-session",
-      "name": "Google Sheets – Get/Upsert Session",
+      "id": "91869b19-52d6-4cb1-919b-cfad2d07f326",
+      "name": "Google Sheets – Get/Upsert Session1",
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.2,
-      "position": [680, 300],
+      "position": [
+        3216,
+        640
+      ],
       "credentials": {
         "googleSheetsOAuth2Api": {
-          "id": "google-sheets-oauth",
-          "name": "Google Sheets OAuth2"
+          "id": "mIkSlt9IkIuDsP58",
+          "name": "ContaGmail_alcinomenezesjunior"
         }
       }
     },
     {
       "parameters": {
-        "jsCode": "// FASE 2: Preparar input para o LLM\n// Constrói histórico de conversa e contexto para a IA\n\nconst userMessage = $input.item.json.userMessage;\nconst whatsapp = $input.item.json.whatsapp;\n\n// Recupera dados da sessão do Google Sheets\nconst estado = $input.item.json.estado || 'inicio';\nconst servico = $input.item.json.servico || '';\nconst slot = $input.item.json.slot || '';\nconst historicoStr = $input.item.json.historico || '[]';\n\n// Parse do histórico (array de mensagens)\nlet historico = [];\ntry {\n  historico = JSON.parse(historicoStr);\n  if (!Array.isArray(historico)) {\n    historico = [];\n  }\n} catch (e) {\n  historico = [];\n}\n\n// Adiciona a mensagem atual do utilizador ao histórico\nhistorico.push({\n  role: 'user',\n  content: userMessage\n});\n\n// Serviços disponíveis (catálogo demo)\nconst servicosDisponiveis = [\n  { nome: 'Limpeza de Pele', duracao: '60 min', preco: '€45' },\n  { nome: 'Massagem Relaxante', duracao: '50 min', preco: '€50' },\n  { nome: 'Tratamento Facial Anti-idade', duracao: '75 min', preco: '€70' },\n  { nome: 'Depilação a Laser', duracao: '30 min', preco: '€60' },\n  { nome: 'Manicure e Pedicure', duracao: '60 min', preco: '€35' }\n];\n\n// Gera 3 slots de horário demo disponíveis\n// (numa implementação real, isto viria de um calendário real)\nconst hoje = new Date();\nconst slots = [];\nfor (let i = 1; i <= 3; i++) {\n  const data = new Date(hoje);\n  data.setDate(data.getDate() + i);\n  const hora = 10 + (i * 2); // 12h, 14h, 16h\n  const slotText = `${data.getDate()}/${data.getMonth() + 1} às ${hora}:00`;\n  slots.push(slotText);\n}\n\n// Monta o payload para o LLM\nconst llmPayload = {\n  state: estado,\n  service: servico,\n  slot: slot,\n  messages: historico,\n  context: {\n    servicosDisponiveis,\n    slotsDisponiveis: slots\n  }\n};\n\nreturn {\n  json: {\n    whatsapp,\n    userMessage,\n    estado,\n    servico,\n    slot,\n    historico: historicoStr,\n    llmPayload,\n    servicosDisponiveis,\n    slotsDisponiveis: slots\n  }\n};"
+        "jsCode": "// FASE 2: Preparar input para o LLM\n// Constrói histórico de conversa e contexto para a IA\n\nconst userMessage = $('Code – Parse WhatsApp Message1').item.json.userMessage;\nconst whatsapp = $input.item.json.whatsapp;\n\n// Recupera dados da sessão do Google Sheets\nconst estado = $input.item.json.estado || 'inicio';\nconst servico = $input.item.json.servico || '';\nconst slot = $input.item.json.slot || '';\nconst historicoStr = $input.item.json.historico || '[]';\n\n// Parse do histórico (array de mensagens)\nlet historico = [];\ntry {\n  historico = JSON.parse(historicoStr);\n  if (!Array.isArray(historico)) {\n    historico = [];\n  }\n} catch (e) {\n  historico = [];\n}\n\n// Adiciona a mensagem atual do utilizador ao histórico\nhistorico.push({\n  role: 'user',\n  content: userMessage\n});\n\n// Serviços disponíveis (catálogo demo)\nconst servicosDisponiveis = [\n  { nome: 'Limpeza de Pele', duracao: '60 min', preco: '€45' },\n  { nome: 'Massagem Relaxante', duracao: '50 min', preco: '€50' },\n  { nome: 'Tratamento Facial Anti-idade', duracao: '75 min', preco: '€70' },\n  { nome: 'Depilação a Laser', duracao: '30 min', preco: '€60' },\n  { nome: 'Manicure e Pedicure', duracao: '60 min', preco: '€35' }\n];\n\n// Gera 3 slots de horário demo disponíveis\n// (numa implementação real, isto viria de um calendário real)\nconst hoje = new Date();\nconst slots = [];\nfor (let i = 1; i <= 3; i++) {\n  const data = new Date(hoje);\n  data.setDate(data.getDate() + i);\n  const hora = 10 + (i * 2); // 12h, 14h, 16h\n  const slotText = `${data.getDate()}/${data.getMonth() + 1} às ${hora}:00`;\n  slots.push(slotText);\n}\n\n// Monta o payload para o LLM\nconst llmPayload = {\n  state: estado,\n  service: servico,\n  slot: slot,\n  messages: historico,\n  context: {\n    servicosDisponiveis,\n    slotsDisponiveis: slots\n  }\n};\n\nreturn {\n  json: {\n    whatsapp,\n    userMessage,\n    estado,\n    servico,\n    slot,\n    historico: historicoStr,\n    llmPayload,\n    servicosDisponiveis,\n    slotsDisponiveis: slots\n  }\n};"
       },
-      "id": "node-build-llm-input",
-      "name": "Code – Build LLM Input",
+      "id": "6955ecfb-d07d-4ca9-ac8b-c0082f905b74",
+      "name": "Code – Build LLM Input1",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [900, 300]
+      "position": [
+        3440,
+        640
+      ]
     },
     {
       "parameters": {
@@ -162,49 +179,55 @@
           "parameters": [
             {
               "name": "model",
-              "value": "claude-3-5-sonnet-latest"
+              "value": "claude-sonnet-4-20250514"
             },
             {
               "name": "max_tokens",
-              "value": "500"
+              "value": "={{ 500 }}"
             },
             {
               "name": "temperature",
-              "value": "0.7"
+              "value": "={{ 0.7 }}"
             },
             {
               "name": "system",
-              "value": "={{ `És um assistente de marcação para um estúdio de estética em Portugal.\\nFala SEMPRE em português de Portugal.\\nTom: amigável, profissional, direto, com frases curtas e claras para WhatsApp.\\n\\nObjetivo:\\n1. Ajudar a pessoa a entender o que o chatbot faz\\n2. Sugerir serviços baseado no que a pessoa diz (não listar todos de uma vez)\\n3. Oferecer 2-3 horários disponíveis\\n4. Confirmar uma marcação demo\\n\\nServiços disponíveis:\\n${$json.servicosDisponiveis.map(s => \\`- \\${s.nome} (\\${s.duracao}, \\${s.preco})\\`).join('\\\\n')}\\n\\nHorários disponíveis para oferecer:\\n${$json.slotsDisponiveis.map((s, i) => \\`\\${i+1}. \\${s}\\`).join('\\\\n')}\\n\\nEstado atual da conversa: ${$json.estado}\\nServiço escolhido: ${$json.servico || 'ainda não escolheu'}\\nHorário escolhido: ${$json.slot || 'ainda não escolheu'}\\n\\nIMPORTANTE: A tua resposta DEVE ser APENAS um JSON válido, sem texto antes ou depois, no formato:\\n{\\n  \\\"reply\\\": \\\"mensagem para o utilizador em PT-PT\\\",\\n  \\\"next_state\\\": \\\"inicio|a_explorar|a_escolher_servico|a_escolher_horario|confirmado\\\",\\n  \\\"service\\\": \\\"nome do serviço ou vazio\\\",\\n  \\\"slot\\\": \\\"horário escolhido ou vazio\\\",\\n  \\\"should_schedule_reminder\\\": true/false,\\n  \\\"should_reset\\\": false\\n}\\n\\nUsa emojis moderadamente. Se a pessoa pedir reset/recomeçar, usa should_reset=true.\\nQuando confirmares marcação, usa should_schedule_reminder=true e next_state=confirmado.` }}"
+              "value": "={{ [\n  \"És um assistente de marcação para um estúdio de estética em Portugal.\",\n  \"Fala SEMPRE em português de Portugal.\",\n  \"Tom: amigável, profissional, direto, com frases curtas e claras para WhatsApp.\",\n  \"\",\n  \"Objetivo:\",\n  \"1. Ajudar a pessoa a entender o que o chatbot faz\",\n  \"2. Sugerir serviços baseado no que a pessoa diz (não listar todos de uma vez)\",\n  \"3. Oferecer 2-3 horários disponíveis\",\n  \"4. Confirmar uma marcação demo\",\n  \"\",\n  \"Serviços disponíveis:\",\n  $json.servicosDisponiveis.map(s => `- ${s.nome} (${s.duracao}, ${s.preco})`).join('\\n'),\n  \"\",\n  \"Horários disponíveis para oferecer:\",\n  $json.slotsDisponiveis.map((s, i) => `${i + 1}. ${s}`).join('\\n'),\n  \"\",\n  `Estado atual da conversa: ${$json.estado}`,\n  `Serviço escolhido: ${$json.servico || 'ainda não escolheu'}`,\n  `Horário escolhido: ${$json.slot || 'ainda não escolheu'}`,\n  \"\",\n  \"IMPORTANTE: A tua resposta DEVE ser APENAS um JSON válido, sem texto antes ou depois, no formato:\",\n  \"{\",\n  '  \"reply\": \"mensagem para o utilizador em PT-PT\",',\n  '  \"next_state\": \"inicio|a_explorar|a_escolher_servico|a_escolher_horario|confirmado\",',\n  '  \"service\": \"nome do serviço ou vazio\",',\n  '  \"slot\": \"horário escolhido ou vazio\",',\n  '  \"should_schedule_reminder\": true/false,',\n  '  \"should_reset\": false',\n  \"}\",\n  \"\",\n  \"Usa emojis moderadamente. Se a pessoa pedir reset/recomeçar, usa should_reset=true.\",\n  \"Quando confirmares marcação, usa should_schedule_reminder=true e next_state=confirmado.\"\n].join('\\n') }}"
             },
             {
               "name": "messages",
-              "value": "={{ JSON.stringify($json.llmPayload.messages) }}"
+              "value": "={{\n  $json.llmPayload.messages.map(m => ({\n    role: m.role,\n    content: [\n      {\n        type: \"text\",\n        text: m.content || \"\"\n      }\n    ]\n  }))\n}}"
             }
           ]
         },
         "options": {}
       },
-      "id": "node-llm-request",
-      "name": "HTTP Request – LLM",
+      "id": "3b8cb19b-8c83-4452-a99e-7ee30221e5e0",
+      "name": "HTTP Request – LLM1",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
-      "position": [1120, 300],
+      "position": [
+        3664,
+        640
+      ],
       "credentials": {
         "anthropicApi": {
-          "id": "llm-api-credential",
+          "id": "Jw1qLxc9wqYCdib7",
           "name": "llmApi"
         }
       }
     },
     {
       "parameters": {
-        "jsCode": "// FASE 3: Interpretar resposta da IA\n// Parse do JSON retornado pela IA e atualização do estado\n\nconst llmResponse = $input.item.json;\n\n// Tenta extrair o JSON da resposta\nlet aiDecision;\ntry {\n  // A resposta pode vir em diferentes formatos dependendo da API\n  let contentText = '';\n  \n  if (llmResponse.content && Array.isArray(llmResponse.content) && llmResponse.content[0]) {\n    // Formato Anthropic (content é array de objetos com text)\n    contentText = llmResponse.content[0].text;\n  } else if (llmResponse.choices && llmResponse.choices[0]) {\n    // Formato OpenAI/similar\n    contentText = llmResponse.choices[0].message.content;\n  } else if (llmResponse.content && typeof llmResponse.content === 'string') {\n    // Formato direto (string)\n    contentText = llmResponse.content;\n  } else if (typeof llmResponse === 'string') {\n    contentText = llmResponse;\n  }\n  \n  // Remove possível markdown code blocks\n  contentText = contentText.replace(/```json\\n?/g, '').replace(/```\\n?/g, '').trim();\n  \n  aiDecision = JSON.parse(contentText);\n} catch (e) {\n  // Fallback caso o parse falhe\n  aiDecision = {\n    reply: 'Desculpa, tive um problema técnico. Podes repetir? 😊',\n    next_state: 'inicio',\n    service: '',\n    slot: '',\n    should_schedule_reminder: false,\n    should_reset: false\n  };\n}\n\n// Garante defaults\nconst reply = aiDecision.reply || 'Desculpa, não percebi. Podes repetir?';\nconst nextState = aiDecision.next_state || 'inicio';\nconst service = aiDecision.service || '';\nconst slot = aiDecision.slot || '';\nconst shouldScheduleReminder = aiDecision.should_schedule_reminder || false;\nconst shouldReset = aiDecision.should_reset || false;\n\n// Recupera dados anteriores\nconst whatsapp = $('Code – Build LLM Input').item.json.whatsapp;\nconst userMessage = $('Code – Build LLM Input').item.json.userMessage;\nlet historicoStr = $('Code – Build LLM Input').item.json.historico;\n\n// Atualiza histórico\nlet historico = [];\ntry {\n  historico = JSON.parse(historicoStr);\n} catch (e) {\n  historico = [];\n}\n\n// Adiciona resposta do assistant\nhistorico.push({\n  role: 'assistant',\n  content: reply\n});\n\n// Limita histórico a últimas 20 mensagens (10 turnos)\nif (historico.length > 20) {\n  historico = historico.slice(-20);\n}\n\n// Se deve resetar, limpa tudo\nlet finalState, finalService, finalSlot, finalHistorico;\n\nif (shouldReset) {\n  finalState = 'inicio';\n  finalService = '';\n  finalSlot = '';\n  finalHistorico = JSON.stringify([]);\n} else {\n  finalState = nextState;\n  finalService = service;\n  finalSlot = slot;\n  finalHistorico = JSON.stringify(historico);\n}\n\nconst now = new Date().toISOString();\n\nreturn {\n  json: {\n    whatsapp,\n    estado: finalState,\n    servico: finalService,\n    slot: finalSlot,\n    historico: finalHistorico,\n    updatedAt: now,\n    to: whatsapp,\n    reply: reply,\n    scheduleReminder: shouldScheduleReminder\n  }\n};"
+        "jsCode": "// FASE 3: Interpretar resposta da IA\n// Parse do JSON retornado pela IA e atualização do estado\n\nconst llmResponse = $input.item.json;\n\n// Tenta extrair o JSON da resposta\nlet aiDecision;\ntry {\n  // A resposta pode vir em diferentes formatos dependendo da API\n  let contentText = '';\n  \n  if (llmResponse.content && Array.isArray(llmResponse.content) && llmResponse.content[0]) {\n    // Formato Anthropic (content é array de objetos com text)\n    contentText = llmResponse.content[0].text;\n  } else if (llmResponse.choices && llmResponse.choices[0]) {\n    // Formato OpenAI/similar\n    contentText = llmResponse.choices[0].message.content;\n  } else if (llmResponse.content && typeof llmResponse.content === 'string') {\n    // Formato direto (string)\n    contentText = llmResponse.content;\n  } else if (typeof llmResponse === 'string') {\n    contentText = llmResponse;\n  }\n  \n  // Remove possível markdown code blocks\n  contentText = contentText.replace(/```json\\n?/g, '').replace(/```\\n?/g, '').trim();\n  \n  aiDecision = JSON.parse(contentText);\n} catch (e) {\n  // Fallback caso o parse falhe\n  aiDecision = {\n    reply: 'Desculpa, tive um problema técnico. Podes repetir? 😊',\n    next_state: 'inicio',\n    service: '',\n    slot: '',\n    should_schedule_reminder: false,\n    should_reset: false\n  };\n}\n\n// Garante defaults\nconst reply = aiDecision.reply || 'Desculpa, não percebi. Podes repetir?';\nconst nextState = aiDecision.next_state || 'inicio';\nconst service = aiDecision.service || '';\nconst slot = aiDecision.slot || '';\nconst shouldScheduleReminder = aiDecision.should_schedule_reminder || false;\nconst shouldReset = aiDecision.should_reset || false;\n\n// Recupera dados anteriores\nconst whatsapp = $('Code – Build LLM Input1').item.json.whatsapp;\nconst userMessage = $('Code – Build LLM Input1').item.json.userMessage;\nlet historicoStr = $('Code – Build LLM Input1').item.json.historico;\n\n// Atualiza histórico\nlet historico = [];\ntry {\n  historico = JSON.parse(historicoStr);\n} catch (e) {\n  historico = [];\n}\n\n// Adiciona resposta do assistant\nhistorico.push({\n  role: 'assistant',\n  content: reply\n});\n\n// Limita histórico a últimas 20 mensagens (10 turnos)\nif (historico.length > 20) {\n  historico = historico.slice(-20);\n}\n\n// Se deve resetar, limpa tudo\nlet finalState, finalService, finalSlot, finalHistorico;\n\nif (shouldReset) {\n  finalState = 'inicio';\n  finalService = '';\n  finalSlot = '';\n  finalHistorico = JSON.stringify([]);\n} else {\n  finalState = nextState;\n  finalService = service;\n  finalSlot = slot;\n  finalHistorico = JSON.stringify(historico);\n}\n\nconst now = new Date().toISOString();\n\nreturn {\n  json: {\n    whatsapp,\n    estado: finalState,\n    servico: finalService,\n    slot: finalSlot,\n    historico: finalHistorico,\n    updatedAt: now,\n    to: whatsapp,\n    reply: reply,\n    scheduleReminder: shouldScheduleReminder\n  }\n};"
       },
-      "id": "node-apply-decision",
-      "name": "Code – Apply LLM Decision",
+      "id": "edc7b824-e4a1-4a88-98a6-8dc0b786faef",
+      "name": "Code – Apply LLM Decision1",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [1340, 300]
+      "position": [
+        3888,
+        640
+      ]
     },
     {
       "parameters": {
@@ -231,7 +254,9 @@
             "historico": "={{ $json.historico }}",
             "updatedAt": "={{ $json.updatedAt }}"
           },
-          "matchingColumns": ["whatsapp"],
+          "matchingColumns": [
+            "whatsapp"
+          ],
           "schema": [
             {
               "id": "whatsapp",
@@ -291,15 +316,18 @@
         },
         "options": {}
       },
-      "id": "node-update-session",
-      "name": "Google Sheets – Update Session",
+      "id": "fc27283b-f29d-4b8e-a2b5-169b04e71847",
+      "name": "Google Sheets – Update Session1",
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.2,
-      "position": [1560, 300],
+      "position": [
+        4112,
+        544
+      ],
       "credentials": {
         "googleSheetsOAuth2Api": {
-          "id": "google-sheets-oauth",
-          "name": "Google Sheets OAuth2"
+          "id": "mIkSlt9IkIuDsP58",
+          "name": "ContaGmail_alcinomenezesjunior"
         }
       }
     },
@@ -341,17 +369,14 @@
         },
         "options": {}
       },
-      "id": "node-send-whatsapp",
-      "name": "HTTP Request – Send WhatsApp Message",
+      "id": "58b9ed62-1327-4aa2-aca2-9a71f77aa889",
+      "name": "HTTP Request – Send WhatsApp Message1",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
-      "position": [1780, 300],
-      "credentials": {
-        "whatsappCloudApi": {
-          "id": "whatsapp-cloud-api",
-          "name": "WhatsApp Cloud API"
-        }
-      }
+      "position": [
+        4336,
+        544
+      ]
     },
     {
       "parameters": {
@@ -362,34 +387,43 @@
               "value2": true
             }
           ]
-        }
+        },
+        "options": {}
       },
-      "id": "node-if-reminder",
-      "name": "IF – Should Schedule Reminder",
+      "id": "836bc5ea-3919-411c-a8c2-5b565831c5c3",
+      "name": "IF – Should Schedule Reminder1",
       "type": "n8n-nodes-base.if",
       "typeVersion": 2,
-      "position": [1780, 500]
+      "position": [
+        4112,
+        736
+      ]
     },
     {
       "parameters": {
         "jsCode": "// FASE 5: Calcular quando enviar o lembrete\n// Num cenário real, seria baseado no slot escolhido\n// Para demo, enviamos 1 minuto depois\n\nconst now = new Date();\nconst reminderTime = new Date(now.getTime() + 60 * 1000); // +1 minuto\n\nreturn {\n  json: {\n    whatsapp: $input.item.json.whatsapp,\n    servico: $input.item.json.servico,\n    slot: $input.item.json.slot,\n    reminderTime: reminderTime.toISOString(),\n    reminderTimestamp: reminderTime.getTime()\n  }\n};"
       },
-      "id": "node-compute-reminder",
-      "name": "Code – Compute Reminder Time",
+      "id": "1128b358-07a2-4946-bcb1-25aaea9bfc04",
+      "name": "Code – Compute Reminder Time1",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [2000, 600]
+      "position": [
+        4336,
+        736
+      ]
     },
     {
       "parameters": {
-        "resume": "dateTime",
-        "dateTime": "={{ $json.reminderTime }}"
+        "resume": "dateTime"
       },
-      "id": "node-wait-reminder",
-      "name": "Wait – Reminder",
+      "id": "1c3e6efd-a896-4317-9831-3c30918b0ffd",
+      "name": "Wait – Reminder1",
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1,
-      "position": [2220, 600],
+      "position": [
+        4560,
+        736
+      ],
       "webhookId": "reminder-webhook"
     },
     {
@@ -430,17 +464,14 @@
         },
         "options": {}
       },
-      "id": "node-send-reminder",
-      "name": "HTTP Request – Send Reminder",
+      "id": "557abec0-66c7-4312-9f98-69b121402624",
+      "name": "HTTP Request – Send Reminder1",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
-      "position": [2440, 600],
-      "credentials": {
-        "whatsappCloudApi": {
-          "id": "whatsapp-cloud-api",
-          "name": "WhatsApp Cloud API"
-        }
-      }
+      "position": [
+        4784,
+        736
+      ]
     },
     {
       "parameters": {
@@ -449,11 +480,14 @@
         "width": 340,
         "color": 4
       },
-      "id": "sticky-fase1",
-      "name": "Sticky Note – Fase 1",
+      "id": "4cbb3f0b-80d8-45ab-870b-fed5ed671231",
+      "name": "Sticky Note – Fase ",
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
-      "position": [220, 120]
+      "position": [
+        2656,
+        336
+      ]
     },
     {
       "parameters": {
@@ -462,11 +496,14 @@
         "width": 340,
         "color": 5
       },
-      "id": "sticky-fase2",
-      "name": "Sticky Note – Fase 2",
+      "id": "8d55a28c-f89b-460e-8e02-d67e550becd3",
+      "name": "Sticky Note – Fase 6",
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
-      "position": [660, 120]
+      "position": [
+        3184,
+        368
+      ]
     },
     {
       "parameters": {
@@ -475,11 +512,14 @@
         "width": 340,
         "color": 6
       },
-      "id": "sticky-fase3",
-      "name": "Sticky Note – Fase 3",
+      "id": "aab3daf5-7384-4453-be03-13fe3137a5a8",
+      "name": "Sticky Note – Fase 7",
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
-      "position": [1100, 120]
+      "position": [
+        3616,
+        368
+      ]
     },
     {
       "parameters": {
@@ -488,11 +528,14 @@
         "width": 420,
         "color": 3
       },
-      "id": "sticky-fase4",
-      "name": "Sticky Note – Fase 4",
+      "id": "705de2eb-6285-466a-8452-b710355afbe2",
+      "name": "Sticky Note – Fase 8",
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
-      "position": [1320, 120]
+      "position": [
+        4048,
+        288
+      ]
     },
     {
       "parameters": {
@@ -501,11 +544,14 @@
         "width": 480,
         "color": 7
       },
-      "id": "sticky-fase5",
-      "name": "Sticky Note – Fase 5",
+      "id": "b71361a6-c7f1-4ae8-9c31-34f02d9097a0",
+      "name": "Sticky Note – Fase 9",
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
-      "position": [1960, 440]
+      "position": [
+        4560,
+        528
+      ]
     },
     {
       "parameters": {
@@ -514,123 +560,116 @@
         "width": 580,
         "color": 2
       },
-      "id": "sticky-header",
-      "name": "Sticky Note – Header",
+      "id": "c02d3fb9-5e5c-46b1-a17c-1c608193240a",
+      "name": "Sticky Note – Header1",
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
-      "position": [220, -380]
+      "position": [
+        2640,
+        -224
+      ]
     }
   ],
+  "pinData": {},
   "connections": {
-    "Webhook – Testar Bot": {
+    "Webhook – Testar Bot1": {
       "main": [
         [
           {
-            "node": "Code – Parse WhatsApp Message",
+            "node": "Code – Parse WhatsApp Message1",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Code – Parse WhatsApp Message": {
+    "Code – Parse WhatsApp Message1": {
       "main": [
         [
           {
-            "node": "Google Sheets – Get/Upsert Session",
+            "node": "Google Sheets – Get/Upsert Session1",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Google Sheets – Get/Upsert Session": {
+    "Google Sheets – Get/Upsert Session1": {
       "main": [
         [
           {
-            "node": "Code – Build LLM Input",
+            "node": "Code – Build LLM Input1",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Code – Build LLM Input": {
+    "Code – Build LLM Input1": {
       "main": [
         [
           {
-            "node": "HTTP Request – LLM",
+            "node": "HTTP Request – LLM1",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "HTTP Request – LLM": {
+    "HTTP Request – LLM1": {
       "main": [
         [
           {
-            "node": "Code – Apply LLM Decision",
+            "node": "Code – Apply LLM Decision1",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Code – Apply LLM Decision": {
+    "Code – Apply LLM Decision1": {
+      "main": [
+        []
+      ]
+    },
+    "Google Sheets – Update Session1": {
       "main": [
         [
           {
-            "node": "Google Sheets – Update Session",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "IF – Should Schedule Reminder",
+            "node": "HTTP Request – Send WhatsApp Message1",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Google Sheets – Update Session": {
+    "IF – Should Schedule Reminder1": {
       "main": [
         [
           {
-            "node": "HTTP Request – Send WhatsApp Message",
+            "node": "Code – Compute Reminder Time1",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "IF – Should Schedule Reminder": {
+    "Code – Compute Reminder Time1": {
       "main": [
         [
           {
-            "node": "Code – Compute Reminder Time",
+            "node": "Wait – Reminder1",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Code – Compute Reminder Time": {
+    "Wait – Reminder1": {
       "main": [
         [
           {
-            "node": "Wait – Reminder",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Wait – Reminder": {
-      "main": [
-        [
-          {
-            "node": "HTTP Request – Send Reminder",
+            "node": "HTTP Request – Send Reminder1",
             "type": "main",
             "index": 0
           }
@@ -638,13 +677,15 @@
       ]
     }
   },
-  "pinData": {},
+  "active": false,
   "settings": {
     "executionOrder": "v1"
   },
-  "staticData": null,
-  "tags": [],
-  "triggerCount": 1,
-  "updatedAt": "2025-11-20T00:00:00.000Z",
-  "versionId": "1"
+  "versionId": "960f1dac-7c5c-4aa0-9cfe-79991802bc62",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "323c9b0d593df2deec4f9143de66619f0d3c68bbcf06bc32eb698efedd85ea5f"
+  },
+  "id": "R8IZfHwWXyg4EWSN",
+  "tags": []
 }
