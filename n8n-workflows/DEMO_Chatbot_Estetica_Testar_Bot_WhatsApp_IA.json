@@ -141,27 +141,44 @@
     {
       "parameters": {
         "method": "POST",
-        "url": "={{ $credentials.baseUrl }}/chat/completions",
+        "url": "https://api.anthropic.com/v1/messages",
         "authentication": "predefinedCredentialType",
-        "nodeCredentialType": "llmApi",
+        "nodeCredentialType": "anthropicApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "anthropic-version",
+              "value": "2023-06-01"
+            },
+            {
+              "name": "content-type",
+              "value": "application/json"
+            }
+          ]
+        },
         "sendBody": true,
         "bodyParameters": {
           "parameters": [
             {
               "name": "model",
-              "value": "={{ $credentials.model || 'gpt-4' }}"
+              "value": "claude-3-5-sonnet-latest"
             },
             {
-              "name": "messages",
-              "value": "={{ JSON.stringify([\n  {\n    role: 'system',\n    content: `És um assistente de marcação para um estúdio de estética em Portugal.\nFala SEMPRE em português de Portugal.\nTom: amigável, profissional, direto, com frases curtas e claras para WhatsApp.\n\nObjetivo:\n1. Ajudar a pessoa a entender o que o chatbot faz\n2. Sugerir serviços baseado no que a pessoa diz (não listar todos de uma vez)\n3. Oferecer 2-3 horários disponíveis\n4. Confirmar uma marcação demo\n\nServiços disponíveis:\n${$json.servicosDisponiveis.map(s => `- ${s.nome} (${s.duracao}, ${s.preco})`).join('\\n')}\n\nHorários disponíveis para oferecer:\n${$json.slotsDisponiveis.map((s, i) => `${i+1}. ${s}`).join('\\n')}\n\nEstado atual da conversa: ${$json.estado}\nServiço escolhido: ${$json.servico || 'ainda não escolheu'}\nHorário escolhido: ${$json.slot || 'ainda não escolheu'}\n\nIMPORTANTE: A tua resposta DEVE ser APENAS um JSON válido, sem texto antes ou depois, no formato:\n{\n  \"reply\": \"mensagem para o utilizador em PT-PT\",\n  \"next_state\": \"inicio|a_explorar|a_escolher_servico|a_escolher_horario|confirmado\",\n  \"service\": \"nome do serviço ou vazio\",\n  \"slot\": \"horário escolhido ou vazio\",\n  \"should_schedule_reminder\": true/false,\n  \"should_reset\": false\n}\n\nUsa emojis moderadamente. Se a pessoa pedir reset/recomeçar, usa should_reset=true.\nQuando confirmares marcação, usa should_schedule_reminder=true e next_state=confirmado.`\n  },\n  ...$json.llmPayload.messages\n]) }}"
+              "name": "max_tokens",
+              "value": "500"
             },
             {
               "name": "temperature",
               "value": "0.7"
             },
             {
-              "name": "max_tokens",
-              "value": "500"
+              "name": "system",
+              "value": "={{ `És um assistente de marcação para um estúdio de estética em Portugal.\\nFala SEMPRE em português de Portugal.\\nTom: amigável, profissional, direto, com frases curtas e claras para WhatsApp.\\n\\nObjetivo:\\n1. Ajudar a pessoa a entender o que o chatbot faz\\n2. Sugerir serviços baseado no que a pessoa diz (não listar todos de uma vez)\\n3. Oferecer 2-3 horários disponíveis\\n4. Confirmar uma marcação demo\\n\\nServiços disponíveis:\\n${$json.servicosDisponiveis.map(s => \\`- \\${s.nome} (\\${s.duracao}, \\${s.preco})\\`).join('\\\\n')}\\n\\nHorários disponíveis para oferecer:\\n${$json.slotsDisponiveis.map((s, i) => \\`\\${i+1}. \\${s}\\`).join('\\\\n')}\\n\\nEstado atual da conversa: ${$json.estado}\\nServiço escolhido: ${$json.servico || 'ainda não escolheu'}\\nHorário escolhido: ${$json.slot || 'ainda não escolheu'}\\n\\nIMPORTANTE: A tua resposta DEVE ser APENAS um JSON válido, sem texto antes ou depois, no formato:\\n{\\n  \\\"reply\\\": \\\"mensagem para o utilizador em PT-PT\\\",\\n  \\\"next_state\\\": \\\"inicio|a_explorar|a_escolher_servico|a_escolher_horario|confirmado\\\",\\n  \\\"service\\\": \\\"nome do serviço ou vazio\\\",\\n  \\\"slot\\\": \\\"horário escolhido ou vazio\\\",\\n  \\\"should_schedule_reminder\\\": true/false,\\n  \\\"should_reset\\\": false\\n}\\n\\nUsa emojis moderadamente. Se a pessoa pedir reset/recomeçar, usa should_reset=true.\\nQuando confirmares marcação, usa should_schedule_reminder=true e next_state=confirmado.` }}"
+            },
+            {
+              "name": "messages",
+              "value": "={{ JSON.stringify($json.llmPayload.messages) }}"
             }
           ]
         },
@@ -173,15 +190,15 @@
       "typeVersion": 4.1,
       "position": [1120, 300],
       "credentials": {
-        "llmApi": {
+        "anthropicApi": {
           "id": "llm-api-credential",
-          "name": "LLM API"
+          "name": "llmApi"
         }
       }
     },
     {
       "parameters": {
-        "jsCode": "// FASE 3: Interpretar resposta da IA\n// Parse do JSON retornado pela IA e atualização do estado\n\nconst llmResponse = $input.item.json;\n\n// Tenta extrair o JSON da resposta\nlet aiDecision;\ntry {\n  // A resposta pode vir em diferentes formatos dependendo da API\n  let contentText = '';\n  \n  if (llmResponse.choices && llmResponse.choices[0]) {\n    // Formato OpenAI/similar\n    contentText = llmResponse.choices[0].message.content;\n  } else if (llmResponse.content) {\n    // Formato direto\n    contentText = llmResponse.content;\n  } else if (typeof llmResponse === 'string') {\n    contentText = llmResponse;\n  }\n  \n  // Remove possível markdown code blocks\n  contentText = contentText.replace(/```json\\n?/g, '').replace(/```\\n?/g, '').trim();\n  \n  aiDecision = JSON.parse(contentText);\n} catch (e) {\n  // Fallback caso o parse falhe\n  aiDecision = {\n    reply: 'Desculpa, tive um problema técnico. Podes repetir? 😊',\n    next_state: 'inicio',\n    service: '',\n    slot: '',\n    should_schedule_reminder: false,\n    should_reset: false\n  };\n}\n\n// Garante defaults\nconst reply = aiDecision.reply || 'Desculpa, não percebi. Podes repetir?';\nconst nextState = aiDecision.next_state || 'inicio';\nconst service = aiDecision.service || '';\nconst slot = aiDecision.slot || '';\nconst shouldScheduleReminder = aiDecision.should_schedule_reminder || false;\nconst shouldReset = aiDecision.should_reset || false;\n\n// Recupera dados anteriores\nconst whatsapp = $('Code – Build LLM Input').item.json.whatsapp;\nconst userMessage = $('Code – Build LLM Input').item.json.userMessage;\nlet historicoStr = $('Code – Build LLM Input').item.json.historico;\n\n// Atualiza histórico\nlet historico = [];\ntry {\n  historico = JSON.parse(historicoStr);\n} catch (e) {\n  historico = [];\n}\n\n// Adiciona resposta do assistant\nhistorico.push({\n  role: 'assistant',\n  content: reply\n});\n\n// Limita histórico a últimas 20 mensagens (10 turnos)\nif (historico.length > 20) {\n  historico = historico.slice(-20);\n}\n\n// Se deve resetar, limpa tudo\nlet finalState, finalService, finalSlot, finalHistorico;\n\nif (shouldReset) {\n  finalState = 'inicio';\n  finalService = '';\n  finalSlot = '';\n  finalHistorico = JSON.stringify([]);\n} else {\n  finalState = nextState;\n  finalService = service;\n  finalSlot = slot;\n  finalHistorico = JSON.stringify(historico);\n}\n\nconst now = new Date().toISOString();\n\nreturn {\n  json: {\n    whatsapp,\n    estado: finalState,\n    servico: finalService,\n    slot: finalSlot,\n    historico: finalHistorico,\n    updatedAt: now,\n    to: whatsapp,\n    reply: reply,\n    scheduleReminder: shouldScheduleReminder\n  }\n};"
+        "jsCode": "// FASE 3: Interpretar resposta da IA\n// Parse do JSON retornado pela IA e atualização do estado\n\nconst llmResponse = $input.item.json;\n\n// Tenta extrair o JSON da resposta\nlet aiDecision;\ntry {\n  // A resposta pode vir em diferentes formatos dependendo da API\n  let contentText = '';\n  \n  if (llmResponse.content && Array.isArray(llmResponse.content) && llmResponse.content[0]) {\n    // Formato Anthropic (content é array de objetos com text)\n    contentText = llmResponse.content[0].text;\n  } else if (llmResponse.choices && llmResponse.choices[0]) {\n    // Formato OpenAI/similar\n    contentText = llmResponse.choices[0].message.content;\n  } else if (llmResponse.content && typeof llmResponse.content === 'string') {\n    // Formato direto (string)\n    contentText = llmResponse.content;\n  } else if (typeof llmResponse === 'string') {\n    contentText = llmResponse;\n  }\n  \n  // Remove possível markdown code blocks\n  contentText = contentText.replace(/```json\\n?/g, '').replace(/```\\n?/g, '').trim();\n  \n  aiDecision = JSON.parse(contentText);\n} catch (e) {\n  // Fallback caso o parse falhe\n  aiDecision = {\n    reply: 'Desculpa, tive um problema técnico. Podes repetir? 😊',\n    next_state: 'inicio',\n    service: '',\n    slot: '',\n    should_schedule_reminder: false,\n    should_reset: false\n  };\n}\n\n// Garante defaults\nconst reply = aiDecision.reply || 'Desculpa, não percebi. Podes repetir?';\nconst nextState = aiDecision.next_state || 'inicio';\nconst service = aiDecision.service || '';\nconst slot = aiDecision.slot || '';\nconst shouldScheduleReminder = aiDecision.should_schedule_reminder || false;\nconst shouldReset = aiDecision.should_reset || false;\n\n// Recupera dados anteriores\nconst whatsapp = $('Code – Build LLM Input').item.json.whatsapp;\nconst userMessage = $('Code – Build LLM Input').item.json.userMessage;\nlet historicoStr = $('Code – Build LLM Input').item.json.historico;\n\n// Atualiza histórico\nlet historico = [];\ntry {\n  historico = JSON.parse(historicoStr);\n} catch (e) {\n  historico = [];\n}\n\n// Adiciona resposta do assistant\nhistorico.push({\n  role: 'assistant',\n  content: reply\n});\n\n// Limita histórico a últimas 20 mensagens (10 turnos)\nif (historico.length > 20) {\n  historico = historico.slice(-20);\n}\n\n// Se deve resetar, limpa tudo\nlet finalState, finalService, finalSlot, finalHistorico;\n\nif (shouldReset) {\n  finalState = 'inicio';\n  finalService = '';\n  finalSlot = '';\n  finalHistorico = JSON.stringify([]);\n} else {\n  finalState = nextState;\n  finalService = service;\n  finalSlot = slot;\n  finalHistorico = JSON.stringify(historico);\n}\n\nconst now = new Date().toISOString();\n\nreturn {\n  json: {\n    whatsapp,\n    estado: finalState,\n    servico: finalService,\n    slot: finalSlot,\n    historico: finalHistorico,\n    updatedAt: now,\n    to: whatsapp,\n    reply: reply,\n    scheduleReminder: shouldScheduleReminder\n  }\n};"
       },
       "id": "node-apply-decision",
       "name": "Code – Apply LLM Decision",
@@ -453,7 +470,7 @@
     },
     {
       "parameters": {
-        "content": "## FASE 3 – CHAMAR IA\n\n✅ Monta prompt do sistema (recepcionista PT-PT)\n✅ Inclui histórico + mensagem atual\n✅ Envia para API LLM genérica\n✅ Recebe decisão em JSON",
+        "content": "## FASE 3 – CHAMAR IA\n\n✅ Monta prompt do sistema (recepcionista PT-PT)\n✅ Inclui histórico + mensagem atual\n✅ Envia para Anthropic Claude API\n✅ Recebe decisão em JSON",
         "height": 240,
         "width": 340,
         "color": 6
@@ -492,7 +509,7 @@
     },
     {
       "parameters": {
-        "content": "# 🤖 DEMO CHATBOT ESTÉTICA – TESTAR BOT WHATSAPP IA\n\n**Objetivo:** Bot demo de marcação para landing page /chatbot-estetica\n\n**Fluxo:**\n1. Utilizador clica \"Testar Bot no WhatsApp\" na landing page\n2. WhatsApp abre com mensagem inicial\n3. Bot conversa em PT-PT, estilo recepcionista natural\n4. Sugere serviços, horários\n5. Confirma \"marcação demo\"\n6. Envia lembrete (1min depois, para demo)\n\n**Tech Stack:**\n• WhatsApp Cloud API\n• Google Sheets (sessão + estado)\n• LLM genérico (OpenAI-compatible)\n• Máquina de estados: inicio → a_explorar → a_escolher_servico → a_escolher_horario → confirmado",
+        "content": "# 🤖 DEMO CHATBOT ESTÉTICA – TESTAR BOT WHATSAPP IA\n\n**Objetivo:** Bot demo de marcação para landing page /chatbot-estetica\n\n**Fluxo:**\n1. Utilizador clica \"Testar Bot no WhatsApp\" na landing page\n2. WhatsApp abre com mensagem inicial\n3. Bot conversa em PT-PT, estilo recepcionista natural\n4. Sugere serviços, horários\n5. Confirma \"marcação demo\"\n6. Envia lembrete (1min depois, para demo)\n\n**Tech Stack:**\n• WhatsApp Cloud API\n• Google Sheets (sessão + estado)\n• Anthropic Claude API (claude-3-5-sonnet-latest)\n• Máquina de estados: inicio → a_explorar → a_escolher_servico → a_escolher_horario → confirmado",
         "height": 440,
         "width": 580,
         "color": 2
