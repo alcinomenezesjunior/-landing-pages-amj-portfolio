@@ -302,13 +302,457 @@
     },
     {
       "parameters": {
-        "jsCode": "// Process AI response and prepare for database update\nconst aiResponse = $input.first().json;\nconst mergedData = $('Code – Merge Data').first().json;\n\n// Add new message to history\nconst messages = mergedData.conversationHistory || [];\nmessages.push({\n  role: 'user',\n  content: mergedData.message,\n  timestamp: new Date().toISOString()\n});\nmessages.push({\n  role: 'assistant',\n  content: aiResponse.output,\n  timestamp: new Date().toISOString()\n});\n\n// Keep only last 20 messages for context\nconst trimmedMessages = messages.slice(-20);\n\n// Extract any booking intent from context\nconst hasBookingIntent = aiResponse.output.toLowerCase().includes('marcar') || \n                         aiResponse.output.toLowerCase().includes('disponibilidade');\n\nreturn {\n  json: {\n    phone: mergedData.phone,\n    clientId: mergedData.clientId,\n    conversationId: mergedData.conversationId,\n    messages: trimmedMessages,\n    currentState: hasBookingIntent ? 'choosing_service' : mergedData.conversationState,\n    responseText: aiResponse.output,\n    toolsUsed: aiResponse.toolCalls || []\n  }\n};"
+        "jsCode": "// Check if AI Agent made any tool calls\nconst aiResponse = $input.first().json;\nconst toolCalls = aiResponse.toolCalls || [];\nconst mergedData = $('Code – Merge Data').first().json;\n\nif (toolCalls.length > 0) {\n  return {\n    json: {\n      hasToolCalls: true,\n      toolCalls: toolCalls,\n      originalResponse: aiResponse.output,\n      phone: mergedData.phone,\n      clientId: mergedData.clientId,\n      clientName: mergedData.clientName,\n      clientEmail: mergedData.clientEmail,\n      conversationId: mergedData.conversationId,\n      conversationState: mergedData.conversationState,\n      conversationHistory: mergedData.conversationHistory\n    }\n  };\n} else {\n  return {\n    json: {\n      hasToolCalls: false,\n      responseText: aiResponse.output,\n      phone: mergedData.phone,\n      clientId: mergedData.clientId,\n      conversationId: mergedData.conversationId,\n      conversationState: mergedData.conversationState,\n      conversationHistory: mergedData.conversationHistory\n    }\n  };\n}"
+      },
+      "id": "code-check-tool-calls",
+      "name": "Code – Check Tool Calls",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [2220, 200]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{$json.hasToolCalls}}",
+              "value2": true
+            }
+          ]
+        }
+      },
+      "id": "if-has-tool-calls",
+      "name": "IF – Has Tool Calls?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [2440, 200]
+    },
+    {
+      "parameters": {
+        "dataType": "string",
+        "value1": "={{$json.toolCalls[0].name}}",
+        "rules": {
+          "rules": [
+            {"value2": "check_availability", "output": 0},
+            {"value2": "create_booking", "output": 1},
+            {"value2": "generate_payment_link", "output": 2},
+            {"value2": "cancel_booking", "output": 3},
+            {"value2": "reschedule_booking", "output": 4},
+            {"value2": "process_refund", "output": 5},
+            {"value2": "get_care_instructions", "output": 6},
+            {"value2": "get_professional_info", "output": 7}
+          ]
+        }
+      },
+      "id": "switch-route-by-tool",
+      "name": "Switch – Route by Tool",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3,
+      "position": [2660, 100]
+    },
+    {
+      "parameters": {
+        "jsCode": "// TOOL 1: check_availability - Parse arguments\nconst toolCall = $input.first().json.toolCalls[0];\nconst args = toolCall.arguments;\n\nreturn {\n  json: {\n    toolName: 'check_availability',\n    serviceName: args.service_name,\n    professionalName: args.professional_name || null,\n    dateFrom: args.date_from,\n    dateTo: args.date_to,\n    phone: $input.first().json.phone,\n    clientId: $input.first().json.clientId\n  }\n};"
+      },
+      "id": "tool1-parse-args",
+      "name": "Tool 1 – Parse Arguments",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [2880, -100]
+    },
+    {
+      "parameters": {
+        "operation": "select",
+        "table": "services",
+        "filterType": "manual",
+        "matchingColumns": [
+          {
+            "column": "name",
+            "value": "={{$json.serviceName}}"
+          }
+        ],
+        "options": {}
+      },
+      "id": "tool1-get-service",
+      "name": "Tool 1 – Get Service",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [3100, -100],
+      "credentials": {
+        "supabaseApi": {
+          "id": "1",
+          "name": "Supabase - Essenza Prime"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "select",
+        "table": "professionals",
+        "filterType": "manual",
+        "matchingColumns": [
+          {
+            "column": "services",
+            "operator": "contains",
+            "value": "={{$('Tool 1 – Parse Arguments').item.json.serviceName}}"
+          }
+        ],
+        "options": {}
+      },
+      "id": "tool1-get-professionals",
+      "name": "Tool 1 – Get Professionals",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [3320, -100],
+      "credentials": {
+        "supabaseApi": {
+          "id": "1",
+          "name": "Supabase - Essenza Prime"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "operation": "getAll",
+        "calendarId": "d682359e9a244ab7f9a7f7e925d05bf9a6def533796af78a1ecba749103b59c8@group.calendar.google.com",
+        "options": {
+          "timeMin": "={{$('Tool 1 – Parse Arguments').item.json.dateFrom}}T00:00:00Z",
+          "timeMax": "={{$('Tool 1 – Parse Arguments').item.json.dateTo}}T23:59:59Z"
+        }
+      },
+      "id": "tool1-get-calendar-events",
+      "name": "Tool 1 – Get Calendar Events",
+      "type": "n8n-nodes-base.googleCalendar",
+      "typeVersion": 2,
+      "position": [3540, -100],
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "3",
+          "name": "Google Calendar OAuth2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Calculate available slots\nconst parseData = $('Tool 1 – Parse Arguments').first().json;\nconst serviceData = $('Tool 1 – Get Service').first().json;\nconst professionals = $('Tool 1 – Get Professionals').all();\nconst calendarEvents = $('Tool 1 – Get Calendar Events').all();\n\nconst serviceName = parseData.serviceName;\nconst professionalFilter = parseData.professionalName;\nconst dateFrom = new Date(parseData.dateFrom);\nconst dateTo = new Date(parseData.dateTo);\nconst durationMinutes = serviceData.duration_max || 60;\n\n// Helper: Parse time string to minutes since midnight\nfunction timeToMinutes(timeStr) {\n  const [hours, minutes] = timeStr.split(':').map(Number);\n  return hours * 60 + minutes;\n}\n\n// Helper: Format minutes to time string\nfunction minutesToTime(minutes) {\n  const hours = Math.floor(minutes / 60).toString().padStart(2, '0');\n  const mins = (minutes % 60).toString().padStart(2, '0');\n  return `${hours}:${mins}`;\n}\n\n// Helper: Format date to YYYY-MM-DD\nfunction formatDate(date) {\n  return date.toISOString().split('T')[0];\n}\n\n// Build busy times from calendar events\nconst busyTimes = calendarEvents.map(event => ({\n  start: new Date(event.json.start.dateTime || event.json.start.date),\n  end: new Date(event.json.end.dateTime || event.json.end.date)\n}));\n\nconst availableSlots = [];\n\n// Process each professional\nfor (const prof of professionals) {\n  const profName = prof.json.name;\n  \n  // Filter by professional if specified\n  if (professionalFilter && !profName.toLowerCase().includes(professionalFilter.toLowerCase())) {\n    continue;\n  }\n  \n  const schedule = prof.json.schedule || {};\n  \n  // Iterate through date range\n  let currentDate = new Date(dateFrom);\n  while (currentDate <= dateTo) {\n    const dayName = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'][currentDate.getDay()];\n    const daySchedule = schedule[dayName];\n    \n    if (daySchedule && daySchedule.start && daySchedule.end) {\n      const workStart = timeToMinutes(daySchedule.start);\n      const workEnd = timeToMinutes(daySchedule.end);\n      \n      // Generate slots every 30 minutes\n      let slotStart = workStart;\n      while (slotStart + durationMinutes <= workEnd) {\n        const slotEnd = slotStart + durationMinutes;\n        \n        // Create date objects for this slot\n        const slotStartDate = new Date(currentDate);\n        slotStartDate.setHours(Math.floor(slotStart / 60), slotStart % 60, 0, 0);\n        \n        const slotEndDate = new Date(currentDate);\n        slotEndDate.setHours(Math.floor(slotEnd / 60), slotEnd % 60, 0, 0);\n        \n        // Check if slot conflicts with any busy time (with 15min buffer)\n        const hasConflict = busyTimes.some(busy => {\n          const bufferMs = 15 * 60 * 1000; // 15 minutes buffer\n          return (\n            (slotStartDate >= new Date(busy.start.getTime() - bufferMs) && slotStartDate < busy.end) ||\n            (slotEndDate > busy.start && slotEndDate <= new Date(busy.end.getTime() + bufferMs)) ||\n            (slotStartDate <= busy.start && slotEndDate >= busy.end)\n          );\n        });\n        \n        if (!hasConflict) {\n          availableSlots.push({\n            date: formatDate(currentDate),\n            time: minutesToTime(slotStart),\n            professional: profName\n          });\n        }\n        \n        slotStart += 30; // 30 minute intervals\n      }\n    }\n    \n    currentDate.setDate(currentDate.getDate() + 1);\n  }\n}\n\n// Return top 5 slots\nconst topSlots = availableSlots.slice(0, 5);\n\nreturn {\n  json: {\n    toolName: 'check_availability',\n    success: true,\n    available_slots: topSlots,\n    total_found: availableSlots.length\n  }\n};"
+      },
+      "id": "tool1-calculate-slots",
+      "name": "Tool 1 – Calculate Available Slots",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [3760, -100]
+    },
+    {
+      "parameters": {
+        "jsCode": "// TOOL 2: create_booking - Parse arguments\nconst toolCall = $input.first().json.toolCalls[0];\nconst args = toolCall.arguments;\n\nreturn {\n  json: {\n    toolName: 'create_booking',\n    serviceName: args.service_name,\n    professionalName: args.professional_name,\n    date: args.date,\n    timeStart: args.time_start,\n    durationMinutes: args.duration_minutes,\n    clientName: args.client_name,\n    clientPhone: args.client_phone,\n    clientEmail: args.client_email || '',\n    price: args.price,\n    deposit: args.deposit || (args.price * 0.5),\n    stripePaymentId: args.stripe_payment_id || '',\n    phone: $input.first().json.phone,\n    clientId: $input.first().json.clientId\n  }\n};"
+      },
+      "id": "tool2-parse-args",
+      "name": "Tool 2 – Parse Arguments",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [2880, 0]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Prepare Google Calendar event data\nconst data = $input.first().json;\n\nconst eventSummary = `[MARCAÇÃO] ${data.serviceName} - ${data.clientName}`;\nconst eventDescription = `═══════════════════════════════\nDADOS DO CLIENTE\n═══════════════════════════════\nNome: ${data.clientName}\nWhatsApp: ${data.clientPhone}\nEmail: ${data.clientEmail}\n\n═══════════════════════════════\nDETALHES DA MARCAÇÃO\n═══════════════════════════════\nServiço: ${data.serviceName}\nProfissional: ${data.professionalName}\nDuração: ${data.durationMinutes} min\n\n═══════════════════════════════\nPAGAMENTO\n═══════════════════════════════\nPreço Total: €${data.price}\nDepósito (50%): €${data.deposit}\nEstado: ${data.stripePaymentId ? 'Pago' : 'Pendente'}\nStripe ID: ${data.stripePaymentId}\n\n═══════════════════════════════\nSISTEMA\n═══════════════════════════════\nCriado via: Chatbot WhatsApp\nTimestamp: ${new Date().toISOString()}`;\n\n// Calculate end time\nconst [hours, minutes] = data.timeStart.split(':').map(Number);\nconst startDate = new Date(`${data.date}T${data.timeStart}:00`);\nconst endDate = new Date(startDate.getTime() + data.durationMinutes * 60000);\n\nreturn {\n  json: {\n    summary: eventSummary,\n    description: eventDescription,\n    start: startDate.toISOString(),\n    end: endDate.toISOString(),\n    ...data\n  }\n};"
+      },
+      "id": "tool2-prepare-calendar-data",
+      "name": "Tool 2 – Prepare Calendar Data",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [3100, 0]
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "operation": "create",
+        "calendarId": "d682359e9a244ab7f9a7f7e925d05bf9a6def533796af78a1ecba749103b59c8@group.calendar.google.com",
+        "summary": "={{$json.summary}}",
+        "description": "={{$json.description}}",
+        "start": "={{$json.start}}",
+        "end": "={{$json.end}}",
+        "options": {}
+      },
+      "id": "tool2-create-calendar-event",
+      "name": "Tool 2 – Create Calendar Event",
+      "type": "n8n-nodes-base.googleCalendar",
+      "typeVersion": 2,
+      "position": [3320, 0],
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "3",
+          "name": "Google Calendar OAuth2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "insert",
+        "table": "appointments",
+        "dataMode": "defineBelow",
+        "valuesToSend": {
+          "values": [
+            {
+              "column": "client_id",
+              "value": "={{$('Tool 2 – Parse Arguments').item.json.clientId}}"
+            },
+            {
+              "column": "service",
+              "value": "={{$('Tool 2 – Parse Arguments').item.json.serviceName}}"
+            },
+            {
+              "column": "professional",
+              "value": "={{$('Tool 2 – Parse Arguments').item.json.professionalName}}"
+            },
+            {
+              "column": "date",
+              "value": "={{$('Tool 2 – Parse Arguments').item.json.date}}"
+            },
+            {
+              "column": "time_start",
+              "value": "={{$('Tool 2 – Parse Arguments').item.json.timeStart}}"
+            },
+            {
+              "column": "duration_minutes",
+              "value": "={{$('Tool 2 – Parse Arguments').item.json.durationMinutes}}"
+            },
+            {
+              "column": "price",
+              "value": "={{$('Tool 2 – Parse Arguments').item.json.price}}"
+            },
+            {
+              "column": "deposit",
+              "value": "={{$('Tool 2 – Parse Arguments').item.json.deposit}}"
+            },
+            {
+              "column": "deposit_paid",
+              "value": "={{$('Tool 2 – Parse Arguments').item.json.stripePaymentId ? true : false}}"
+            },
+            {
+              "column": "stripe_payment_id",
+              "value": "={{$('Tool 2 – Parse Arguments').item.json.stripePaymentId}}"
+            },
+            {
+              "column": "google_calendar_event_id",
+              "value": "={{$json.id}}"
+            },
+            {
+              "column": "status",
+              "value": "confirmed"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "tool2-create-appointment",
+      "name": "Tool 2 – Create Appointment",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [3540, 0],
+      "credentials": {
+        "supabaseApi": {
+          "id": "1",
+          "name": "Supabase - Essenza Prime"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Schedule automated messages\nconst parseData = $('Tool 2 – Parse Arguments').first().json;\nconst appointmentData = $input.first().json;\n\nconst appointmentId = appointmentData.id;\nconst appointmentDateTime = new Date(`${parseData.date}T${parseData.timeStart}:00`);\n\n// Calculate scheduled times\nconst messages = [\n  {\n    type: 'reminder_24h',\n    scheduledFor: new Date(appointmentDateTime.getTime() - 24 * 60 * 60 * 1000).toISOString()\n  },\n  {\n    type: 'reminder_1h',\n    scheduledFor: new Date(appointmentDateTime.getTime() - 60 * 60 * 1000).toISOString()\n  },\n  {\n    type: 'post_care',\n    scheduledFor: new Date(appointmentDateTime.getTime() + (parseData.durationMinutes + 15) * 60 * 1000).toISOString()\n  },\n  {\n    type: 'follow_up_2h',\n    scheduledFor: new Date(appointmentDateTime.getTime() + (parseData.durationMinutes + 120) * 60 * 1000).toISOString()\n  },\n  {\n    type: 'follow_up_7d',\n    scheduledFor: new Date(appointmentDateTime.getTime() + 7 * 24 * 60 * 60 * 1000).toISOString()\n  }\n];\n\nreturn messages.map(msg => ({\n  json: {\n    appointment_id: appointmentId,\n    client_phone: parseData.clientPhone,\n    message_type: msg.type,\n    scheduled_for: msg.scheduledFor,\n    sent: false\n  }\n}));"
+      },
+      "id": "tool2-prepare-scheduled-messages",
+      "name": "Tool 2 – Prepare Scheduled Messages",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [3760, 0]
+    },
+    {
+      "parameters": {
+        "operation": "insert",
+        "table": "scheduled_messages",
+        "dataMode": "defineBelow",
+        "valuesToSend": {
+          "values": [
+            {
+              "column": "appointment_id",
+              "value": "={{$json.appointment_id}}"
+            },
+            {
+              "column": "client_phone",
+              "value": "={{$json.client_phone}}"
+            },
+            {
+              "column": "message_type",
+              "value": "={{$json.message_type}}"
+            },
+            {
+              "column": "scheduled_for",
+              "value": "={{$json.scheduled_for}}"
+            },
+            {
+              "column": "sent",
+              "value": "={{$json.sent}}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "tool2-create-scheduled-messages",
+      "name": "Tool 2 – Create Scheduled Messages",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [3980, 0],
+      "credentials": {
+        "supabaseApi": {
+          "id": "1",
+          "name": "Supabase - Essenza Prime"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Format tool result for AI Agent\nconst appointmentData = $('Tool 2 – Create Appointment').first().json;\nconst parseData = $('Tool 2 – Parse Arguments').first().json;\n\nreturn {\n  json: {\n    toolName: 'create_booking',\n    success: true,\n    appointment_id: appointmentData.id,\n    calendar_event_id: appointmentData.google_calendar_event_id,\n    message: `Marcação criada com sucesso para ${parseData.clientName} - ${parseData.serviceName} em ${parseData.date} às ${parseData.timeStart}`\n  }\n};"
+      },
+      "id": "tool2-format-result",
+      "name": "Tool 2 – Format Result",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [4200, 0]
+    },
+    {
+      "parameters": {
+        "jsCode": "// TOOL 3: generate_payment_link - Parse arguments\nconst toolCall = $input.first().json.toolCalls[0];\nconst args = toolCall.arguments;\n\nreturn {\n  json: {\n    toolName: 'generate_payment_link',\n    amountCents: args.amount_cents,\n    serviceName: args.service_name,\n    clientEmail: args.client_email || '',\n    clientPhone: args.client_phone,\n    bookingDate: args.booking_date || '',\n    bookingTime: args.booking_time || '',\n    phone: $input.first().json.phone\n  }\n};"
+      },
+      "id": "tool3-parse-args",
+      "name": "Tool 3 – Parse Arguments",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [2880, 100]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.stripe.com/v1/checkout/sessions",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/x-www-form-urlencoded"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "string",
+        "bodyContentType": "form-urlencoded",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "mode",
+              "value": "payment"
+            },
+            {
+              "name": "success_url",
+              "value": "https://www.alcinomenezesjunior.com/chatbot-estetica?pagamento=sucesso"
+            },
+            {
+              "name": "cancel_url",
+              "value": "https://www.alcinomenezesjunior.com/chatbot-estetica?pagamento=cancelado"
+            },
+            {
+              "name": "line_items[0][price_data][currency]",
+              "value": "eur"
+            },
+            {
+              "name": "line_items[0][price_data][product_data][name]",
+              "value": "=Depósito - {{$json.serviceName}}"
+            },
+            {
+              "name": "line_items[0][price_data][unit_amount]",
+              "value": "={{$json.amountCents}}"
+            },
+            {
+              "name": "line_items[0][quantity]",
+              "value": "1"
+            },
+            {
+              "name": "metadata[phone]",
+              "value": "={{$json.clientPhone}}"
+            },
+            {
+              "name": "metadata[service]",
+              "value": "={{$json.serviceName}}"
+            },
+            {
+              "name": "metadata[date]",
+              "value": "={{$json.bookingDate}}"
+            },
+            {
+              "name": "metadata[time]",
+              "value": "={{$json.bookingTime}}"
+            },
+            {
+              "name": "customer_email",
+              "value": "={{$json.clientEmail}}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "tool3-create-stripe-session",
+      "name": "Tool 3 – Create Stripe Session",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [3100, 100],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "4",
+          "name": "Stripe Secret Key"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Format tool result for AI Agent\nconst stripeResponse = $input.first().json;\n\nreturn {\n  json: {\n    toolName: 'generate_payment_link',\n    success: true,\n    payment_url: stripeResponse.url,\n    session_id: stripeResponse.id\n  }\n};"
+      },
+      "id": "tool3-format-result",
+      "name": "Tool 3 – Format Result",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [3320, 100]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Placeholder for tools 4-8\nconst toolCall = $input.first().json.toolCalls[0];\n\nreturn {\n  json: {\n    toolName: toolCall.name,\n    success: false,\n    message: `Tool ${toolCall.name} não implementada ainda. Implementar conforme TOOLS_IMPLEMENTATION.md`\n  }\n};"
+      },
+      "id": "tools-placeholder",
+      "name": "Tools 4-8 – Placeholder",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [2880, 200]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Merge tool results back to AI Agent format\nconst toolResult = $input.first().json;\nconst originalData = $('Code – Check Tool Calls').first().json;\n\n// Format result as tool response for AI Agent\nconst toolResponse = {\n  toolCallId: originalData.toolCalls[0].id || 'tool-call-1',\n  toolName: toolResult.toolName,\n  result: JSON.stringify(toolResult)\n};\n\nreturn {\n  json: {\n    phone: originalData.phone,\n    clientId: originalData.clientId,\n    conversationId: originalData.conversationId,\n    conversationState: originalData.conversationState,\n    conversationHistory: originalData.conversationHistory,\n    toolResult: toolResponse,\n    responseText: `[Tool executed: ${toolResult.toolName}] ${toolResult.message || JSON.stringify(toolResult)}`,\n    hasMoreToolCalls: originalData.toolCalls.length > 1\n  }\n};"
+      },
+      "id": "code-merge-tool-results",
+      "name": "Code – Merge Tool Results",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [3980, 200]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Process AI response and prepare for database update\nconst responseData = $input.first().json;\nconst mergedData = $('Code – Merge Data').first().json;\n\n// Add new message to history\nconst messages = mergedData.conversationHistory || [];\n\nif (!responseData.toolResult) {\n  // Regular response (no tool calls)\n  messages.push({\n    role: 'user',\n    content: mergedData.message,\n    timestamp: new Date().toISOString()\n  });\n  messages.push({\n    role: 'assistant',\n    content: responseData.responseText,\n    timestamp: new Date().toISOString()\n  });\n}\n\n// Keep only last 20 messages for context\nconst trimmedMessages = messages.slice(-20);\n\n// Extract any booking intent from context\nconst hasBookingIntent = responseData.responseText.toLowerCase().includes('marcar') || \n                         responseData.responseText.toLowerCase().includes('disponibilidade');\n\nreturn {\n  json: {\n    phone: responseData.phone,\n    clientId: responseData.clientId,\n    conversationId: responseData.conversationId,\n    messages: trimmedMessages,\n    currentState: hasBookingIntent ? 'choosing_service' : responseData.conversationState,\n    responseText: responseData.responseText\n  }\n};"
       },
       "id": "code-process-response",
       "name": "Code – Process Response",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [2220, 200]
+      "position": [2660, 300]
     },
     {
       "parameters": {
@@ -341,7 +785,7 @@
       "name": "Supabase – Update Conversation",
       "type": "n8n-nodes-base.supabase",
       "typeVersion": 1,
-      "position": [2440, 200],
+      "position": [2880, 300],
       "credentials": {
         "supabaseApi": {
           "id": "1",
@@ -373,7 +817,7 @@
       "name": "WhatsApp – Send Message",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
-      "position": [2660, 200],
+      "position": [3100, 300],
       "credentials": {
         "httpHeaderAuth": {
           "id": "2",
@@ -390,7 +834,7 @@
       "name": "Webhook Response",
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1.1,
-      "position": [2880, 200]
+      "position": [3320, 300]
     }
   ],
   "connections": {
@@ -422,6 +866,78 @@
       "main": [[{"node": "AI Agent – Claude Sonnet 4", "type": "main", "index": 0}]]
     },
     "AI Agent – Claude Sonnet 4": {
+      "main": [[{"node": "Code – Check Tool Calls", "type": "main", "index": 0}]]
+    },
+    "Code – Check Tool Calls": {
+      "main": [[{"node": "IF – Has Tool Calls?", "type": "main", "index": 0}]]
+    },
+    "IF – Has Tool Calls?": {
+      "main": [
+        [{"node": "Switch – Route by Tool", "type": "main", "index": 0}],
+        [{"node": "Code – Process Response", "type": "main", "index": 0}]
+      ]
+    },
+    "Switch – Route by Tool": {
+      "main": [
+        [{"node": "Tool 1 – Parse Arguments", "type": "main", "index": 0}],
+        [{"node": "Tool 2 – Parse Arguments", "type": "main", "index": 0}],
+        [{"node": "Tool 3 – Parse Arguments", "type": "main", "index": 0}],
+        [{"node": "Tools 4-8 – Placeholder", "type": "main", "index": 0}],
+        [{"node": "Tools 4-8 – Placeholder", "type": "main", "index": 0}],
+        [{"node": "Tools 4-8 – Placeholder", "type": "main", "index": 0}],
+        [{"node": "Tools 4-8 – Placeholder", "type": "main", "index": 0}],
+        [{"node": "Tools 4-8 – Placeholder", "type": "main", "index": 0}]
+      ]
+    },
+    "Tool 1 – Parse Arguments": {
+      "main": [[{"node": "Tool 1 – Get Service", "type": "main", "index": 0}]]
+    },
+    "Tool 1 – Get Service": {
+      "main": [[{"node": "Tool 1 – Get Professionals", "type": "main", "index": 0}]]
+    },
+    "Tool 1 – Get Professionals": {
+      "main": [[{"node": "Tool 1 – Get Calendar Events", "type": "main", "index": 0}]]
+    },
+    "Tool 1 – Get Calendar Events": {
+      "main": [[{"node": "Tool 1 – Calculate Available Slots", "type": "main", "index": 0}]]
+    },
+    "Tool 1 – Calculate Available Slots": {
+      "main": [[{"node": "Code – Merge Tool Results", "type": "main", "index": 0}]]
+    },
+    "Tool 2 – Parse Arguments": {
+      "main": [[{"node": "Tool 2 – Prepare Calendar Data", "type": "main", "index": 0}]]
+    },
+    "Tool 2 – Prepare Calendar Data": {
+      "main": [[{"node": "Tool 2 – Create Calendar Event", "type": "main", "index": 0}]]
+    },
+    "Tool 2 – Create Calendar Event": {
+      "main": [[{"node": "Tool 2 – Create Appointment", "type": "main", "index": 0}]]
+    },
+    "Tool 2 – Create Appointment": {
+      "main": [[{"node": "Tool 2 – Prepare Scheduled Messages", "type": "main", "index": 0}]]
+    },
+    "Tool 2 – Prepare Scheduled Messages": {
+      "main": [[{"node": "Tool 2 – Create Scheduled Messages", "type": "main", "index": 0}]]
+    },
+    "Tool 2 – Create Scheduled Messages": {
+      "main": [[{"node": "Tool 2 – Format Result", "type": "main", "index": 0}]]
+    },
+    "Tool 2 – Format Result": {
+      "main": [[{"node": "Code – Merge Tool Results", "type": "main", "index": 0}]]
+    },
+    "Tool 3 – Parse Arguments": {
+      "main": [[{"node": "Tool 3 – Create Stripe Session", "type": "main", "index": 0}]]
+    },
+    "Tool 3 – Create Stripe Session": {
+      "main": [[{"node": "Tool 3 – Format Result", "type": "main", "index": 0}]]
+    },
+    "Tool 3 – Format Result": {
+      "main": [[{"node": "Code – Merge Tool Results", "type": "main", "index": 0}]]
+    },
+    "Tools 4-8 – Placeholder": {
+      "main": [[{"node": "Code – Merge Tool Results", "type": "main", "index": 0}]]
+    },
+    "Code – Merge Tool Results": {
       "main": [[{"node": "Code – Process Response", "type": "main", "index": 0}]]
     },
     "Code – Process Response": {
@@ -449,5 +965,5 @@
   ],
   "triggerCount": 1,
   "updatedAt": "2025-11-21T00:00:00.000Z",
-  "versionId": "1"
+  "versionId": "2"
 }
