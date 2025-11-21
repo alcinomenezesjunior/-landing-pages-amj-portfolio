@@ -5,6 +5,53 @@ Todas as alterações notáveis neste projeto serão documentadas neste ficheiro
 
 ---
 
+## [2.1.0] - 2025-11-21
+
+### 🎉 Adicionado
+- **Workflows Auxiliares Completos**
+  - `STRIPE_WEBHOOK_WORKFLOW.json`: Processa webhooks do Stripe
+  - `SCHEDULED_MESSAGES_WORKFLOW.json`: Envia mensagens automáticas a cada 5 minutos
+
+- **Documentação de Implementação das Tools**
+  - `TOOLS_IMPLEMENTATION.md`: Código completo e detalhado das 8 Tools
+  - Exemplos práticos de integração no workflow principal
+  - Helpers e funções auxiliares JavaScript
+  - Instruções de implementação via Code nodes ou sub-workflows
+
+- **Sistema de Confirmações de Pagamento**
+  - Webhook Stripe recebe evento `checkout.session.completed`
+  - Atualiza automaticamente status do appointment para `confirmed`
+  - Marca `deposit_paid = true` no Supabase
+  - Envia mensagem WhatsApp de confirmação ao cliente
+  - Sugere upsell automático baseado no serviço marcado
+
+- **Sistema de Mensagens Agendadas Funcional**
+  - Query automática de mensagens pendentes a cada 5 minutos
+  - Lembretes T-24h com cuidados pré-procedimento personalizados
+  - Lembretes T-1h antes da consulta
+  - Cuidados pós-procedimento T+2h após consulta
+  - Follow-up comercial T+7 dias com sugestão de upsell
+  - Marcação automática de mensagens como enviadas
+
+### 📝 Melhorado
+- **SETUP_GUIDE.md**
+  - Adicionado **PASSO 7.5**: Workflows Auxiliares
+    - Instruções detalhadas para importar Stripe Webhook
+    - Instruções para importar Scheduled Messages
+  - Adicionado **PASSO 7.6**: Implementar as Tools
+    - Referência ao `TOOLS_IMPLEMENTATION.md`
+    - Lista completa das 8 tools com descrição
+  - Melhor organização e flow de configuração
+
+### 🔧 Técnico
+- Workflows totalmente funcionais em ambiente de desenvolvimento
+- Credenciais configuráveis via variáveis de ambiente
+- Error handling robusto em Code nodes críticos
+- Integração completa: n8n + Supabase + Stripe + WhatsApp + Google Calendar
+- Templates de mensagens personalizados por tipo
+
+---
+
 ## [2.0.0] - 2025-11-21
 
 ### 🎉 Adicionado
