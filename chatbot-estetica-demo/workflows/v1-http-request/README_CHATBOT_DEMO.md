@@ -260,3 +260,4 @@ Se a versão no n8n usa configurações diferentes (ex: `claude-sonnet-4-2025051
 ---
 
 **Desenvolvido com:** n8n + Anthropic Claude + WhatsApp Cloud API + Google Sheets
+
