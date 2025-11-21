@@ -277,6 +277,9 @@
 <a class="btn btn-demo-cta" href="https://wa.me/351926698959?text=Ol%C3%A1!%20Quero%20testar%20o%20chatbot%20de%20marca%C3%A7%C3%A3o%20%F0%9F%93%85" onclick="trackWhatsAppDemo(event)" rel="noopener noreferrer" target="_blank">
 <i class="ri-whatsapp-line" aria-hidden="true"></i> Testar Bot no WhatsApp
           </a>
+<button id="demo-bot-open" class="btn btn-primary" type="button" style="margin-top: 1rem;">
+<i class="ri-message-3-line" aria-hidden="true"></i> Testar bot demo no WhatsApp (simulado)
+          </button>
 <div class="demo-card__features">
 <p class="demo-card__features-title">✅ O que vais ver:</p>
 <ul class="demo-card__features-list">
@@ -837,6 +840,27 @@
 </div>
 <p class="popup__footer">💡 Descobre como podemos ajudar o teu estúdio a crescer de forma sustentável</p>
 </div>
+</div>
+<!-- Widget de chat da demo (inicialmente escondido) -->
+<div id="demo-bot-widget" class="demo-bot hidden" aria-hidden="true">
+<div class="demo-bot__header">
+<strong>Demo Chatbot Estética</strong>
+<button type="button" id="demo-bot-close" class="demo-bot__close" aria-label="Fechar demo">
+      ×
+    </button>
+</div>
+<div id="demo-bot-messages" class="demo-bot__messages">
+<div class="msg msg-bot">
+      👋 Olá! Esta é uma simulação do bot de WhatsApp. Escreve uma mensagem para ver como ele responderia.
+    </div>
+</div>
+<form id="demo-bot-form" class="demo-bot__form">
+<input type="text" id="demo-bot-input" class="demo-bot__input" placeholder="Escreve aqui a tua mensagem…" autocomplete="off" required=""/>
+<button type="submit" class="demo-bot__send">Enviar</button>
+</form>
+<p class="demo-bot__disclaimer">
+    🔁 Simulação: nenhuma mensagem é enviada para um número real de WhatsApp.
+  </p>
 </div>
 <script defer src="/chatbot-estetica/script.min.js?v=22"></script>
 <script>
