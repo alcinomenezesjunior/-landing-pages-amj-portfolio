@@ -1,0 +1,264 @@
+{
+  "name": "Stripe Webhook - Essenza Prime",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "stripe-webhook",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "webhook-stripe",
+      "name": "Webhook – Stripe Events",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [240, 300],
+      "webhookId": "stripe-essenza-prime"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Verify Stripe signature (production use)\nconst body = $input.item.json.body;\nconst headers = $input.item.json.headers;\n\n// For demo purposes, we'll skip signature verification\n// In production: verify using stripe signature header + webhook secret\n\nconst event = body;\n\nreturn {\n  json: {\n    eventType: event.type,
+    eventId: event.id,\n    sessionData: event.data?.object || {},\n    rawEvent: event\n  }\n};"
+      },
+      "id": "code-parse-stripe-event",
+      "name": "Code – Parse Stripe Event",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [460, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{$json.eventType}}",
+              "operation": "equals",
+              "value2": "checkout.session.completed"
+            }
+          ]
+        }
+      },
+      "id": "if-checkout-completed",
+      "name": "IF – Checkout Completed?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [680, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Extract metadata from Stripe session\nconst session = $input.item.json.sessionData;\n\nconst metadata = session.metadata || {};\n\nreturn {\n  json: {\n    clientPhone: metadata.phone,\n    serviceName: metadata.service,\n    bookingDate: metadata.date,\n    bookingTime: metadata.time,\n    paymentIntentId: session.payment_intent,\n    amountPaid: session.amount_total / 100, // Convert from cents\n    customerEmail: session.customer_email || session.customer_details?.email,\n    sessionId: session.id\n  }\n};"
+      },
+      "id": "code-extract-metadata",
+      "name": "Code – Extract Metadata",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [900, 200]
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "table": "appointments",
+        "filterType": "manual",
+        "matchingColumns": [
+          {
+            "column": "date",
+            "value": "={{$json.bookingDate}}"
+          }
+        ],
+        "dataMode": "defineBelow",
+        "valuesToSend": {
+          "values": [
+            {
+              "column": "deposit_paid",
+              "value": true
+            },
+            {
+              "column": "status",
+              "value": "confirmed"
+            },
+            {
+              "column": "stripe_payment_id",
+              "value": "={{$json.paymentIntentId}}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "supabase-update-appointment",
+      "name": "Supabase – Update Appointment",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [1120, 200],
+      "credentials": {
+        "supabaseApi": {
+          "id": "1",
+          "name": "Supabase - Essenza Prime"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "select",
+        "table": "appointments",
+        "filterType": "manual",
+        "matchingColumns": [
+          {
+            "column": "date",
+            "value": "={{$('Code – Extract Metadata').item.json.bookingDate}}"
+          }
+        ],
+        "options": {
+          "limit": 1
+        }
+      },
+      "id": "supabase-get-appointment",
+      "name": "Supabase – Get Appointment Details",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [1340, 200],
+      "credentials": {
+        "supabaseApi": {
+          "id": "1",
+          "name": "Supabase - Essenza Prime"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "select",
+        "table": "services",
+        "filterType": "manual",
+        "matchingColumns": [
+          {
+            "column": "name",
+            "value": "={{$('Supabase – Get Appointment Details').item.json.service}}"
+          }
+        ],
+        "options": {}
+      },
+      "id": "supabase-get-service",
+      "name": "Supabase – Get Service Info",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [1560, 200],
+      "credentials": {
+        "supabaseApi": {
+          "id": "1",
+          "name": "Supabase - Essenza Prime"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Prepare confirmation message with upsell\nconst appointment = $('Supabase – Get Appointment Details').first().json;\nconst service = $('Supabase – Get Service Info').first().json;\nconst metadata = $('Code – Extract Metadata').first().json;\n\nlet message = `Pagamento confirmado! ✅\\n\\n`;\nmessage += `A tua marcação está garantida:\\n`;\nmessage += `📅 ${appointment.date} às ${appointment.time_start}\\n`;\nmessage += `💆 ${appointment.service}\\n`;\nmessage += `👩‍⚕️ Com: ${appointment.professional}\\n\\n`;\nmessage += `📍 Essenza Prime Clinic - Cascais\\n\\n`;\nmessage += `Receberás um lembrete 24h antes.`;\n\n// Add upsell if applicable\nif (service.upsell_service && service.upsell_discount) {\n  const discountedPrice = parseFloat(service.price) * (1 - service.upsell_discount / 100);\n  message += `\\n\\n💡 Muitas clientes combinam ${appointment.service} com ${service.upsell_service} para resultados ainda melhores.\\n\\n`;\n  message += `🎁 Por marcares agora, tens ${service.upsell_discount}% de desconto!\\n\\n`;\n  message += `Queres adicionar?`;\n}\n\nreturn {\n  json: {\n    phone: metadata.clientPhone,\n    message: message,\n    appointmentId: appointment.id\n  }\n};"
+      },
+      "id": "code-prepare-confirmation",
+      "name": "Code – Prepare Confirmation Message",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1780, 200]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://graph.facebook.com/v18.0/{{$env.WHATSAPP_PHONE_NUMBER_ID}}/messages",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"messaging_product\": \"whatsapp\",\n  \"to\": \"{{$json.phone}}\",\n  \"type\": \"text\",\n  \"text\": {\n    \"body\": \"{{$json.message}}\"\n  }\n}",
+        "options": {}
+      },
+      "id": "whatsapp-send-confirmation",
+      "name": "WhatsApp – Send Confirmation",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [2000, 200],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "2",
+          "name": "WhatsApp Cloud API Token"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\"received\": true}"
+      },
+      "id": "webhook-response-ok",
+      "name": "Webhook Response – 200 OK",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [2220, 200]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\"received\": true, \"ignored\": \"event type not handled\"}"
+      },
+      "id": "webhook-response-ignored",
+      "name": "Webhook Response – Ignored",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [900, 400]
+    }
+  ],
+  "connections": {
+    "Webhook – Stripe Events": {
+      "main": [[{"node": "Code – Parse Stripe Event", "type": "main", "index": 0}]]
+    },
+    "Code – Parse Stripe Event": {
+      "main": [[{"node": "IF – Checkout Completed?", "type": "main", "index": 0}]]
+    },
+    "IF – Checkout Completed?": {
+      "main": [
+        [{"node": "Code – Extract Metadata", "type": "main", "index": 0}],
+        [{"node": "Webhook Response – Ignored", "type": "main", "index": 0}]
+      ]
+    },
+    "Code – Extract Metadata": {
+      "main": [[{"node": "Supabase – Update Appointment", "type": "main", "index": 0}]]
+    },
+    "Supabase – Update Appointment": {
+      "main": [[{"node": "Supabase – Get Appointment Details", "type": "main", "index": 0}]]
+    },
+    "Supabase – Get Appointment Details": {
+      "main": [[{"node": "Supabase – Get Service Info", "type": "main", "index": 0}]]
+    },
+    "Supabase – Get Service Info": {
+      "main": [[{"node": "Code – Prepare Confirmation Message", "type": "main", "index": 0}]]
+    },
+    "Code – Prepare Confirmation Message": {
+      "main": [[{"node": "WhatsApp – Send Confirmation", "type": "main", "index": 0}]]
+    },
+    "WhatsApp – Send Confirmation": {
+      "main": [[{"node": "Webhook Response – 200 OK", "type": "main", "index": 0}]]
+    }
+  },
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "createdAt": "2025-11-21T00:00:00.000Z",
+      "updatedAt": "2025-11-21T00:00:00.000Z",
+      "id": "1",
+      "name": "Demo - Essenza Prime"
+    }
+  ],
+  "triggerCount": 1,
+  "updatedAt": "2025-11-21T00:00:00.000Z",
+  "versionId": "1"
+}

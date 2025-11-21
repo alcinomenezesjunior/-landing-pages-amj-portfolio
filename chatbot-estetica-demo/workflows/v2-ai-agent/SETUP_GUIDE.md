@@ -251,6 +251,80 @@ Criar workflow separado que corre a cada 5 minutos:
 
 ---
 
+## 🔗 PASSO 7.5: WORKFLOWS AUXILIARES
+
+### Importar Workflows Adicionais
+
+Além do workflow principal, precisas importar 2 workflows auxiliares:
+
+#### 7.5.1 Stripe Webhook Workflow
+
+1. No n8n, clica **Import from File**
+2. Seleciona `STRIPE_WEBHOOK_WORKFLOW.json`
+3. Verifica credenciais:
+   - Supabase: `Supabase - Essenza Prime`
+   - WhatsApp: `WhatsApp Cloud API Token`
+4. **Ativa o workflow**
+
+**Webhook URL:** `https://n8n.alcinomenezesjunior.com/webhook/stripe-webhook`
+
+**O que faz:**
+- Recebe evento `checkout.session.completed` do Stripe
+- Atualiza status do appointment para `confirmed`
+- Marca `deposit_paid = true`
+- Envia mensagem de confirmação ao cliente no WhatsApp
+- Sugere upsell se aplicável
+
+#### 7.5.2 Scheduled Messages Workflow
+
+1. No n8n, clica **Import from File**
+2. Seleciona `SCHEDULED_MESSAGES_WORKFLOW.json`
+3. Verifica credenciais (mesmas do anterior)
+4. **Ativa o workflow**
+
+**Trigger:** Corre automaticamente a cada 5 minutos
+
+**O que faz:**
+- Consulta tabela `scheduled_messages` para mensagens pendentes
+- Filtra mensagens com `sent = false` e `scheduled_for <= NOW()`
+- Envia cada mensagem via WhatsApp:
+  - **reminder_24h:** Lembrete 24h antes + cuidados pré
+  - **reminder_1h:** Lembrete 1h antes
+  - **post_care:** Cuidados pós-procedimento (T+2h)
+  - **follow_up_7d:** Follow-up comercial (T+7 dias)
+- Marca mensagens como enviadas (`sent = true`)
+
+---
+
+## 🛠️ PASSO 7.6: IMPLEMENTAR AS TOOLS
+
+As 8 Tools estão **definidas** no AI Agent mas **não implementadas**. Para torná-las funcionais:
+
+### Opção A: Implementação Manual (Recomendado para Demo)
+
+Consulta o ficheiro `TOOLS_IMPLEMENTATION.md` que contém:
+- Código completo de cada tool
+- Exemplos de integração
+- Helpers e funções auxiliares
+
+**Tools a implementar:**
+1. ✅ `check_availability` - Verifica slots livres no calendário
+2. ✅ `create_booking` - Cria marcação + evento + mensagens agendadas
+3. ✅ `generate_payment_link` - Gera Stripe Checkout Session
+4. ✅ `cancel_booking` - Cancela + processa reembolso
+5. ✅ `reschedule_booking` - Move marcação para nova data
+6. ✅ `process_refund` - Processa reembolso Stripe
+7. ✅ `get_care_instructions` - Retorna cuidados pré/pós
+8. ✅ `get_professional_info` - Info sobre profissionais
+
+### Opção B: Usar Workflows Pré-Construídos
+
+Para produção, recomenda-se criar sub-workflows separados para cada tool.
+
+**Próximo passo:** Ver `TOOLS_IMPLEMENTATION.md` para código completo.
+
+---
+
 ## 📊 PASSO 8: MONITORIZAÇÃO
 
 ### Dashboards Supabase
