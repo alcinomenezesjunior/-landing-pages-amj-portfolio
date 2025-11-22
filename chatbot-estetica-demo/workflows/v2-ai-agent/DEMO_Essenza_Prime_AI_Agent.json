@@ -49,7 +49,7 @@
         "returnAll": false,
         "limit": 10,
         "filterType": "string",
-        "filterString": "phone=eq.={{$json.phone}}",
+        "filterString": "phone=eq.{{$json.phone}}",
         "options": {}
       },
       "id": "supabase-get-client",
@@ -115,7 +115,7 @@
         "returnAll": false,
         "limit": 1,
         "filterType": "string",
-        "filterString": "phone=eq.={{$('Code – Parse Message').item.json.phone}}",
+        "filterString": "phone=eq.{{$('Code – Parse Message').item.json.phone}}",
         "options": {}
       },
       "id": "supabase-get-conversation",
@@ -360,7 +360,7 @@
         "returnAll": false,
         "limit": 1,
         "filterType": "string",
-        "filterString": "name=eq.={{$json.serviceName}}",
+        "filterString": "name=eq.{{$json.serviceName}}",
         "options": {}
       },
       "id": "tool1-get-service",
@@ -381,7 +381,7 @@
         "table": "professionals",
         "returnAll": true,
         "filterType": "string",
-        "filterString": "services=cs.{={{$('Tool 1 – Parse Arguments').item.json.serviceName}}}",
+        "filterString": "services=cs.{{{$('Tool 1 – Parse Arguments').item.json.serviceName}}}",
         "options": {}
       },
       "id": "tool1-get-professionals",
