@@ -249,7 +249,7 @@
       "id": "switch-route-by-tool",
       "name": "Switch – Route by Tool",
       "type": "n8n-nodes-base.switch",
-      "typeVersion": 2,
+      "typeVersion": 3,
       "position": [
         2660,
         100
