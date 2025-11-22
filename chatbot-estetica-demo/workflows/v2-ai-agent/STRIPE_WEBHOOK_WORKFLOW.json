@@ -17,8 +17,7 @@
     },
     {
       "parameters": {
-        "jsCode": "// Verify Stripe signature (production use)\nconst body = $input.item.json.body;\nconst headers = $input.item.json.headers;\n\n// For demo purposes, we'll skip signature verification\n// In production: verify using stripe signature header + webhook secret\n\nconst event = body;\n\nreturn {\n  json: {\n    eventType: event.type,
-    eventId: event.id,\n    sessionData: event.data?.object || {},\n    rawEvent: event\n  }\n};"
+        "jsCode": "// Verify Stripe signature (production use)\nconst body = $input.item.json.body;\nconst headers = $input.item.json.headers;\n\n// For demo purposes, we'll skip signature verification\n// In production: verify using stripe signature header + webhook secret\n\nconst event = body;\n\nreturn {\n  json: {\n    eventType: event.type,\n    eventId: event.id,\n    sessionData: event.data?.object || {},\n    rawEvent: event\n  }\n};"
       },
       "id": "code-parse-stripe-event",
       "name": "Code – Parse Stripe Event",
@@ -58,29 +57,15 @@
       "parameters": {
         "operation": "update",
         "table": "appointments",
-        "filterType": "manual",
-        "matchingColumns": [
-          {
-            "column": "date",
-            "value": "={{$json.bookingDate}}"
+        "filterType": "string",
+        "filterString": "date=eq.={{$json.bookingDate}}",
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "deposit_paid": true,
+            "status": "confirmed",
+            "stripe_payment_id": "={{$json.paymentIntentId}}"
           }
-        ],
-        "dataMode": "defineBelow",
-        "valuesToSend": {
-          "values": [
-            {
-              "column": "deposit_paid",
-              "value": true
-            },
-            {
-              "column": "status",
-              "value": "confirmed"
-            },
-            {
-              "column": "stripe_payment_id",
-              "value": "={{$json.paymentIntentId}}"
-            }
-          ]
         },
         "options": {}
       },
@@ -100,16 +85,11 @@
       "parameters": {
         "operation": "select",
         "table": "appointments",
-        "filterType": "manual",
-        "matchingColumns": [
-          {
-            "column": "date",
-            "value": "={{$('Code – Extract Metadata').item.json.bookingDate}}"
-          }
-        ],
-        "options": {
-          "limit": 1
-        }
+        "returnAll": false,
+        "limit": 1,
+        "filterType": "string",
+        "filterString": "date=eq.={{$('Code – Extract Metadata').item.json.bookingDate}}",
+        "options": {}
       },
       "id": "supabase-get-appointment",
       "name": "Supabase – Get Appointment Details",
@@ -127,13 +107,10 @@
       "parameters": {
         "operation": "select",
         "table": "services",
-        "filterType": "manual",
-        "matchingColumns": [
-          {
-            "column": "name",
-            "value": "={{$('Supabase – Get Appointment Details').item.json.service}}"
-          }
-        ],
+        "returnAll": false,
+        "limit": 1,
+        "filterType": "string",
+        "filterString": "name=eq.={{$('Supabase – Get Appointment Details').item.json.service}}",
         "options": {}
       },
       "id": "supabase-get-service",
