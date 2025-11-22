@@ -46,13 +46,10 @@
       "parameters": {
         "operation": "select",
         "table": "clients",
-        "filterType": "manual",
-        "matchingColumns": [
-          {
-            "column": "phone",
-            "value": "={{$json.phone}}"
-          }
-        ],
+        "returnAll": false,
+        "limit": 10,
+        "filterType": "string",
+        "filterString": "phone=eq.={{$json.phone}}",
         "options": {}
       },
       "id": "supabase-get-client",
@@ -115,16 +112,11 @@
       "parameters": {
         "operation": "select",
         "table": "conversations",
-        "filterType": "manual",
-        "matchingColumns": [
-          {
-            "column": "phone",
-            "value": "={{$('Code – Parse Message').item.json.phone}}"
-          }
-        ],
-        "options": {
-          "limit": 1
-        }
+        "returnAll": false,
+        "limit": 1,
+        "filterType": "string",
+        "filterString": "phone=eq.={{$('Code – Parse Message').item.json.phone}}",
+        "options": {}
       },
       "id": "supabase-get-conversation",
       "name": "Supabase – Get Conversation",
@@ -332,22 +324,23 @@
         "dataType": "string",
         "value1": "={{$json.toolCalls[0].name}}",
         "rules": {
-          "rules": [
-            {"value2": "check_availability", "output": 0},
-            {"value2": "create_booking", "output": 1},
-            {"value2": "generate_payment_link", "output": 2},
-            {"value2": "cancel_booking", "output": 3},
-            {"value2": "reschedule_booking", "output": 4},
-            {"value2": "process_refund", "output": 5},
-            {"value2": "get_care_instructions", "output": 6},
-            {"value2": "get_professional_info", "output": 7}
+          "string": [
+            {"value2": "check_availability"},
+            {"value2": "create_booking"},
+            {"value2": "generate_payment_link"},
+            {"value2": "cancel_booking"},
+            {"value2": "reschedule_booking"},
+            {"value2": "process_refund"},
+            {"value2": "get_care_instructions"},
+            {"value2": "get_professional_info"}
           ]
-        }
+        },
+        "fallbackOutput": "extra"
       },
       "id": "switch-route-by-tool",
       "name": "Switch – Route by Tool",
       "type": "n8n-nodes-base.switch",
-      "typeVersion": 3,
+      "typeVersion": 2,
       "position": [2660, 100]
     },
     {
@@ -364,13 +357,10 @@
       "parameters": {
         "operation": "select",
         "table": "services",
-        "filterType": "manual",
-        "matchingColumns": [
-          {
-            "column": "name",
-            "value": "={{$json.serviceName}}"
-          }
-        ],
+        "returnAll": false,
+        "limit": 1,
+        "filterType": "string",
+        "filterString": "name=eq.={{$json.serviceName}}",
         "options": {}
       },
       "id": "tool1-get-service",
@@ -389,14 +379,9 @@
       "parameters": {
         "operation": "select",
         "table": "professionals",
-        "filterType": "manual",
-        "matchingColumns": [
-          {
-            "column": "services",
-            "operator": "contains",
-            "value": "={{$('Tool 1 – Parse Arguments').item.json.serviceName}}"
-          }
-        ],
+        "returnAll": true,
+        "filterType": "string",
+        "filterString": "services=cs.{={{$('Tool 1 – Parse Arguments').item.json.serviceName}}}",
         "options": {}
       },
       "id": "tool1-get-professionals",
@@ -413,9 +398,14 @@
     },
     {
       "parameters": {
-        "authentication": "oAuth2",
         "operation": "getAll",
-        "calendarId": "d682359e9a244ab7f9a7f7e925d05bf9a6def533796af78a1ecba749103b59c8@group.calendar.google.com",
+        "calendar": {
+          "__rl": true,
+          "value": "d682359e9a244ab7f9a7f7e925d05bf9a6def533796af78a1ecba749103b59c8@group.calendar.google.com",
+          "mode": "id"
+        },
+        "returnAll": false,
+        "limit": 100,
         "options": {
           "timeMin": "={{$('Tool 1 – Parse Arguments').item.json.dateFrom}}T00:00:00Z",
           "timeMax": "={{$('Tool 1 – Parse Arguments').item.json.dateTo}}T23:59:59Z"
@@ -424,7 +414,7 @@
       "id": "tool1-get-calendar-events",
       "name": "Tool 1 – Get Calendar Events",
       "type": "n8n-nodes-base.googleCalendar",
-      "typeVersion": 2,
+      "typeVersion": 1.2,
       "position": [3540, -100],
       "credentials": {
         "googleCalendarOAuth2Api": {
@@ -465,9 +455,12 @@
     },
     {
       "parameters": {
-        "authentication": "oAuth2",
         "operation": "create",
-        "calendarId": "d682359e9a244ab7f9a7f7e925d05bf9a6def533796af78a1ecba749103b59c8@group.calendar.google.com",
+        "calendar": {
+          "__rl": true,
+          "value": "d682359e9a244ab7f9a7f7e925d05bf9a6def533796af78a1ecba749103b59c8@group.calendar.google.com",
+          "mode": "id"
+        },
         "summary": "={{$json.summary}}",
         "description": "={{$json.description}}",
         "start": "={{$json.start}}",
@@ -477,7 +470,7 @@
       "id": "tool2-create-calendar-event",
       "name": "Tool 2 – Create Calendar Event",
       "type": "n8n-nodes-base.googleCalendar",
-      "typeVersion": 2,
+      "typeVersion": 1.2,
       "position": [3320, 0],
       "credentials": {
         "googleCalendarOAuth2Api": {
