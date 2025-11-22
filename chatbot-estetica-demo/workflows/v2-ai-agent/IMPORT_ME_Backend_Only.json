@@ -1,0 +1,273 @@
+{
+  "name": "BACKEND - Essenza Prime (SEM AI Agent)",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "testar-bot-whatsapp",
+        "responseMode": "responseNode"
+      },
+      "id": "webhook-whatsapp-incoming",
+      "name": "Webhook – WhatsApp Incoming",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [240, 300],
+      "webhookId": "essenza-prime-demo"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Parse incoming WhatsApp message\nconst body = $input.item.json.body;\n\n// Extract message data\nconst phone = body.entry?.[0]?.changes?.[0]?.value?.messages?.[0]?.from || '';\nconst messageText = body.entry?.[0]?.changes?.[0]?.value?.messages?.[0]?.text?.body || '';\nconst messageId = body.entry?.[0]?.changes?.[0]?.value?.messages?.[0]?.id || '';\nconst timestamp = body.entry?.[0]?.changes?.[0]?.value?.messages?.[0]?.timestamp || '';\n\n// Check if this is a valid message\nif (!phone || !messageText) {\n  return {\n    json: {\n      skip: true,\n      reason: 'No valid message data'\n    }\n  };\n}\n\nreturn {\n  json: {\n    skip: false,\n    phone: phone,\n    message: messageText,\n    messageId: messageId,\n    timestamp: timestamp,\n    receivedAt: new Date().toISOString()\n  }\n};"
+      },
+      "id": "code-parse-message",
+      "name": "Code – Parse Message",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [460, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{$json.skip}}",
+              "value2": false
+            }
+          ]
+        }
+      },
+      "id": "if-valid-message",
+      "name": "IF – Valid Message?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [680, 300]
+    },
+    {
+      "parameters": {
+        "operation": "select",
+        "table": "clients",
+        "returnAll": false,
+        "limit": 10,
+        "filterType": "string",
+        "filterString": "phone=eq.{{$json.phone}}"
+      },
+      "id": "supabase-get-client",
+      "name": "Supabase – Get Client",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [900, 200],
+      "credentials": {
+        "supabaseApi": {
+          "id": "1",
+          "name": "Supabase - Essenza Prime"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{$json.length > 0}}",
+              "value2": true
+            }
+          ]
+        }
+      },
+      "id": "if-client-exists",
+      "name": "IF – Client Exists?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [1120, 200]
+    },
+    {
+      "parameters": {
+        "operation": "insert",
+        "table": "clients",
+        "dataMode": "defineBelow",
+        "valuesToSend": {
+          "values": [
+            {
+              "column": "phone",
+              "value": "={{$('Code – Parse Message').item.json.phone}}"
+            }
+          ]
+        }
+      },
+      "id": "supabase-create-client",
+      "name": "Supabase – Create Client",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [1340, 320],
+      "credentials": {
+        "supabaseApi": {
+          "id": "1",
+          "name": "Supabase - Essenza Prime"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "select",
+        "table": "conversations",
+        "returnAll": false,
+        "limit": 1,
+        "filterType": "string",
+        "filterString": "phone=eq.{{$('Code – Parse Message').item.json.phone}}"
+      },
+      "id": "supabase-get-conversation",
+      "name": "Supabase – Get Conversation",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [1560, 200],
+      "credentials": {
+        "supabaseApi": {
+          "id": "1",
+          "name": "Supabase - Essenza Prime"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Merge client and conversation data\nconst parseData = $('Code – Parse Message').first().json;\nconst clientData = $('IF – Client Exists?').all()[0]?.json || $('Supabase – Create Client').first().json;\nconst conversationData = $input.first().json;\n\nreturn {\n  json: {\n    phone: parseData.phone,\n    message: parseData.message,\n    messageId: parseData.messageId,\n    clientId: clientData.id,\n    clientName: clientData.name || null,\n    clientEmail: clientData.email || null,\n    conversationId: conversationData.id || null,\n    conversationState: conversationData.current_state || 'inicio',\n    conversationContext: conversationData.context || {},\n    conversationHistory: conversationData.messages || []\n  }\n};"
+      },
+      "id": "code-merge-data",
+      "name": "Code – Merge Data",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1780, 200]
+    },
+    {
+      "parameters": {
+        "jsCode": "// PLACEHOLDER: AI Agent vai aqui\n// Por enquanto, resposta de teste\n\nconst mergedData = $input.first().json;\n\nreturn {\n  json: {\n    responseText: `✅ Backend funcionando! Mensagem de ${mergedData.phone}: \"${mergedData.message}\"\\n\\n⚠️ AI Agent ainda não configurado - siga o guia para adicionar.`,\n    phone: mergedData.phone,\n    clientId: mergedData.clientId,\n    conversationId: mergedData.conversationId\n  }\n};"
+      },
+      "id": "placeholder-ai-response",
+      "name": "PLACEHOLDER – AI Response",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [2000, 200]
+    },
+    {
+      "parameters": {
+        "operation": "upsert",
+        "table": "conversations",
+        "dataMode": "defineBelow",
+        "valuesToSend": {
+          "values": [
+            {
+              "column": "client_id",
+              "value": "={{$json.clientId}}"
+            },
+            {
+              "column": "phone",
+              "value": "={{$json.phone}}"
+            },
+            {
+              "column": "current_state",
+              "value": "test"
+            }
+          ]
+        }
+      },
+      "id": "supabase-update-conversation",
+      "name": "Supabase – Update Conversation",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [2220, 200],
+      "credentials": {
+        "supabaseApi": {
+          "id": "1",
+          "name": "Supabase - Essenza Prime"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://graph.facebook.com/v18.0/{{$env.WHATSAPP_PHONE_NUMBER_ID}}/messages",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"messaging_product\": \"whatsapp\",\n  \"to\": \"{{$('PLACEHOLDER – AI Response').item.json.phone}}\",\n  \"type\": \"text\",\n  \"text\": {\n    \"body\": \"{{$('PLACEHOLDER – AI Response').item.json.responseText}}\"\n  }\n}"
+      },
+      "id": "whatsapp-send-message",
+      "name": "WhatsApp – Send Message",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [2440, 200],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "2",
+          "name": "WhatsApp Cloud API Token"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\"status\": \"success\", \"message\": \"Message processed\"}"
+      },
+      "id": "webhook-response",
+      "name": "Webhook Response",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [2660, 200]
+    }
+  ],
+  "connections": {
+    "Webhook – WhatsApp Incoming": {
+      "main": [[{"node": "Code – Parse Message", "type": "main", "index": 0}]]
+    },
+    "Code – Parse Message": {
+      "main": [[{"node": "IF – Valid Message?", "type": "main", "index": 0}]]
+    },
+    "IF – Valid Message?": {
+      "main": [[{"node": "Supabase – Get Client", "type": "main", "index": 0}]]
+    },
+    "Supabase – Get Client": {
+      "main": [[{"node": "IF – Client Exists?", "type": "main", "index": 0}]]
+    },
+    "IF – Client Exists?": {
+      "main": [
+        [{"node": "Supabase – Get Conversation", "type": "main", "index": 0}],
+        [{"node": "Supabase – Create Client", "type": "main", "index": 0}]
+      ]
+    },
+    "Supabase – Create Client": {
+      "main": [[{"node": "Supabase – Get Conversation", "type": "main", "index": 0}]]
+    },
+    "Supabase – Get Conversation": {
+      "main": [[{"node": "Code – Merge Data", "type": "main", "index": 0}]]
+    },
+    "Code – Merge Data": {
+      "main": [[{"node": "PLACEHOLDER – AI Response", "type": "main", "index": 0}]]
+    },
+    "PLACEHOLDER – AI Response": {
+      "main": [[{"node": "Supabase – Update Conversation", "type": "main", "index": 0}]]
+    },
+    "Supabase – Update Conversation": {
+      "main": [[{"node": "WhatsApp – Send Message", "type": "main", "index": 0}]]
+    },
+    "WhatsApp – Send Message": {
+      "main": [[{"node": "Webhook Response", "type": "main", "index": 0}]]
+    }
+  },
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2025-11-22T00:00:00.000Z",
+  "versionId": "1"
+}
