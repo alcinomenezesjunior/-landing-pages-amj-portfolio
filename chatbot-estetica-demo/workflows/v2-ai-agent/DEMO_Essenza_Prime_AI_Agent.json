@@ -404,10 +404,8 @@
         },
         "returnAll": false,
         "limit": 100,
-        "options": {
-          "timeMin": "={{$('Tool 1 – Parse Arguments').item.json.dateFrom}}T00:00:00Z",
-          "timeMax": "={{$('Tool 1 – Parse Arguments').item.json.dateTo}}T23:59:59Z"
-        }
+        "timeMin": "={{$('Tool 1 – Parse Arguments').item.json.dateFrom}}T00:00:00Z",
+        "timeMax": "={{$('Tool 1 – Parse Arguments').item.json.dateTo}}T23:59:59Z"
       },
       "id": "tool1-get-calendar-events",
       "name": "Tool 1 – Get Calendar Events",
@@ -462,8 +460,7 @@
         "summary": "={{$json.summary}}",
         "description": "={{$json.description}}",
         "start": "={{$json.start}}",
-        "end": "={{$json.end}}",
-        "options": {}
+        "end": "={{$json.end}}"
       },
       "id": "tool2-create-calendar-event",
       "name": "Tool 2 – Create Calendar Event",
