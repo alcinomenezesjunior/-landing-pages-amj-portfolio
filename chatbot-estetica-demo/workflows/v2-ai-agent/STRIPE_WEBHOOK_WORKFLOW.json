@@ -5,14 +5,16 @@
       "parameters": {
         "httpMethod": "POST",
         "path": "stripe-webhook",
-        "responseMode": "responseNode",
-        "options": {}
+        "responseMode": "responseNode"
       },
       "id": "webhook-stripe",
       "name": "Webhook – Stripe Events",
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2,
-      "position": [240, 300],
+      "position": [
+        240,
+        300
+      ],
       "webhookId": "stripe-essenza-prime"
     },
     {
@@ -23,7 +25,10 @@
       "name": "Code – Parse Stripe Event",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [460, 300]
+      "position": [
+        460,
+        300
+      ]
     },
     {
       "parameters": {
@@ -41,7 +46,10 @@
       "name": "IF – Checkout Completed?",
       "type": "n8n-nodes-base.if",
       "typeVersion": 2,
-      "position": [680, 300]
+      "position": [
+        680,
+        300
+      ]
     },
     {
       "parameters": {
@@ -51,7 +59,10 @@
       "name": "Code – Extract Metadata",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [900, 200]
+      "position": [
+        900,
+        200
+      ]
     },
     {
       "parameters": {
@@ -66,14 +77,16 @@
             "status": "confirmed",
             "stripe_payment_id": "={{$json.paymentIntentId}}"
           }
-        },
-        "options": {}
+        }
       },
       "id": "supabase-update-appointment",
       "name": "Supabase – Update Appointment",
       "type": "n8n-nodes-base.supabase",
       "typeVersion": 1,
-      "position": [1120, 200],
+      "position": [
+        1120,
+        200
+      ],
       "credentials": {
         "supabaseApi": {
           "id": "1",
@@ -88,14 +101,16 @@
         "returnAll": false,
         "limit": 1,
         "filterType": "string",
-        "filterString": "date=eq.={{$('Code – Extract Metadata').item.json.bookingDate}}",
-        "options": {}
+        "filterString": "date=eq.={{$('Code – Extract Metadata').item.json.bookingDate}}"
       },
       "id": "supabase-get-appointment",
       "name": "Supabase – Get Appointment Details",
       "type": "n8n-nodes-base.supabase",
       "typeVersion": 1,
-      "position": [1340, 200],
+      "position": [
+        1340,
+        200
+      ],
       "credentials": {
         "supabaseApi": {
           "id": "1",
@@ -110,14 +125,16 @@
         "returnAll": false,
         "limit": 1,
         "filterType": "string",
-        "filterString": "name=eq.={{$('Supabase – Get Appointment Details').item.json.service}}",
-        "options": {}
+        "filterString": "name=eq.={{$('Supabase – Get Appointment Details').item.json.service}}"
       },
       "id": "supabase-get-service",
       "name": "Supabase – Get Service Info",
       "type": "n8n-nodes-base.supabase",
       "typeVersion": 1,
-      "position": [1560, 200],
+      "position": [
+        1560,
+        200
+      ],
       "credentials": {
         "supabaseApi": {
           "id": "1",
@@ -133,7 +150,10 @@
       "name": "Code – Prepare Confirmation Message",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [1780, 200]
+      "position": [
+        1780,
+        200
+      ]
     },
     {
       "parameters": {
@@ -152,14 +172,16 @@
         },
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={\n  \"messaging_product\": \"whatsapp\",\n  \"to\": \"{{$json.phone}}\",\n  \"type\": \"text\",\n  \"text\": {\n    \"body\": \"{{$json.message}}\"\n  }\n}",
-        "options": {}
+        "jsonBody": "={\n  \"messaging_product\": \"whatsapp\",\n  \"to\": \"{{$json.phone}}\",\n  \"type\": \"text\",\n  \"text\": {\n    \"body\": \"{{$json.message}}\"\n  }\n}"
       },
       "id": "whatsapp-send-confirmation",
       "name": "WhatsApp – Send Confirmation",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
-      "position": [2000, 200],
+      "position": [
+        2000,
+        200
+      ],
       "credentials": {
         "httpHeaderAuth": {
           "id": "2",
@@ -176,7 +198,10 @@
       "name": "Webhook Response – 200 OK",
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1.1,
-      "position": [2220, 200]
+      "position": [
+        2220,
+        200
+      ]
     },
     {
       "parameters": {
@@ -187,39 +212,118 @@
       "name": "Webhook Response – Ignored",
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1.1,
-      "position": [900, 400]
+      "position": [
+        900,
+        400
+      ]
     }
   ],
   "connections": {
     "Webhook – Stripe Events": {
-      "main": [[{"node": "Code – Parse Stripe Event", "type": "main", "index": 0}]]
+      "main": [
+        [
+          {
+            "node": "Code – Parse Stripe Event",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
     "Code – Parse Stripe Event": {
-      "main": [[{"node": "IF – Checkout Completed?", "type": "main", "index": 0}]]
+      "main": [
+        [
+          {
+            "node": "IF – Checkout Completed?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
     "IF – Checkout Completed?": {
       "main": [
-        [{"node": "Code – Extract Metadata", "type": "main", "index": 0}],
-        [{"node": "Webhook Response – Ignored", "type": "main", "index": 0}]
+        [
+          {
+            "node": "Code – Extract Metadata",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Webhook Response – Ignored",
+            "type": "main",
+            "index": 0
+          }
+        ]
       ]
     },
     "Code – Extract Metadata": {
-      "main": [[{"node": "Supabase – Update Appointment", "type": "main", "index": 0}]]
+      "main": [
+        [
+          {
+            "node": "Supabase – Update Appointment",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
     "Supabase – Update Appointment": {
-      "main": [[{"node": "Supabase – Get Appointment Details", "type": "main", "index": 0}]]
+      "main": [
+        [
+          {
+            "node": "Supabase – Get Appointment Details",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
     "Supabase – Get Appointment Details": {
-      "main": [[{"node": "Supabase – Get Service Info", "type": "main", "index": 0}]]
+      "main": [
+        [
+          {
+            "node": "Supabase – Get Service Info",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
     "Supabase – Get Service Info": {
-      "main": [[{"node": "Code – Prepare Confirmation Message", "type": "main", "index": 0}]]
+      "main": [
+        [
+          {
+            "node": "Code – Prepare Confirmation Message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
     "Code – Prepare Confirmation Message": {
-      "main": [[{"node": "WhatsApp – Send Confirmation", "type": "main", "index": 0}]]
+      "main": [
+        [
+          {
+            "node": "WhatsApp – Send Confirmation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
     "WhatsApp – Send Confirmation": {
-      "main": [[{"node": "Webhook Response – 200 OK", "type": "main", "index": 0}]]
+      "main": [
+        [
+          {
+            "node": "Webhook Response – 200 OK",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "pinData": {},
