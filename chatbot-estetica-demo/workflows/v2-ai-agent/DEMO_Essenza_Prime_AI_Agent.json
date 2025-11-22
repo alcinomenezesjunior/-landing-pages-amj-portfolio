@@ -5,14 +5,16 @@
       "parameters": {
         "httpMethod": "POST",
         "path": "testar-bot-whatsapp",
-        "responseMode": "responseNode",
-        "options": {}
+        "responseMode": "responseNode"
       },
       "id": "webhook-whatsapp-incoming",
       "name": "Webhook – WhatsApp Incoming",
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2,
-      "position": [240, 300],
+      "position": [
+        240,
+        300
+      ],
       "webhookId": "essenza-prime-demo"
     },
     {
@@ -23,7 +25,10 @@
       "name": "Code – Parse Message",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [460, 300]
+      "position": [
+        460,
+        300
+      ]
     },
     {
       "parameters": {
@@ -40,7 +45,10 @@
       "name": "IF – Valid Message?",
       "type": "n8n-nodes-base.if",
       "typeVersion": 2,
-      "position": [680, 300]
+      "position": [
+        680,
+        300
+      ]
     },
     {
       "parameters": {
@@ -49,14 +57,16 @@
         "returnAll": false,
         "limit": 10,
         "filterType": "string",
-        "filterString": "phone=eq.{{$json.phone}}",
-        "options": {}
+        "filterString": "phone=eq.{{$json.phone}}"
       },
       "id": "supabase-get-client",
       "name": "Supabase – Get Client",
       "type": "n8n-nodes-base.supabase",
       "typeVersion": 1,
-      "position": [900, 200],
+      "position": [
+        900,
+        200
+      ],
       "credentials": {
         "supabaseApi": {
           "id": "1",
@@ -79,7 +89,10 @@
       "name": "IF – Client Exists?",
       "type": "n8n-nodes-base.if",
       "typeVersion": 2,
-      "position": [1120, 200]
+      "position": [
+        1120,
+        200
+      ]
     },
     {
       "parameters": {
@@ -93,14 +106,16 @@
               "value": "={{$('Code – Parse Message').item.json.phone}}"
             }
           ]
-        },
-        "options": {}
+        }
       },
       "id": "supabase-create-client",
       "name": "Supabase – Create Client",
       "type": "n8n-nodes-base.supabase",
       "typeVersion": 1,
-      "position": [1340, 320],
+      "position": [
+        1340,
+        320
+      ],
       "credentials": {
         "supabaseApi": {
           "id": "1",
@@ -115,14 +130,16 @@
         "returnAll": false,
         "limit": 1,
         "filterType": "string",
-        "filterString": "phone=eq.{{$('Code – Parse Message').item.json.phone}}",
-        "options": {}
+        "filterString": "phone=eq.{{$('Code – Parse Message').item.json.phone}}"
       },
       "id": "supabase-get-conversation",
       "name": "Supabase – Get Conversation",
       "type": "n8n-nodes-base.supabase",
       "typeVersion": 1,
-      "position": [1560, 200],
+      "position": [
+        1560,
+        200
+      ],
       "credentials": {
         "supabaseApi": {
           "id": "1",
@@ -138,7 +155,10 @@
       "name": "Code – Merge Data",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [1780, 200]
+      "position": [
+        1780,
+        200
+      ]
     },
     {
       "parameters": {
@@ -172,7 +192,11 @@
                   "description": "Data final no formato YYYY-MM-DD"
                 }
               },
-              "required": ["service_name", "date_from", "date_to"]
+              "required": [
+                "service_name",
+                "date_from",
+                "date_to"
+              ]
             }
           },
           {
@@ -181,19 +205,52 @@
             "parameters": {
               "type": "object",
               "properties": {
-                "service_name": {"type": "string"},
-                "professional_name": {"type": "string"},
-                "date": {"type": "string", "description": "YYYY-MM-DD"},
-                "time_start": {"type": "string", "description": "HH:MM"},
-                "duration_minutes": {"type": "integer"},
-                "client_name": {"type": "string"},
-                "client_phone": {"type": "string"},
-                "client_email": {"type": "string"},
-                "price": {"type": "number"},
-                "deposit": {"type": "number"},
-                "stripe_payment_id": {"type": "string"}
+                "service_name": {
+                  "type": "string"
+                },
+                "professional_name": {
+                  "type": "string"
+                },
+                "date": {
+                  "type": "string",
+                  "description": "YYYY-MM-DD"
+                },
+                "time_start": {
+                  "type": "string",
+                  "description": "HH:MM"
+                },
+                "duration_minutes": {
+                  "type": "integer"
+                },
+                "client_name": {
+                  "type": "string"
+                },
+                "client_phone": {
+                  "type": "string"
+                },
+                "client_email": {
+                  "type": "string"
+                },
+                "price": {
+                  "type": "number"
+                },
+                "deposit": {
+                  "type": "number"
+                },
+                "stripe_payment_id": {
+                  "type": "string"
+                }
               },
-              "required": ["service_name", "professional_name", "date", "time_start", "duration_minutes", "client_name", "client_phone", "price"]
+              "required": [
+                "service_name",
+                "professional_name",
+                "date",
+                "time_start",
+                "duration_minutes",
+                "client_name",
+                "client_phone",
+                "price"
+              ]
             }
           },
           {
@@ -202,14 +259,31 @@
             "parameters": {
               "type": "object",
               "properties": {
-                "amount_cents": {"type": "integer", "description": "Valor em cêntimos"},
-                "service_name": {"type": "string"},
-                "client_email": {"type": "string"},
-                "client_phone": {"type": "string"},
-                "booking_date": {"type": "string"},
-                "booking_time": {"type": "string"}
+                "amount_cents": {
+                  "type": "integer",
+                  "description": "Valor em cêntimos"
+                },
+                "service_name": {
+                  "type": "string"
+                },
+                "client_email": {
+                  "type": "string"
+                },
+                "client_phone": {
+                  "type": "string"
+                },
+                "booking_date": {
+                  "type": "string"
+                },
+                "booking_time": {
+                  "type": "string"
+                }
               },
-              "required": ["amount_cents", "service_name", "client_phone"]
+              "required": [
+                "amount_cents",
+                "service_name",
+                "client_phone"
+              ]
             }
           },
           {
@@ -218,11 +292,22 @@
             "parameters": {
               "type": "object",
               "properties": {
-                "client_phone": {"type": "string"},
-                "booking_date": {"type": "string", "description": "YYYY-MM-DD"},
-                "reason": {"type": "string", "description": "Motivo do cancelamento"}
+                "client_phone": {
+                  "type": "string"
+                },
+                "booking_date": {
+                  "type": "string",
+                  "description": "YYYY-MM-DD"
+                },
+                "reason": {
+                  "type": "string",
+                  "description": "Motivo do cancelamento"
+                }
               },
-              "required": ["client_phone", "booking_date"]
+              "required": [
+                "client_phone",
+                "booking_date"
+              ]
             }
           },
           {
@@ -231,12 +316,25 @@
             "parameters": {
               "type": "object",
               "properties": {
-                "client_phone": {"type": "string"},
-                "old_date": {"type": "string"},
-                "new_date": {"type": "string"},
-                "new_time": {"type": "string"}
+                "client_phone": {
+                  "type": "string"
+                },
+                "old_date": {
+                  "type": "string"
+                },
+                "new_date": {
+                  "type": "string"
+                },
+                "new_time": {
+                  "type": "string"
+                }
               },
-              "required": ["client_phone", "old_date", "new_date", "new_time"]
+              "required": [
+                "client_phone",
+                "old_date",
+                "new_date",
+                "new_time"
+              ]
             }
           },
           {
@@ -245,11 +343,21 @@
             "parameters": {
               "type": "object",
               "properties": {
-                "stripe_payment_id": {"type": "string"},
-                "refund_percentage": {"type": "integer", "description": "0-100"},
-                "reason": {"type": "string"}
+                "stripe_payment_id": {
+                  "type": "string"
+                },
+                "refund_percentage": {
+                  "type": "integer",
+                  "description": "0-100"
+                },
+                "reason": {
+                  "type": "string"
+                }
               },
-              "required": ["stripe_payment_id", "refund_percentage"]
+              "required": [
+                "stripe_payment_id",
+                "refund_percentage"
+              ]
             }
           },
           {
@@ -258,10 +366,21 @@
             "parameters": {
               "type": "object",
               "properties": {
-                "service_name": {"type": "string"},
-                "instruction_type": {"type": "string", "enum": ["pre", "post"]}
+                "service_name": {
+                  "type": "string"
+                },
+                "instruction_type": {
+                  "type": "string",
+                  "enum": [
+                    "pre",
+                    "post"
+                  ]
+                }
               },
-              "required": ["service_name", "instruction_type"]
+              "required": [
+                "service_name",
+                "instruction_type"
+              ]
             }
           },
           {
@@ -270,19 +389,34 @@
             "parameters": {
               "type": "object",
               "properties": {
-                "professional_name": {"type": "string"},
-                "info_type": {"type": "string", "enum": ["services", "schedule", "bio"]}
+                "professional_name": {
+                  "type": "string"
+                },
+                "info_type": {
+                  "type": "string",
+                  "enum": [
+                    "services",
+                    "schedule",
+                    "bio"
+                  ]
+                }
               },
-              "required": ["professional_name"]
+              "required": [
+                "professional_name"
+              ]
             }
           }
-        ]
+        ],
+        "options": {}
       },
       "id": "ai-agent-claude",
       "name": "AI Agent – Claude Sonnet 4",
       "type": "@n8n/n8n-nodes-langchain.agent",
-      "typeVersion": 1.7,
-      "position": [2000, 200],
+      "typeVersion": 3,
+      "position": [
+        2000,
+        200
+      ],
       "credentials": {
         "anthropicApi": {
           "id": "1",
@@ -298,7 +432,10 @@
       "name": "Code – Check Tool Calls",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [2220, 200]
+      "position": [
+        2220,
+        200
+      ]
     },
     {
       "parameters": {
@@ -315,7 +452,10 @@
       "name": "IF – Has Tool Calls?",
       "type": "n8n-nodes-base.if",
       "typeVersion": 2,
-      "position": [2440, 200]
+      "position": [
+        2440,
+        200
+      ]
     },
     {
       "parameters": {
@@ -323,14 +463,30 @@
         "value1": "={{$json.toolCalls[0].name}}",
         "rules": {
           "string": [
-            {"value2": "check_availability"},
-            {"value2": "create_booking"},
-            {"value2": "generate_payment_link"},
-            {"value2": "cancel_booking"},
-            {"value2": "reschedule_booking"},
-            {"value2": "process_refund"},
-            {"value2": "get_care_instructions"},
-            {"value2": "get_professional_info"}
+            {
+              "value2": "check_availability"
+            },
+            {
+              "value2": "create_booking"
+            },
+            {
+              "value2": "generate_payment_link"
+            },
+            {
+              "value2": "cancel_booking"
+            },
+            {
+              "value2": "reschedule_booking"
+            },
+            {
+              "value2": "process_refund"
+            },
+            {
+              "value2": "get_care_instructions"
+            },
+            {
+              "value2": "get_professional_info"
+            }
           ]
         },
         "fallbackOutput": "extra"
@@ -339,7 +495,10 @@
       "name": "Switch – Route by Tool",
       "type": "n8n-nodes-base.switch",
       "typeVersion": 2,
-      "position": [2660, 100]
+      "position": [
+        2660,
+        100
+      ]
     },
     {
       "parameters": {
@@ -349,7 +508,10 @@
       "name": "Tool 1 – Parse Arguments",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [2880, -100]
+      "position": [
+        2880,
+        -100
+      ]
     },
     {
       "parameters": {
@@ -358,14 +520,16 @@
         "returnAll": false,
         "limit": 1,
         "filterType": "string",
-        "filterString": "name=eq.{{$json.serviceName}}",
-        "options": {}
+        "filterString": "name=eq.{{$json.serviceName}}"
       },
       "id": "tool1-get-service",
       "name": "Tool 1 – Get Service",
       "type": "n8n-nodes-base.supabase",
       "typeVersion": 1,
-      "position": [3100, -100],
+      "position": [
+        3100,
+        -100
+      ],
       "credentials": {
         "supabaseApi": {
           "id": "1",
@@ -379,14 +543,16 @@
         "table": "professionals",
         "returnAll": true,
         "filterType": "string",
-        "filterString": "services=cs.{{{$('Tool 1 – Parse Arguments').item.json.serviceName}}}",
-        "options": {}
+        "filterString": "services=cs.{{{$('Tool 1 – Parse Arguments').item.json.serviceName}}}"
       },
       "id": "tool1-get-professionals",
       "name": "Tool 1 – Get Professionals",
       "type": "n8n-nodes-base.supabase",
       "typeVersion": 1,
-      "position": [3320, -100],
+      "position": [
+        3320,
+        -100
+      ],
       "credentials": {
         "supabaseApi": {
           "id": "1",
@@ -411,7 +577,10 @@
       "name": "Tool 1 – Get Calendar Events",
       "type": "n8n-nodes-base.googleCalendar",
       "typeVersion": 1.2,
-      "position": [3540, -100],
+      "position": [
+        3540,
+        -100
+      ],
       "credentials": {
         "googleCalendarOAuth2Api": {
           "id": "3",
@@ -427,7 +596,10 @@
       "name": "Tool 1 – Calculate Available Slots",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [3760, -100]
+      "position": [
+        3760,
+        -100
+      ]
     },
     {
       "parameters": {
@@ -437,7 +609,10 @@
       "name": "Tool 2 – Parse Arguments",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [2880, 0]
+      "position": [
+        2880,
+        0
+      ]
     },
     {
       "parameters": {
@@ -447,7 +622,10 @@
       "name": "Tool 2 – Prepare Calendar Data",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [3100, 0]
+      "position": [
+        3100,
+        0
+      ]
     },
     {
       "parameters": {
@@ -466,7 +644,10 @@
       "name": "Tool 2 – Create Calendar Event",
       "type": "n8n-nodes-base.googleCalendar",
       "typeVersion": 1.2,
-      "position": [3320, 0],
+      "position": [
+        3320,
+        0
+      ],
       "credentials": {
         "googleCalendarOAuth2Api": {
           "id": "3",
@@ -530,14 +711,16 @@
               "value": "confirmed"
             }
           ]
-        },
-        "options": {}
+        }
       },
       "id": "tool2-create-appointment",
       "name": "Tool 2 – Create Appointment",
       "type": "n8n-nodes-base.supabase",
       "typeVersion": 1,
-      "position": [3540, 0],
+      "position": [
+        3540,
+        0
+      ],
       "credentials": {
         "supabaseApi": {
           "id": "1",
@@ -553,7 +736,10 @@
       "name": "Tool 2 – Prepare Scheduled Messages",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [3760, 0]
+      "position": [
+        3760,
+        0
+      ]
     },
     {
       "parameters": {
@@ -583,14 +769,16 @@
               "value": "={{$json.sent}}"
             }
           ]
-        },
-        "options": {}
+        }
       },
       "id": "tool2-create-scheduled-messages",
       "name": "Tool 2 – Create Scheduled Messages",
       "type": "n8n-nodes-base.supabase",
       "typeVersion": 1,
-      "position": [3980, 0],
+      "position": [
+        3980,
+        0
+      ],
       "credentials": {
         "supabaseApi": {
           "id": "1",
@@ -606,7 +794,10 @@
       "name": "Tool 2 – Format Result",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [4200, 0]
+      "position": [
+        4200,
+        0
+      ]
     },
     {
       "parameters": {
@@ -616,7 +807,10 @@
       "name": "Tool 3 – Parse Arguments",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [2880, 100]
+      "position": [
+        2880,
+        100
+      ]
     },
     {
       "parameters": {
@@ -687,14 +881,16 @@
               "value": "={{$json.clientEmail}}"
             }
           ]
-        },
-        "options": {}
+        }
       },
       "id": "tool3-create-stripe-session",
       "name": "Tool 3 – Create Stripe Session",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
-      "position": [3100, 100],
+      "position": [
+        3100,
+        100
+      ],
       "credentials": {
         "httpHeaderAuth": {
           "id": "4",
@@ -710,7 +906,10 @@
       "name": "Tool 3 – Format Result",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [3320, 100]
+      "position": [
+        3320,
+        100
+      ]
     },
     {
       "parameters": {
@@ -720,7 +919,10 @@
       "name": "Tools 4-8 – Placeholder",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [2880, 200]
+      "position": [
+        2880,
+        200
+      ]
     },
     {
       "parameters": {
@@ -730,7 +932,10 @@
       "name": "Code – Merge Tool Results",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [3980, 200]
+      "position": [
+        3980,
+        200
+      ]
     },
     {
       "parameters": {
@@ -740,7 +945,10 @@
       "name": "Code – Process Response",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [2660, 300]
+      "position": [
+        2660,
+        300
+      ]
     },
     {
       "parameters": {
@@ -766,14 +974,16 @@
               "value": "={{$json.currentState}}"
             }
           ]
-        },
-        "options": {}
+        }
       },
       "id": "supabase-update-conversation",
       "name": "Supabase – Update Conversation",
       "type": "n8n-nodes-base.supabase",
       "typeVersion": 1,
-      "position": [2880, 300],
+      "position": [
+        2880,
+        300
+      ],
       "credentials": {
         "supabaseApi": {
           "id": "1",
@@ -798,14 +1008,16 @@
         },
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={\n  \"messaging_product\": \"whatsapp\",\n  \"to\": \"{{$('Code – Process Response').item.json.phone}}\",\n  \"type\": \"text\",\n  \"text\": {\n    \"body\": \"{{$('Code – Process Response').item.json.responseText}}\"\n  }\n}",
-        "options": {}
+        "jsonBody": "={\n  \"messaging_product\": \"whatsapp\",\n  \"to\": \"{{$('Code – Process Response').item.json.phone}}\",\n  \"type\": \"text\",\n  \"text\": {\n    \"body\": \"{{$('Code – Process Response').item.json.responseText}}\"\n  }\n}"
       },
       "id": "whatsapp-send-message",
       "name": "WhatsApp – Send Message",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
-      "position": [3100, 300],
+      "position": [
+        3100,
+        300
+      ],
       "credentials": {
         "httpHeaderAuth": {
           "id": "2",
@@ -822,120 +1034,427 @@
       "name": "Webhook Response",
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1.1,
-      "position": [3320, 300]
+      "position": [
+        3320,
+        300
+      ]
     }
   ],
   "connections": {
     "Webhook – WhatsApp Incoming": {
-      "main": [[{"node": "Code – Parse Message", "type": "main", "index": 0}]]
+      "main": [
+        [
+          {
+            "node": "Code – Parse Message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
     "Code – Parse Message": {
-      "main": [[{"node": "IF – Valid Message?", "type": "main", "index": 0}]]
+      "main": [
+        [
+          {
+            "node": "IF – Valid Message?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
     "IF – Valid Message?": {
-      "main": [[{"node": "Supabase – Get Client", "type": "main", "index": 0}]]
+      "main": [
+        [
+          {
+            "node": "Supabase – Get Client",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
     "Supabase – Get Client": {
-      "main": [[{"node": "IF – Client Exists?", "type": "main", "index": 0}]]
+      "main": [
+        [
+          {
+            "node": "IF – Client Exists?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
     "IF – Client Exists?": {
       "main": [
-        [{"node": "Supabase – Get Conversation", "type": "main", "index": 0}],
-        [{"node": "Supabase – Create Client", "type": "main", "index": 0}]
+        [
+          {
+            "node": "Supabase – Get Conversation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Supabase – Create Client",
+            "type": "main",
+            "index": 0
+          }
+        ]
       ]
     },
     "Supabase – Create Client": {
-      "main": [[{"node": "Supabase – Get Conversation", "type": "main", "index": 0}]]
+      "main": [
+        [
+          {
+            "node": "Supabase – Get Conversation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
     "Supabase – Get Conversation": {
-      "main": [[{"node": "Code – Merge Data", "type": "main", "index": 0}]]
+      "main": [
+        [
+          {
+            "node": "Code – Merge Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
     "Code – Merge Data": {
-      "main": [[{"node": "AI Agent – Claude Sonnet 4", "type": "main", "index": 0}]]
+      "main": [
+        [
+          {
+            "node": "AI Agent – Claude Sonnet 4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
     "AI Agent – Claude Sonnet 4": {
-      "main": [[{"node": "Code – Check Tool Calls", "type": "main", "index": 0}]]
+      "main": [
+        [
+          {
+            "node": "Code – Check Tool Calls",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
     "Code – Check Tool Calls": {
-      "main": [[{"node": "IF – Has Tool Calls?", "type": "main", "index": 0}]]
+      "main": [
+        [
+          {
+            "node": "IF – Has Tool Calls?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
     "IF – Has Tool Calls?": {
       "main": [
-        [{"node": "Switch – Route by Tool", "type": "main", "index": 0}],
-        [{"node": "Code – Process Response", "type": "main", "index": 0}]
+        [
+          {
+            "node": "Switch – Route by Tool",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Code – Process Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
       ]
     },
     "Switch – Route by Tool": {
       "main": [
-        [{"node": "Tool 1 – Parse Arguments", "type": "main", "index": 0}],
-        [{"node": "Tool 2 – Parse Arguments", "type": "main", "index": 0}],
-        [{"node": "Tool 3 – Parse Arguments", "type": "main", "index": 0}],
-        [{"node": "Tools 4-8 – Placeholder", "type": "main", "index": 0}],
-        [{"node": "Tools 4-8 – Placeholder", "type": "main", "index": 0}],
-        [{"node": "Tools 4-8 – Placeholder", "type": "main", "index": 0}],
-        [{"node": "Tools 4-8 – Placeholder", "type": "main", "index": 0}],
-        [{"node": "Tools 4-8 – Placeholder", "type": "main", "index": 0}]
+        [
+          {
+            "node": "Tool 1 – Parse Arguments",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Tool 2 – Parse Arguments",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Tool 3 – Parse Arguments",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Tools 4-8 – Placeholder",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Tools 4-8 – Placeholder",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Tools 4-8 – Placeholder",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Tools 4-8 – Placeholder",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Tools 4-8 – Placeholder",
+            "type": "main",
+            "index": 0
+          }
+        ]
       ]
     },
     "Tool 1 – Parse Arguments": {
-      "main": [[{"node": "Tool 1 – Get Service", "type": "main", "index": 0}]]
+      "main": [
+        [
+          {
+            "node": "Tool 1 – Get Service",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
     "Tool 1 – Get Service": {
-      "main": [[{"node": "Tool 1 – Get Professionals", "type": "main", "index": 0}]]
+      "main": [
+        [
+          {
+            "node": "Tool 1 – Get Professionals",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
     "Tool 1 – Get Professionals": {
-      "main": [[{"node": "Tool 1 – Get Calendar Events", "type": "main", "index": 0}]]
+      "main": [
+        [
+          {
+            "node": "Tool 1 – Get Calendar Events",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
     "Tool 1 – Get Calendar Events": {
-      "main": [[{"node": "Tool 1 – Calculate Available Slots", "type": "main", "index": 0}]]
+      "main": [
+        [
+          {
+            "node": "Tool 1 – Calculate Available Slots",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
     "Tool 1 – Calculate Available Slots": {
-      "main": [[{"node": "Code – Merge Tool Results", "type": "main", "index": 0}]]
+      "main": [
+        [
+          {
+            "node": "Code – Merge Tool Results",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
     "Tool 2 – Parse Arguments": {
-      "main": [[{"node": "Tool 2 – Prepare Calendar Data", "type": "main", "index": 0}]]
+      "main": [
+        [
+          {
+            "node": "Tool 2 – Prepare Calendar Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
     "Tool 2 – Prepare Calendar Data": {
-      "main": [[{"node": "Tool 2 – Create Calendar Event", "type": "main", "index": 0}]]
+      "main": [
+        [
+          {
+            "node": "Tool 2 – Create Calendar Event",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
     "Tool 2 – Create Calendar Event": {
-      "main": [[{"node": "Tool 2 – Create Appointment", "type": "main", "index": 0}]]
+      "main": [
+        [
+          {
+            "node": "Tool 2 – Create Appointment",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
     "Tool 2 – Create Appointment": {
-      "main": [[{"node": "Tool 2 – Prepare Scheduled Messages", "type": "main", "index": 0}]]
+      "main": [
+        [
+          {
+            "node": "Tool 2 – Prepare Scheduled Messages",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
     "Tool 2 – Prepare Scheduled Messages": {
-      "main": [[{"node": "Tool 2 – Create Scheduled Messages", "type": "main", "index": 0}]]
+      "main": [
+        [
+          {
+            "node": "Tool 2 – Create Scheduled Messages",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
     "Tool 2 – Create Scheduled Messages": {
-      "main": [[{"node": "Tool 2 – Format Result", "type": "main", "index": 0}]]
+      "main": [
+        [
+          {
+            "node": "Tool 2 – Format Result",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
     "Tool 2 – Format Result": {
-      "main": [[{"node": "Code – Merge Tool Results", "type": "main", "index": 0}]]
+      "main": [
+        [
+          {
+            "node": "Code – Merge Tool Results",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
     "Tool 3 – Parse Arguments": {
-      "main": [[{"node": "Tool 3 – Create Stripe Session", "type": "main", "index": 0}]]
+      "main": [
+        [
+          {
+            "node": "Tool 3 – Create Stripe Session",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
     "Tool 3 – Create Stripe Session": {
-      "main": [[{"node": "Tool 3 – Format Result", "type": "main", "index": 0}]]
+      "main": [
+        [
+          {
+            "node": "Tool 3 – Format Result",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
     "Tool 3 – Format Result": {
-      "main": [[{"node": "Code – Merge Tool Results", "type": "main", "index": 0}]]
+      "main": [
+        [
+          {
+            "node": "Code – Merge Tool Results",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
     "Tools 4-8 – Placeholder": {
-      "main": [[{"node": "Code – Merge Tool Results", "type": "main", "index": 0}]]
+      "main": [
+        [
+          {
+            "node": "Code – Merge Tool Results",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
     "Code – Merge Tool Results": {
-      "main": [[{"node": "Code – Process Response", "type": "main", "index": 0}]]
+      "main": [
+        [
+          {
+            "node": "Code – Process Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
     "Code – Process Response": {
-      "main": [[{"node": "Supabase – Update Conversation", "type": "main", "index": 0}]]
+      "main": [
+        [
+          {
+            "node": "Supabase – Update Conversation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
     "Supabase – Update Conversation": {
-      "main": [[{"node": "WhatsApp – Send Message", "type": "main", "index": 0}]]
+      "main": [
+        [
+          {
+            "node": "WhatsApp – Send Message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
     "WhatsApp – Send Message": {
-      "main": [[{"node": "Webhook Response", "type": "main", "index": 0}]]
+      "main": [
+        [
+          {
+            "node": "Webhook Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "pinData": {},
