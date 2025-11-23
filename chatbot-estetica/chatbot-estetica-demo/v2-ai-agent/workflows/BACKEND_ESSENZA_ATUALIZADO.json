@@ -117,6 +117,36 @@
     },
     {
       "parameters": {
+        "operation": "getMany",
+        "tableId": "conversations",
+        "returnAll": false,
+        "limit": 1,
+        "filterType": "manual",
+        "matchType": "allFilters",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "phone",
+              "condition": "equals",
+              "keyValue": "={{ $('Parse Message').item.json.phone }}"
+            }
+          ]
+        }
+      },
+      "id": "supabase-get-conversation",
+      "name": "Get Conversation",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [1340, 300],
+      "credentials": {
+        "supabaseApi": {
+          "id": "5FmNwSU32HCxPptn",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
         "jsCode": "const parseData = $('Parse Message').first().json;\nconst clientData = $input.first().json;\n\nreturn {\n  json: {\n    phone: parseData.phone,\n    message: parseData.message,\n    messageId: parseData.messageId,\n    clientId: clientData.id || clientData[0]?.id,\n    clientName: clientData.name || clientData[0]?.name || 'Cliente',\n    timestamp: parseData.timestamp\n  }\n};"
       },
       "id": "code-merge",
@@ -127,13 +157,62 @@
     },
     {
       "parameters": {
-        "jsCode": "const data = $input.first().json;\n\nreturn {\n  json: {\n    responseText: `✅ Olá ${data.clientName}!\\n\\nRecebi a tua mensagem: \"${data.message}\"\\n\\n⚠️ Este é um backend de teste. O AI Agent será adicionado em breve!`,\n    phone: data.phone\n  }\n};"
+        "jsCode": "const data = $input.first().json;\n\nreturn {\n  json: {\n    responseText: `✅ Olá ${data.clientName}!\\n\\nRecebi a tua mensagem: \"${data.message}\"\\n\\n⚠️ Este é um backend de teste. O AI Agent será adicionado em breve!`,\n    phone: data.phone,\n    clientId: data.clientId\n  }\n};"
       },
       "id": "code-response",
       "name": "Generate Response",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [1780, 300]
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "conversations",
+        "filterType": "manual",
+        "matchType": "allFilters",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "phone",
+              "condition": "equals",
+              "keyValue": "={{ $json.phone }}"
+            }
+          ]
+        },
+        "dataMode": "defineBelow",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "client_id",
+              "fieldValue": "={{ $json.clientId }}"
+            },
+            {
+              "fieldId": "phone",
+              "fieldValue": "={{ $json.phone }}"
+            },
+            {
+              "fieldId": "current_state",
+              "fieldValue": "test"
+            },
+            {
+              "fieldId": "updated_at",
+              "fieldValue": "={{ new Date().toISOString() }}"
+            }
+          ]
+        }
+      },
+      "id": "supabase-update-conversation",
+      "name": "Update Conversation",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [1900, 300],
+      "credentials": {
+        "supabaseApi": {
+          "id": "5FmNwSU32HCxPptn",
+          "name": "Supabase account"
+        }
+      }
     },
     {
       "parameters": {
@@ -150,7 +229,7 @@
       "name": "Send WhatsApp",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
-      "position": [2000, 300],
+      "position": [2120, 300],
       "credentials": {
         "httpHeaderAuth": {
           "id": "msDucOJHTeBau1zJ",
@@ -168,7 +247,7 @@
       "name": "Respond",
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1.1,
-      "position": [2220, 300]
+      "position": [2340, 300]
     }
   ],
   "connections": {
@@ -186,17 +265,23 @@
     },
     "Client Exists?": {
       "main": [
-        [{"node": "Merge Data", "type": "main", "index": 0}],
+        [{"node": "Get Conversation", "type": "main", "index": 0}],
         [{"node": "Create Client", "type": "main", "index": 0}]
       ]
     },
     "Create Client": {
+      "main": [[{"node": "Get Conversation", "type": "main", "index": 0}]]
+    },
+    "Get Conversation": {
       "main": [[{"node": "Merge Data", "type": "main", "index": 0}]]
     },
     "Merge Data": {
       "main": [[{"node": "Generate Response", "type": "main", "index": 0}]]
     },
     "Generate Response": {
+      "main": [[{"node": "Update Conversation", "type": "main", "index": 0}]]
+    },
+    "Update Conversation": {
       "main": [[{"node": "Send WhatsApp", "type": "main", "index": 0}]]
     },
     "Send WhatsApp": {
