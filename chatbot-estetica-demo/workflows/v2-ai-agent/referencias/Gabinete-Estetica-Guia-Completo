@@ -1,0 +1,1290 @@
+# GUIA COMPLETO DE PROCEDIMENTOS ESTÉTICOS
+## Referencial Técnico e Operacional para Gabinete de Estética (2025)
+
+---
+
+## ÍNDICE
+1. Procedimentos Faciais
+2. Procedimentos Corporais
+3. Serviços de Micropigmentação
+4. Protocolos Operacionais
+5. Gestão Financeira e Pagamentos
+
+---
+
+## 1. PROCEDIMENTOS FACIAIS
+
+### 1.1 LIMPEZA DE PELE PROFUNDA
+
+#### Descrição
+Procedimento de higienização, esfoliação e hidratação intensiva que remove impurezas, células mortas e sebo, revitalizando a pele.
+
+#### Técnicas Utilizadas
+- **Higienização inicial**: Com agentes suaves específicos para o tipo de pele (ácido salicílico para oleosa, glicérico para sensível)
+- **Vapor de ozônio**: Abre poros, desinfeta e prepara a pele para extrações
+- **Extrações manuais e mecanizadas**: Remoção de comedões e impurezas
+- **Esfoliação enzimática ou mecânica**: Estimula renovação celular
+- **Máscara calmante/hidratante**: Reduz inflamação e rehidrata
+- **Sérum e hidratante final**: Proteção e selagem de umidade
+
+#### Tempo de Procedimento
+- **60–90 minutos**
+
+#### Resultados e Durabilidade
+- Pele mais limpa, luminosa e uniforme
+- Redução de acne e oleosidade
+- Durabilidade: 15–30 dias (recomenda-se mensalmente)
+
+#### Requisitos Prévios
+- Avaliação presencial do tipo e estado da pele
+- Histórico de sensibilidade ou reações alérgicas
+- Suspensão de produtos ácidos 2–3 dias antes (recomendado)
+
+#### Contraindicações
+- Infecções ativas (herpes, piodermite)
+- Lesões abertas ou inflamadas
+- Dermatites severas
+- Acne conglobata descontrolada
+
+#### Recomendações Pós-Procedimento
+- Evitar maquiagem por 24h
+- Protetor solar SPF 50+ obrigatório
+- Evitar saunas, piscinas e academia 48h
+- Hidratação tópica intensiva (2–3 vezes ao dia durante 7 dias)
+- Evitar produtos com ácidos nos primeiros 3 dias
+
+#### Valor Médio em Portugal
+- **€30–50** (sessão única)
+- **Pacote 4 sessões**: €100–150
+
+---
+
+### 1.2 PEELINGS QUÍMICOS
+
+#### Descrição
+Aplicação controlada de agentes químicos para promover descamação e renovação celular em profundidades variáveis.
+
+#### Tipos de Peelings e Profundidade de Ação
+
+**A) Peeling Superficial (Very Light)**
+- **Profundidade**: Camada córnea e granulosa
+- **Ácidos utilizados**:
+  - Ácido Glicólico (AHA): 30–70% | Estimula hidratação e renovação celular
+  - Ácido Láctico: 20–90% | Suave, indicado para peles sensíveis
+  - Ácido Mandélico: 15–45% | Molecular maior, penetração lenta, apto para peles étnicas
+  - Ácido Salicílico (BHA): 15–30% | Lipossolúvel, ideal para acne
+  - Ácido Azelaico: 15–20% | Anti-inflamatório, reduz hiperpigmentação
+  
+- **Indicações**: 
+  - Rejuvenescimento leve
+  - Hiperpigmentação superficial
+  - Acne leve e comedões
+  - Textura irregular
+  - Fotoenvelhecimento inicial
+  
+- **Tempo**: 30–45 minutos
+- **Sessões recomendadas**: Sequencial (5–10 sessões, 1 vez/semana)
+- **Downtime**: Mínimo (descamação leve 2–3 dias)
+
+---
+
+**B) Peeling Médio (Medium Depth)**
+- **Profundidade**: Epiderme até derme papilar
+- **Ácidos utilizados**:
+  - Ácido Tricloroacético (TCA): 15–35% | Mais invasivo, resultados profundos
+  - Jessner Solution (combinação): Ácido láctico + ácido salicílico + resorcinol
+  - Combinações sinérgicas: Ácido glicólico + TCA (efeito potencializado)
+  
+- **Indicações**:
+  - Melasma resistente
+  - Manchas profundas
+  - Rugas moderadas
+  - Cicatrizes de acne superficiais
+  - Fotoenvelhecimento moderado
+  
+- **Tempo**: 45–60 minutos
+- **Sessões recomendadas**: 3–6 sessões com intervalo de 4–6 semanas
+- **Downtime**: Moderado (descamação 5–7 dias, vermelhidão 1–2 semanas)
+
+---
+
+**C) Peeling Profundo (Deep)**
+- **Profundidade**: Derme reticular
+- **Ácidos utilizados**:
+  - Fenol: 45–90% | Mais agressivo, uso limitado
+  - TCA: 35–50%
+  
+- **Indicações**:
+  - Fotoenvelhecimento severo
+  - Cicatrizes profundas
+  - Rugas marcadas (limite com procedimentos cirúrgicos)
+  
+- **Tempo**: 60–90 minutos
+- **Sessões**: 1–2, com intervalo de 6+ meses
+- **Downtime**: Intenso (2–4 semanas de recuperação)
+- **Nota**: Menos comum em gabinetes por maior complexidade; recomenda-se referenciação
+
+---
+
+#### Mecanismo de Ação
+- Descamação controlada da epiderme
+- Estímulo de síntese de colágeno e elastina
+- Inibição de tirosinase (redução de melanina)
+- Renovação celular e melhora de textura
+
+#### Técnica de Aplicação
+1. Limpeza profunda da pele com solvente
+2. Aplicação uniforme do agente químico com pincel
+3. Tempo de permanência conforme protocolo (3–20 min, consoante ácido)
+4. Neutralização com solução específica (se necessário)
+5. Remoção do agente com água filtrada
+6. Aplicação de máscara calmante
+7. Hidratação intensiva
+
+#### Requisitos Prévios
+- Avaliação dermatológica ou estética especializada
+- Teste de sensibilidade 24h antes
+- Suspensão de ácidos, retinoides e vitamina C 7–10 dias antes
+- Suspensão de medicamentos fotossensibilizantes
+- Uso de protetor solar SPF 50+ na semana anterior
+
+#### Contraindicações
+- Gestação e lactação
+- Infecções ativas
+- Herpes simplex ativa
+- Doenças autoimunes descontroladas
+- Uso recente de isotretinoína (< 6 meses)
+- Alergia conhecida a componentes
+- Diabetes descompensada
+
+#### Recomendações Pós-Procedimento
+- **Dias 1–3**: Evitar água quente, maquiagem, produtos com ácidos
+- **Semana 1**: Protetor solar SPF 50+, hidratação intensiva 2–3x/dia
+- **Semana 2**: Ainda evitar exposição solar direta, utilizar chapéu/óculos
+- **Até 4 semanas**: Sem sauna, piscina, exercício intenso, álcool
+- **Medicação**: Se prescreva, cumprir rigorosamente (antibióticos, antivirais)
+- **Evitar**: Coçar, manipular ou desprender as descamações (deixar cair naturalmente)
+
+#### Valores Médios em Portugal
+- **Peeling Superficial**: €60–100 (sessão)
+- **Peeling Médio**: €120–200 (sessão)
+- **Protocolo Completo Superficial** (5 sessões): €250–400
+- **Protocolo Completo Médio** (4 sessões): €400–700
+
+---
+
+### 1.3 RADIOFREQUÊNCIA
+
+#### Descrição
+Utilização de ondas eletromagnéticas para gerar calor controlado nos tecidos profundos, estimulando produção de colágeno e elastina.
+
+#### Mecanismo de Ação
+- Aquecimento das camadas dérmicas (40–45°C de temperatura-alvo)
+- Desnaturação parcial de colágeno existente
+- Estímulo de síntese de novo colágeno (remodelação 8–12 semanas)
+- Melhora de circulação sanguínea e oxigenação tecidual
+
+#### Técnicas Disponíveis
+- **Radiofrequência Bipolar**: Para pequenas áreas faciais, maior precisão
+- **Radiofrequência Multipolar**: Para áreas maiores, face completa ou corpo
+- **Radiofrequência Fracionada**: Aplicação segmentada para reduzir downtime
+- **Combinação com Ultrassom Microfocado**: Potencialização de resultados (lifting complementar)
+
+#### Protocolo de Aplicação
+1. Limpeza e esfoliação suave
+2. Aplicação de meio deslizante (óleo vegetal ou glicerina)
+3. Passagem do aplicador em movimentos lentos e uniformes
+4. Manutenção de temperatura de 40–45°C por 5 minutos por hemi-face
+5. Potência inicial de 35W, ajustável conforme tolerância
+6. Hidratação final com sérum reparador
+
+#### Tempo de Procedimento
+- **Rosto**: 30–45 minutos
+- **Corporal/Áreas maiores**: 45–60 minutos
+
+#### Indicações
+- Flacidez leve a moderada
+- Rugas dinâmicas
+- Perda de luminosidade
+- Textura irregular
+- Poros dilatados
+- Melhora geral de qualidade de pele
+- Prevenção de envelhecimento
+
+#### Resultados e Durabilidade
+- Resultados visíveis: 2–4 semanas (melhora progressiva)
+- Pico de resultados: 8–12 semanas
+- Durabilidade: 6–12 meses (necessário manutenção)
+- Recomendação: 1 sessão/mês para 3–6 meses, depois manutenção semestral
+
+#### Requisitos Prévios
+- Avaliação do tipo de pele e histórico
+- Teste de tolerância ao calor
+- Não usar produtos ácidos 24h antes
+
+#### Contraindicações
+- Marcapassos ou implantes metálicos
+- Gestação (relativo)
+- Infecções ativas
+- Doenças autoimunes
+- Cicatrizes queloidianas
+
+#### Recomendações Pós-Procedimento
+- Ligeira vermelhidão por 2–4 horas (normal)
+- Evitar protetor solar com óxido de zinco/titânio imediatamente
+- Hidratação tópica intensiva
+- Evitar sauna/piscina 48h
+- Protetor solar SPF 50+ nos dias seguintes
+- Sem produtos ácidos 48h
+- Sensação de aquecimento nos dias 1–3 (normal)
+
+#### Valor Médio em Portugal
+- **Sessão Rosto**: €80–150
+- **Sessão Corporal/Área grande**: €120–200
+- **Pacote 4 sessões**: €280–500
+- **Manutenção Semestral**: €100–150
+
+---
+
+### 1.4 ULTRASSOM MICROFOCADO
+
+#### Descrição
+Tecnologia de ondas sonoras de alta frequência focadas para estimular colágeno em camadas profundas, promovendo lifting não invasivo.
+
+#### Mecanismo de Ação
+- Ondas sonoras concentradas geram calor localizado (60–70°C)
+- Estimulação de fibroblastos
+- Síntese de novo colágeno (remodelação progressiva)
+- Efeito lifting comparável a procedimentos cirúrgicos
+
+#### Técnicas Disponíveis
+- **Ultrassom Microfocado (HIFU)**: Profundidade até derme profunda
+- **Combinação com Radiofrequência**: Potencialização (lifting + firmeza)
+
+#### Protocolo de Aplicação
+1. Limpeza profunda
+2. Aplicação de gel condutor específico
+3. Uso de transdutor com intensidade ajustada (1.3–4.5 MHz conforme profundidade)
+4. Aplicação em linhas uniformes, sem sobreposição
+5. Hidratação e proteção final
+
+#### Tempo de Procedimento
+- **Rosto completo**: 45–60 minutos
+- **Áreas focalizadas** (papada, flacidez): 30–45 minutos
+- **Corporal**: 60–90 minutos
+
+#### Indicações
+- Flacidez moderada a severa
+- Papada/dupla mente
+- Rugas profundas
+- Perda de volume
+- Rejuvenescimento global
+- Melhora de contorno (efeito lifting)
+- Complemento a outras técnicas
+
+#### Resultados e Durabilidade
+- Resultados imediatos: 20–30% (melhora progressiva)
+- Pico de resultados: 3–4 meses
+- Durabilidade: 12–18 meses (recomendação: 1–2 sessões/ano manutenção)
+
+#### Requisitos Prévios
+- Avaliação presencial
+- Teste de tolerância ao calor focal
+- Comunicar qualquer prótese ou implante
+
+#### Contraindicações
+- Implantes metálicos faciais
+- Gestação
+- Infecções ativas
+- Doenças autoimunes
+- Cicatrizes recentes
+- Distúrbios de coagulação
+
+#### Recomendações Pós-Procedimento
+- Ligeira vermelhidão/edema 24–48h (normal e esperado)
+- Evitar água quente 24h
+- Protetor solar SPF 50+ obrigatório
+- Sem sauna/piscina 72h
+- Evitar álcool nas primeiras 48h
+- Suplementação com colágenoídeos (recomendado)
+- Acompanhamento progressivo das primeiras 4 semanas
+
+#### Valor Médio em Portugal
+- **Rosto completo**: €150–300
+- **Áreas focalizadas**: €100–200
+- **Corpo**: €200–400
+- **Pacote 2 sessões**: €250–550
+
+---
+
+### 1.5 MICROAGULHAMENTO (DERMAROLLING/DERMAPEN)
+
+#### Descrição
+Procedimento que utiliza agulhas muito finas para criar micro-canais na pele, estimulando produção de colágeno e permitindo penetração de ativos.
+
+#### Mecanismo de Ação
+- Criação controlada de micro-lesões
+- Ativação de resposta de cicatrização natural
+- Síntese de colágeno e elastina
+- Aumento de permeabilidade para absorção de ativos
+- Remodelação progressiva
+
+#### Técnicas Disponíveis
+- **Dermaroller Manual**: Profundidade 0.5–2.5mm, uso doméstico ou clínico
+- **Dermapen Motorizado**: Agulhas vibratórias, profundidade ajustável, maior precisão
+- **Radiofrequência com Microagulhamento**: Combinação para potencialização
+
+#### Protocolo de Aplicação
+1. Higienização profunda
+2. Aplicação de anestésico tópico (15–20 min)
+3. Esfoliação suave opcional
+4. Passagem do dispositivo em padrões sistemáticos (vertical, horizontal, diagonal)
+5. Aplicação de sérum reparador/exossomas durante o procedimento
+6. Máscara calmante
+7. Protetor solar e cuidados pós
+
+#### Profundidade Recomendada
+- **0.5–1.0mm**: Hidratação e absorção de ativos, renovação superficial
+- **1.0–1.5mm**: Estimulação de colágeno, antiacne
+- **1.5–2.0mm**: Cicatrizes de acne, rejuvenescimento profundo
+- **2.0–2.5mm**: Cicatrizes profundas, flacidez (requer profissional experiente)
+
+#### Tempo de Procedimento
+- **30–45 minutos** (incluindo anestesia)
+
+#### Indicações
+- Acne e cicatrizes de acne
+- Rugas finas
+- Textura irregular
+- Poros dilatados
+- Flacidez leve
+- Renovação geral de pele
+- Hiperpigmentação
+- Estirias
+
+#### Resultados e Durabilidade
+- Pele mais renovada: 3–5 dias
+- Colágeno em ativação: 2–4 semanas
+- Resultados completos: 8–12 semanas
+- Recomendação: 4–6 sessões com intervalo de 4 semanas, depois manutenção
+
+#### Requisitos Prévios
+- Avaliação presencial
+- Teste de alergia a anestésicos
+- Suspensão de ácidos 3 dias antes
+- Suspensão de retinoides 2 dias antes
+
+#### Contraindicações
+- Infecções ativas (herpes, piodermite)
+- Cicatrizes queloides
+- Doenças autoimunes (relativa)
+- Diabetes descompensada (relativa)
+- Gestação
+- Pele muito inflamada
+- Uso de anticoagulantes
+
+#### Recomendações Pós-Procedimento
+- **Horas 0–24**: Evitar água quente, maquiagem, produtos agressivos
+- **Dias 1–3**: Vermelhidão e pequeno inchaço (normal)
+- **Dias 1–7**: Protetor solar SPF 50+, hidratação intensiva
+- **Dias 1–7**: Evitar sauna, piscina, academia, exposição solar
+- **Dias 1–14**: Sem ácidos, retinoides ou produtos irritantes
+- **Suplementação**: Vitamina C, colágenoídeos (recomendado)
+- **Follow-up**: Sessão subsequente após 4 semanas
+
+#### Valor Médio em Portugal
+- **Sessão Dermapen**: €80–150 (rosto)
+- **Sessão + Exossomas/Ativos Premium**: €120–200
+- **Pacote 4 sessões**: €280–500
+- **Corporal**: €100–180 (sessão)
+
+---
+
+### 1.6 HARMONIZAÇÃO FACIAL
+
+#### Descrição
+Conjunto de procedimentos que harmonizam proporções faciais através de preenchimentos e toxina botulínica, melhorando contorno, volume e simetria.
+
+#### Componentes Principais
+
+**A) Preenchimento Facial (Ácido Hialurônico)**
+
+*Mecanismo*:
+- Restauração de volume perdido
+- Hidratação intensa (retenção de 1000x seu peso em água)
+- Estimulação de colágeno (alguns fillers biostimuladores)
+- Melhora da definição e contorno
+
+*Áreas de Aplicação*:
+- Bochechas (volume e lift)
+- Lábios (aumento, definição, hidratação)
+- Olheiras (preenchimento)
+- Surcos nasolabiais
+- Mento (projeção)
+- Nariz (rinomodelação não cirúrgica)
+
+*Tipos de Fillers*:
+- **Ácido Hialurônico Reticulado**: Durabilidade 6–12 meses, natural
+- **Biostimuladores de Colágeno**: Estimulam síntese, durabilidade 12–24 meses
+- **Hidroxiapatita de Cálcio**: Mais estrutural, 12–18 meses
+
+*Tempo*: 40–60 minutos
+*Durabilidade*: 6–18 meses (conforme produto)
+
+---
+
+**B) Toxina Botulínica**
+
+*Mecanismo*:
+- Relaxamento de músculos responsáveis por rugas dinâmicas
+- Suavização de expressões marcadas
+- Efeito preventivo (uso precoce)
+
+*Áreas de Aplicação*:
+- Testa (rugas horizontais)
+- Glabela (rugas verticais, carranca)
+- Pés de galinha (olhos)
+- Lábio superior (rugas peribucal)
+
+*Apresentação*:
+- Unidades aplicadas conforme necessidade (10–60 unidades/área)
+- Ajuste individual
+
+*Tempo*: 15–30 minutos
+*Durabilidade*: 3–4 meses (necessário reaplicação)
+
+---
+
+#### Protocolo Harmonização Facial
+1. Avaliação facial presencial (análise de proporções, simetria, volume)
+2. Fotos documentação (frontal, lateral, 45°)
+3. Discussão de objetivos e expectativas
+4. Planejamento customizado
+5. Anestesia tópica/bloqueio conforme necessário
+6. Aplicação de ácido hialurônico e/ou toxina
+7. Repouso 15 min, avaliação imediata
+8. Retorno avaliação 2 semanas (ajustes menores)
+9. Documentação final
+
+#### Tempo Total
+- **Consulta + Procedimento**: 60–90 minutos
+
+#### Indicações
+- Assimetrias faciais
+- Volume reduzido
+- Rugas marcadas
+- Perda de definição
+- Envelhecimento global
+- Melhora estética geral
+- Prevenção de sinais
+
+#### Requisitos Prévios
+- Avaliação especializada obrigatória
+- Fotos documentação
+- Consentimento informado
+- Histórico de alergias
+- Sem ácidos/retinoides 24h antes
+
+#### Contraindicações
+- Gestação e lactação
+- Alergia a componentes
+- Infecções ativas
+- Distúrbios de coagulação
+- Miopatias neuromusculares (toxina)
+- Expectativas não realistas
+
+#### Recomendações Pós-Procedimento
+- Não tocar/massajar área 24h
+- Evitar agua quente 24h
+- Não fazer exercício/academia 48h
+- Não deitar-se durante 4h (se botox)
+- Evitar sauna/piscina 48h
+- Resultado completo toxina: 5–7 dias
+- Resultado completo filler: 2–4 semanas
+- Retorno controle 2 semanas
+- Manutenção cada 3–4 meses (toxina), 6–12 meses (filler)
+
+#### Valor Médio em Portugal
+- **Toxina Botulínica**: €150–350 (área) | €300–800 (face completa)
+- **Preenchimento Filler**: €260–400 (por ampola/seringa)
+- **Harmonização Completa**: €500–1200 (combinada)
+- **Pacote Manutenção Trimestral**: €400–1000
+
+---
+
+## 2. PROCEDIMENTOS CORPORAIS
+
+### 2.1 MASSAGENS TERAPÊUTICAS E DETOX
+
+#### Descrição
+Procedimentos manuais ou semi-mecanizados para redução de inchaço, relaxamento muscular, melhora de circulação e drenagem linfática.
+
+#### Tipos de Massagens
+
+**A) Drenagem Linfática Manual**
+- *Técnica*: Pressão suave, movimentos unidirecionais, estimulação de gânglios linfáticos
+- *Indicações*: Inchaço, celulite, pós-operatório
+- *Tempo*: 45–60 minutos
+- *Durabilidade*: Efeito imediato, manutenção com regularidade
+
+**B) Massagem Descontracturante/Terapêutica**
+- *Técnica*: Pressão variável, técnicas de alongamento, libertação de nós musculares
+- *Indicações*: Tensão muscular, contracturas, relaxamento geral
+- *Tempo*: 45–60 minutos
+
+**C) Massagem Modeladora**
+- *Técnica*: Pressão forte, movimentos de compressão e rolamento, endermologia manual
+- *Indicações*: Celulite, flacidez leve, reafirmação
+- *Tempo*: 45–60 minutos
+
+**D) Massagem Detox/Holística**
+- *Técnica*: Combinação de drenagem + modeladora + aromaterapia
+- *Indicações*: Bem-estar geral, desintoxicação percebida, relaxamento
+- *Tempo*: 60–90 minutos
+
+#### Protocolo de Aplicação
+1. Anamnese detalhada (edemas, lesões, sensibilidades)
+2. Aplicação de óleo ou gel apropriado
+3. Aquecimento suave do tecido
+4. Técnica específica conforme protocolo
+5. Alongamentos suaves finais
+6. Repouso 10 min
+7. Recomendações de hidratação/seguimento
+
+#### Tempo de Procedimento
+- **45–90 minutos** (conforme tipo)
+
+#### Indicações
+- Retenção de líquidos
+- Celulite
+- Flacidez
+- Tensão muscular
+- Stress e relaxamento
+- Recuperação pós-procedimentos
+- Bem-estar geral
+
+#### Requisitos Prévios
+- Comunicação de lesões, cirurgias recentes
+- Sem refeição pesada 1h antes
+- Roupas confortáveis
+
+#### Contraindicações
+- Trombose/varizes (relativa, técnicas adaptadas)
+- Feridas abertas
+- Inflamações agudas
+- Gestação avançada (técnicas específicas)
+
+#### Recomendações Pós-Procedimento
+- Descanso de 15–30 min
+- Hidratação abundante (água)
+- Evitar refeições pesadas 1h
+- Não fazer exercício imediato (2h)
+- Movimento leve nos dias seguintes
+- Sessões regulares para manutenção (1–2x/semana ideal)
+
+#### Valor Médio em Portugal
+- **Drenagem Linfática Manual**: €40–70 (sessão)
+- **Massagem Descontracturante**: €35–70
+- **Massagem Modeladora**: €40–75
+- **Massagem Detox/Holística**: €50–90
+- **Pacote 5 sessões**: €150–300
+
+---
+
+### 2.2 RADIOFREQUÊNCIA E ULTRASSOM CORPORAL
+
+#### Descrição
+Aplicação de radiofrequência e ultrassom em áreas corporais para redução de gordura localizada, reafirmação e melhora de celulite.
+
+#### Mecanismo de Ação
+- *Radiofrequência*: Aquecimento profundo, síntese de colágeno
+- *Ultrassom Microfocado*: Quebra de células adiposas, remodelação
+
+#### Técnicas Disponíveis
+- **Radiofrequência Corporal**: Rosto completo, braços, abdómen, glúteos, coxas
+- **Cryo RF MAX**: Combinação de frio + radiofrequência (maior eficácia)
+- **Ultrassom Corporal**: Gordura localizada, celulite, flacidez
+
+#### Protocolo de Aplicação
+1. Limpeza da área
+2. Aplicação de gel condutor
+3. Passagem uniforme do dispositivo
+4. Temperatura-alvo: 40–45°C (radiofrequência)
+5. Sessões complementares com ultrassom se indicado
+6. Hidratação final
+
+#### Tempo de Procedimento
+- **Abdómen/Coxas**: 45–60 minutos
+- **Glúteos**: 30–45 minutos
+- **Braços**: 20–30 minutos
+- **Corporal completo**: 90–120 minutos
+
+#### Indicações
+- Gordura localizada
+- Celulite (todos os graus)
+- Flacidez leve a moderada
+- Perda de definição
+- Reafirmação pós-gravidez
+- Reafirmação pós-perda de peso
+
+#### Resultados e Durabilidade
+- Resultados visíveis: 4–8 sessões
+- Redução de circunferência: 2–5cm (dependendo de protocolo)
+- Durabilidade: 6–12 meses (manutenção recomendada)
+
+#### Requisitos Prévios
+- Avaliação presencial
+- Medições iniciais (circunferência)
+- Fotos documentação
+
+#### Contraindicações
+- Marcapasso/implantes metálicos
+- Gestação
+- Doenças de coagulação
+- Cicatrizes queloides
+- Inflamações agudas
+
+#### Recomendações Pós-Procedimento
+- Hidratação tópica e sistémica
+- Movimento leve (caminhada recomendada)
+- Protetor solar se exposição solar
+- Sem sauna 48h
+- Sessões regulares conforme protocolo (1x/semana ideal)
+- Suplementação de colágenoídeos
+
+#### Valor Médio em Portugal
+- **Sessão Área Pequena**: €70–120
+- **Sessão Área Grande**: €100–180
+- **Pacote 8 sessões**: €500–1000
+- **Combinação RF + Ultrassom**: +20–30% valor
+
+---
+
+### 2.3 CRIOLIPÓLISE
+
+#### Descrição
+Procedimento não invasivo que utiliza frio controlado (–5°C a –10°C) para congelamento e destruição de células adiposas sem dano ao tecido circundante.
+
+#### Mecanismo de Ação
+- Cristalização seletiva de gordura
+- Apoptose (morte programada) de adipócitos
+- Eliminação natural via sistema linfático (4–12 semanas)
+- Redução permanente de células adiposas (não pode regenerar)
+
+#### Técnicas Disponíveis
+- **Criolipólise Tradicional**: Cabeça única, aplicador único por sessão
+- **Criolipólise Dual**: Dois aplicadores simultâneos, eficiência temporal
+- **Criolipólise Portátil**: Dispositivos menores, áreas específicas
+
+#### Protocolo de Aplicação
+1. Avaliação presencial, marcação de área
+2. Proteção de pele (membrana)
+3. Colocação do aplicador
+4. Ciclo de congelamento: 60–70 minutos
+5. Remoção e massagem da área 2 min (melhora resultado)
+6. Repouso 10 min
+7. Instrução de cuidados pós
+
+#### Tempo de Procedimento
+- **Área simples**: 60–70 minutos
+- **Dual (2 áreas)**: 60–70 minutos (simultâneo)
+
+#### Indicações
+- Gordura localizada resistente
+- Redução de circunferência
+- Definição abdominal
+- Redução de flancos
+- Redução de coxas mediais
+- Redução de submentão
+
+#### Resultados e Durabilidade
+- Resultado inicial: 2–3 semanas
+- Resultado completo: 8–12 semanas
+- Redução de 20–25% da gordura tratada
+- Durabilidade: Permanente (destruição de células)
+- Manutenção: Apenas se novo ganho de peso
+
+#### Requisitos Prévios
+- Avaliação presencial
+- Medições iniciais
+- Histórico médico (neuropatias periféricas contraindição relativa)
+
+#### Contraindicações
+- Neuropatia periférica (CPID)
+- Hipersensibilidade ao frio
+- Inflamações agudas
+- Feridas abertas
+- Gestação
+
+#### Recomendações Pós-Procedimento
+- Massagem caseira da área 2x/dia durante 2 semanas (potencia resultado)
+- Evitar calor intenso (sauna) 48h
+- Hidratação abundante
+- Movimento regular (caminhada)
+- Edema, roxos, dormência ligeira (normal, 1–2 semanas)
+- Resultado progredindo durante 3 meses
+- Sem restrições de atividade
+
+#### Valor Médio em Portugal
+- **Sessão Área Simples**: €70–150
+- **Sessão Dual (2 áreas)**: €120–250
+- **Pacote 3 sessões (áreas diferentes)**: €300–600
+- **Tratamento Completo Abdómen (múltiplas passagens)**: €150–300
+
+---
+
+## 3. SERVIÇOS DE MICROPIGMENTAÇÃO
+
+### 3.1 MICROPIGMENTAÇÃO DE SOBRANCELHAS
+
+#### Descrição
+Técnica de tatuagem semipermanente que cria apparência de sobrancelhas preenchidas através de deposição de pigmento personalizado.
+
+#### Técnicas Disponíveis
+
+**A) Microblading (Fio a Fio)**
+- *Dispositivo*: Caneta manual com lâminas muito finas (tebori)
+- *Resultado*: Traços finos, naturais, simulam fios
+- *Pigmentação*: Mais superficial (epiderme)
+- *Durabilidade*: 12–18 meses
+- *Profissional*: Requer treino especializado
+- *Vantagem*: Aparência muito natural
+- *Desvantagem*: Durabilidade menor, menos apta para pele oleosa
+
+**B) Shadow (Esfumada/Sombreada)**
+- *Dispositivo*: Dermógrafo/máquina com agulha redonda
+- *Resultado*: Efeito esfumado, tipo maquilhagem
+- *Pigmentação*: Profundidade média
+- *Durabilidade*: 18–24 meses
+- *Vantagem*: Durabilidade maior, ideal para pele oleosa
+- *Desvantagem*: Menos naturalidade que fio a fio
+
+**C) Técnica Híbrida**
+- *Combinação*: Fios (microblading) + shadow (esfumada)
+- *Resultado*: Volume + naturalidade
+- *Pigmentação*: Profundidade variável
+- *Durabilidade*: 18–24 meses
+- *Vantagem*: Melhor equilíbrio entre volume e naturalidade
+- *Popularidade*: Mais procurada em 2025
+
+**D) Nanoblading**
+- *Dispositivo*: Caneta com lâminas ainda mais finas
+- *Resultado*: Traços ultra-finos, hiper-realistas
+- *Pigmentação*: Muito superficial
+- *Durabilidade*: 12–15 meses
+- *Vantagem*: Máxima naturalidade
+- *Desvantagem*: Curva de aprendizagem elevada
+
+#### Protocolo de Procedimento
+
+1. **Avaliação e Desenho**
+   - Análise da proporção facial
+   - Determinação de formato ideal
+   - Desenho com lápis para aprovação
+   - Fotos presencial
+
+2. **Preparação**
+   - Limpeza profunda da zona
+   - Aplicação de anestésico tópico (15–20 min)
+   - Remoção de pêlos/descamação se necessário
+
+3. **Pigmentação**
+   - Escolha de cor (gama de tons disponíveis)
+   - Aplicação conforme técnica selecionada
+   - Múltiplas passagens para uniformização
+   - Paciente controla profundidade de cor
+
+4. **Finalização**
+   - Aplicação de creme reparador
+   - Limpeza final
+   - Instrução de cuidados pós
+   - Agendamento retoque
+
+#### Tempo de Procedimento
+- **Primeira Sessão**: 1h30–2h30 minutos
+- **Retoque (21–40 dias)**: 1h–1h30 minutos
+
+#### Cores Disponíveis (Gama)
+- Castanhos claros, médios, escuros
+- Tons cinzentos, acinzentados
+- Tons dourados/acobreados
+- Tons avermelhados/naturais
+
+#### Durabilidade e Manutenção
+
+| Aspecto         | Microblading | Shadow | Híbrida |
+|-----------------|--------------|--------|---------|
+| Durabilidade    | 12–18 meses  | 18–24  | 18–24   |
+| Retoque (1º)    | 21–40 dias   | 21–40  | 21–40   |
+| Retoque mantém  | 6–12 meses   | 12–24  | 12–24   |
+
+#### Requisitos Prévios
+- Avaliação presencial
+- Teste de alergia a pigmento (se histórico de reações)
+- Suspensão de ácidos 1 semana antes
+- Suspensão de retinoides 3 dias antes
+- Sem sol excessivo 3 dias antes
+- Avaliação de anticoncepcionais/hormonal (pode afetar cor)
+
+#### Contraindicações
+- Gestação e lactação
+- Alergia conhecida a pigmentos
+- Doenças autoimunes
+- Diabetes descompensada
+- Infecções ativas
+- Cicatrizes queloides
+- Tendência a cicatrizes hipertróficas
+
+#### Recomendações Pós-Procedimento
+
+| Período   | Recomendações |
+|-----------|---------------|
+| **0–7 dias** | Não molhar, não coçar. Cor intensa (clareará). Evitar maquilhagem. Sem sauna/piscina. Aplicar creme cicatrizante 3–4x/dia. |
+| **7–14 dias** | Descamação normal. Não desprender pele à força. Protetor solar SPF 50+. Evitar suor excessivo (academia). |
+| **2–4 semanas** | Cicatrização completa. Aguardar clareamento total antes de retoque. Cor final 30–40% mais clara que inicial. |
+| **Retoque (21–40d)** | Retoque recomendado para uniformização de cor. Sem custo adicional (incluído no valor inicial). |
+
+#### Efeitos Colaterais Normais
+- Vermelhidão 24–48h
+- Edema leve 24h
+- Sensibilidade ao toque 3–5 dias
+- Descamação dias 7–14
+- Clareamento gradual semanas 2–4
+
+#### Valor Médio em Portugal
+
+| Item                        | Preço        |
+|-----------------------------|--------------|
+| Microblading (1ª sessão)    | €180–300     |
+| Shadow (1ª sessão)          | €150–280     |
+| Híbrida (1ª sessão)         | €180–320     |
+| Nanoblading (1ª sessão)     | €220–350     |
+| Retoque (21–40 dias)        | €30–80       |
+| Retoque manutenção (6m+)    | €40–100      |
+| Remoção/Neutralização       | €150–250     |
+
+---
+
+### 3.2 MICROPIGMENTAÇÃO DE LÁBIOS
+
+#### Descrição
+Técnica que aplica pigmento semipermanente nos lábios para definição de contorno, preenchimento de cor ou efeito aquarela, melhorando forma e vitalidade.
+
+#### Técnicas Disponíveis
+
+**A) Contorno Labial**
+- *Definição*: Pigmentação apenas do contorno
+- *Resultado*: Lábios mais definidos, aparência de maior volume (ilusão óptica)
+- *Indicação*: Contorno desbotado, falta de definição
+- *Durabilidade*: 2–3 anos
+
+**B) Preenchimento Completo (Full Lips)**
+- *Definição*: Pigmentação do contorno + preenchimento interno
+- *Resultado*: Lábios com cor uniforme, aparência mais volumosa
+- *Indicação*: Melhora geral de cor e volume
+- *Durabilidade*: 2–4 anos
+
+**C) Efeito Aquarela (Ombré)**
+- *Definição*: Cor mais clara no centro, mais escura nas bordas
+- *Resultado*: Efeito gradiente, aparência profissional de maquilhagem
+- *Indicação*: Resultado estético aprimorado
+- *Durabilidade*: 2–4 anos
+- *Popularidade*: Muito procurado em 2025
+
+#### Pigmentos Utilizados
+- Pigmentos orgânicos e hipoalergênicos
+- Gama de cores: nude, rosa, coral, vermelhos, vinheos, marrom
+- Personalizados conforme tom de pele natural
+
+#### Protocolo de Procedimento
+
+1. **Avaliação e Planejamento**
+   - Análise de proporção labial
+   - Determinação de cor ideal
+   - Desenho do contorno com lápis
+   - Aprovação do cliente
+
+2. **Preparação**
+   - Limpeza profunda dos lábios
+   - Hidratação com bálsamo
+   - Aplicação de anestésico tópico (20–30 min, eventualmente bloqueio)
+   - Remoção de pele morta suave
+
+3. **Pigmentação**
+   - Aplicação uniforme de pigmento
+   - Múltiplas camadas conforme técnica
+   - Ajuste de intensidade de cor
+   - Fixação em linha completa
+
+4. **Finalização**
+   - Remoção de excesso
+   - Aplicação de creme reparador
+   - Instruções pós-procedimento
+   - Agendamento retoque
+
+#### Tempo de Procedimento
+- **Primeira Sessão**: 2h–3h minutos (anestesia + procedimento)
+- **Retoque (21–40 dias)**: 1h30–2h minutos
+
+#### Durabilidade
+- **Contorno**: 2–3 anos
+- **Preenchimento**: 2–4 anos (varia conforme metabolismo)
+- **Retoque (1º)**: 21–40 dias (recomendado, sem custo adicional)
+- **Retoque manutenção**: 12–24 meses (opcional, com custo)
+
+#### Requisitos Prévios
+- Avaliação presencial
+- Teste de alergia a pigmento (se histórico)
+- Suspensão de ácidos 1 semana antes
+- Sem herpes ativa (consultar dermatologista)
+- Suspensão de anticoagulantes se possível (consultar médico)
+
+#### Contraindicações
+- Herpes simplex ativa (risco de disseminação)
+- Alergia a pigmentos/componentes
+- Gestação e lactação
+- Infecções ativas
+- Doenças autoimunes descontroladas
+- Diabetes descompensada
+- Distúrbios de coagulação
+
+#### Recomendações Pós-Procedimento
+
+| Período   | Recomendações |
+|-----------|---------------|
+| **0–3 dias** | Não molhar lábios com água corrente. Evitar alimentos quentes/picantes/ácidos. Aplicar bálsamo cicatrizante 4–5x/dia. Manter lábios hidratados. Dormir com elevação (reduz inchaço). |
+| **3–7 dias** | Cor muito intensa (clareará progressivamente). Descamação natural. Não desprender pele. Evitar maquilhagem. Protetor solar SPF 50+ se exposição. |
+| **7–14 dias** | Cicatrização quase completa. Manutenção de hidratação. Cor final emergindo (30–50% mais clara). |
+| **2–4 semanas** | Cicatrização completa. Cor final estabelecida. Retoque recomendado se necessário. |
+
+#### Efeitos Colaterais Normais
+- Inchaço 24–48h (esperar antes de avaliar resultado)
+- Vermelhidão 24–48h
+- Sensibilidade ao toque 3–7 dias
+- Descamação dias 5–14
+- Coceira leve (normal, não coçar)
+- Clareamento gradual 2–4 semanas
+
+#### Valor Médio em Portugal
+
+| Item                           | Preço        |
+|--------------------------------|--------------|
+| Contorno Labial (1ª sessão)    | €150–250     |
+| Preenchimento Completo (1ª)    | €180–320     |
+| Efeito Aquarela (1ª sessão)    | €200–350     |
+| Retoque (21–40 dias)           | €40–80       |
+| Retoque manutenção (12m+)      | €50–120      |
+| Correção/Remoção               | €150–250     |
+
+---
+
+### 3.3 MICROPIGMENTAÇÃO DE OLHOS (EYELINER)
+
+#### Descrição
+Técnica que aplica pigmento permanente na linha dos olhos para criar aparência de eyeliner, realçando o olhar.
+
+#### Técnicas Disponíveis
+
+**A) Eyeliner Clássico**
+- *Definição*: Linha na margem ciliar superior, inferior ou ambas
+- *Resultado*: Olhar mais definido, aparência de cílios mais densos
+- *Indicação*: Realce geral do olhar
+- *Durabilidade*: 2–5 anos
+
+**B) Efeito Esfumado (Smudged)**
+- *Definição*: Linha difusa, efeito sombreado
+- *Resultado*: Aparência smoky, mais suave
+- *Indicação*: Preferência por efeito menos marcado
+- *Durabilidade*: 2–5 anos
+
+**C) Densificação de Pestanas (Lash Liner)**
+- *Definição*: Pigmentação entre os fios das pestanas
+- *Resultado*: Cílios aparentam mais densos, volume aumentado
+- *Indicação*: Pestanas finas, falta de densidade
+- *Durabilidade*: 3–7 anos (mais duradouro)
+
+#### Pigmentos Utilizados
+- Pigmentos hipoalergênicos, resistentes a desbotamento
+- Cores: Castanhos, cinzentos, pretos, tons quentes
+- Personalização conforme tom de pele
+
+#### Protocolo de Procedimento
+
+1. **Avaliação Presencial**
+   - Análise da forma de olho
+   - Determinação de estilo ideal
+   - Desenho de contorno com lápis
+   - Aprovação cliente
+
+2. **Preparação**
+   - Limpeza profunda da zona
+   - Aplicação de anestésico tópico potente (20–30 min)
+   - Proteção ocular (de forma a não contactar olho)
+
+3. **Pigmentação**
+   - Aplicação delicada e precisa
+   - Múltiplas passagens finas
+   - Cuidado extremo com proximidade ocular
+   - Paciente mantém olho semi-aberto conforme protocolo
+
+4. **Finalização**
+   - Remoção de excesso
+   - Aplicação de creme cicatrizante
+   - Instruções específicas
+   - Agendamento retoque
+
+#### Tempo de Procedimento
+- **Primeira Sessão**: 1h30–2h minutos
+- **Retoque (21–40 dias)**: 1h–1h30 minutos
+
+#### Durabilidade
+- **Eyeliner Clássico**: 2–5 anos
+- **Smudged**: 2–5 anos
+- **Lash Liner**: 3–7 anos (mais profundo, maior durabilidade)
+- **Retoque (1º)**: 21–40 dias (sem custo adicional)
+- **Retoque manutenção**: 24–36 meses
+
+#### Requisitos Prévios
+- Avaliação especializada obrigatória
+- Teste de alergia (se histórico)
+- Sem produtos ácidos 1 semana antes
+- Sem retinoides 3 dias antes
+- Comunicar qualquer sensibilidade ocular
+
+#### Contraindicações
+- Alergia a pigmentos
+- Glaucoma (relativa, consultar oftalmologista)
+- Olho seco severo
+- Inflamação ocular ativa
+- Herpes oftálmico
+- Gestação
+- Distúrbios de coagulação
+
+#### Recomendações Pós-Procedimento
+
+| Período   | Recomendações |
+|-----------|---------------|
+| **0–7 dias** | Não molhar olhos com água corrente. Evitar maquilhagem (especialmente eyeliner/rimel). Evitar lentes de contacto (se possível). Sem piscina/sauna. Aplicar creme cicatrizante 3–4x/dia. Usar óculos escuros se sensibilidade. |
+| **7–14 dias** | Evitar movimentos de olhos acentuados (não esfregar). Descamação normal. Maquilhagem suave permitida se necessário (hipoalergênica). Protetor solar em pele circundante. |
+| **2–4 semanas** | Cicatrização completa. Cor mais clara/natural. Retoque recomendado se necessário. |
+
+#### Efeitos Colaterais Normais
+- Sensibilidade ocular 24–48h (leve queimadura)
+- Edema palpebral 24h
+- Vermelhidão 24–48h
+- Pequena descamação dias 5–10
+- Clareamento gradual 2–4 semanas
+- Visão ligeiramente turva 24–48h (edema palpebral)
+
+#### Valor Médio em Portugal
+
+| Item                           | Preço        |
+|--------------------------------|--------------|
+| Eyeliner Clássico (1ª sessão)  | €195–290     |
+| Eyeliner Smudged (1ª sessão)   | €195–290     |
+| Lash Liner (1ª sessão)         | €220–310     |
+| Retoque (21–40 dias)           | €40–80       |
+| Retoque manutenção (24m+)      | €50–120      |
+
+---
+
+## 4. PROTOCOLOS OPERACIONAIS
+
+### 4.1 FLUXO DE ATENDIMENTO PADRÃO
+
+#### Fase 1: Pré-Agendamento
+1. Confirmação de disponibilidade
+2. Explicação breve do procedimento
+3. Comunicação de requisitos prévios
+4. Agendamento com lembrete (SMS/email)
+
+#### Fase 2: Chegada do Cliente
+1. Check-in e confirmação de dados pessoais
+2. Distribuição de termo de consentimento informado
+3. Recolha de histórico detalhado:
+   - Alergias, sensibilidades
+   - Medicações em uso
+   - Cirurgias/tratamentos recentes
+   - Expectativas
+
+#### Fase 3: Consulta Presencial
+1. Avaliação profissional (visual, palpação se necessário)
+2. Fotografias documentação (frontal, lateral, detalhes)
+3. Apresentação de opções/protocolos
+4. Explicação de resultados esperados, durabilidade, cuidados
+5. Resposta a dúvidas
+6. Assinatura de consentimento informado
+
+#### Fase 4: Procedimento
+1. Limpeza/preparação da zona
+2. Aplicação de anestésico se necessário
+3. Execução conforme protocolo
+4. Monitorização de conforto do cliente
+5. Documentação fotográfica final
+6. Entrega de instruções escritas
+
+#### Fase 5: Pós-Procedimento Imediato
+1. Repouso 10–15 min (conforme procedimento)
+2. Recomendações verbais e escritas
+3. Distribuição de guia de cuidados
+4. Agendamento retoque (se aplicável)
+5. Esclarecimento de dúvidas finais
+6. Despedida
+
+#### Fase 6: Follow-up
+1. Contacto 24h após procedimento (SMS/WhatsApp)
+2. Avaliação de bem-estar e complicações
+3. Reforço de recomendações
+4. Agendamento retoque/manutenção
+5. Documentação de feedback
+
+---
+
+### 4.2 CONSENTIMENTO INFORMADO
+
+**Elementos Obrigatórios:**
+- Descrição detalhada do procedimento
+- Benefícios esperados e probabilidade de sucesso
+- Riscos e complicações possíveis
+- Alternativas disponíveis
+- Recomendações pré e pós-procedimento
+- Autorização para uso de fotografias (com privacidade garantida)
+- Assinatura e data
+- Cópia entregue ao cliente
+
+---
+
+### 4.3 GESTÃO DE COMPLICAÇÕES
+
+#### Complicações Menores (Auto-Resolvíveis)
+- **Edema/Vermelhidão**: Repouso, frio local, anti-inflamatório tópico
+- **Coceira**: Hidratação, evitar rascagem, anti-histamínico se necessário
+- **Descamação**: Hidratação intensiva, evitar manipulação
+- **Sensibilidade**: Protetor solar, evitar irritantes
+
+#### Complicações Moderadas (Requerem Monitorização)
+- **Inflamação Persistente**: Contactar cliente, possível avaliação por dermatologista
+- **Alergia a Pigmento**: Encaminhamento médico, documentação, possível neutralização
+- **Cicatrização Anómala**: Seguimento especializado
+
+#### Complicações Severas (Encaminhamento Médico Obrigatório)
+- Infecção (febre, supuração)
+- Reações alérgicas severas (edema facial, dificuldade respiratória)
+- Queimaduras (radiofrequência/ultrassom)
+- Contaminação com microrganismos
+
+---
+
+## 5. GESTÃO FINANCEIRA E PAGAMENTOS
+
+### 5.1 MODELOS DE PREÇO
+
+#### Pagamento por Sessão
+- **Estrutura**: Preço individual por procedimento
+- **Vantagem**: Flexibilidade total para cliente
+- **Desvantagem**: Sem incentivo de compromisso
+
+#### Pacotes com Desconto
+- **Estrutura**: Múltiplas sessões com redução percentual
+  - Pacote 4 sessões: –10%
+  - Pacote 6 sessões: –15%
+  - Pacote 8+ sessões: –20%
+- **Vantagem**: Incentiva compromisso, aumenta receita previsível
+- **Prazo**: 3–6 meses para completar
+
+#### Pacotes Combinados
+- **Estrutura**: Múltiplos procedimentos num pacote integrado
+  - Exemplo: Limpeza + Peeling + RF (€200)
+  - Exemplo: Micropigmentação 3 zonas (€600)
+- **Vantagem**: Valor perceived maior, incentiva upselling
+
+#### Programa de Fidelização
+- **Estrutura**: Pontos por procedimento, desconto progressivo
+  - 1 ponto = €1 gasto
+  - 50 pontos = €5 desconto
+  - 100 pontos = €15 desconto
+- **Vantagem**: Lealdade, retenção cliente
+
+#### Assinaturas Mensais (Premium)
+- **Estrutura**: Valor fixo mensal para acesso a serviços
+  - Exemplo: €99/mês = 1 procedimento facial + desconto 15% restantes
+  - Exemplo: €199/mês = 2 procedimentos + desconto 20%
+- **Vantagem**: Receita previsível, retenção elevada
+- **Desvantagem**: Complexidade administrativa
+
+---
+
+### 5.2 PAGAMENTO E FORMAS ACEITES
+
+#### Pagamento Obrigatório
+- **Timing**: Antes do procedimento ou no dia (salvo acordo especial)
+- **Confirmação**: Recibo/fatura emitida
+
+#### Formas de Pagamento Aceites
+1. **Numerário**: Dinheiro em espécie
+2. **Cartão de Débito/Crédito**: Visa, Mastercard, outros
+3. **Transferência Bancária**: IBAN
+4. **MB WAY**: App de pagamento móvel (Portugal)
+5. **Multibanco**: Sistema de pagamento online (Portugal)
+
+#### Depósito Antecipado
+- **Pacotes**: Depósito de 30–50% no momento de reserva
+- **Vantagem**: Confirmação de compromisso
+- **Reembolso**: Política clara se cancelamento (ex: reembolso 7+ dias antes)
+
+#### Cancelamento e Reembolso
+- **Cancelamento com 7+ dias de antecedência**: Reembolso 100% ou transferência para nova data
+- **Cancelamento com 3–7 dias**: Perda de 25% valor
+- **Cancelamento < 3 dias**: Perda de 50%
+- **Não-apresentação**: Perda de 100%
+
+---
+
+### 5.3 FATURAÇÃO E CONFORMIDADE
+
+#### Documentação Obrigatória
+- Recibos/Faturas numeradas (conforme volume)
+- Livro de visitas/procedimentos
+- Consentimentos informados arquivados
+- Fotos documentação (com privacidade)
+
+#### Conformidade GDPR/Lei Privacidade
+- Privacidade de dados garantida
+- Fotos apenas com autorização escrita
+- Retenção dados conforme legislação (6 anos recomendado)
+- Política de privacidade disponível
+
+#### Impostos e Conformidade Fiscal
+- Registar receita conforme regime fiscal
+- IVA conforme alíquota (serviços estética: normalmente 23% em PT)
+- Contribuições sociais se autónomo
+- Contabilidade atualizada
+
+---
+
+## 6. CONSIDERAÇÕES FINAIS
+
+### Equipamento e Higiene
+- Esterilização conforme normas (instrumentos reutilizáveis)
+- Material descartável de uma única utilização
+- Protocolo de higiene mãos antes de cada cliente
+- Espaço limpo, iluminado, confortável
+- Ventilação adequada
+
+### Formação Profissional
+- Certificações em procedimentos oferecidos
+- Educação contínua em atualização técnica
+- Conhecimento de contra-indicações e complicações
+- Ética profissional e sigilo
+
+### Comunicação com Cliente
+- Escuta ativa de expectativas
+- Explicação clara de realidades vs expectativas
+- Documentação de antes/depois
+- Disponibilidade para questões
+- Transparência em resultados possíveis
+
+---
+
+**Documento Compilado: Gabinete de Estética – Guia Técnico e Operacional 2025**
+**Versão Final: Pronto para integração em AI Agent**
