@@ -1,0 +1,209 @@
+{
+  "name": "BACKEND - Essenza Prime (ATUALIZADO)",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "testar-bot-whatsapp",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "webhook-1",
+      "name": "Webhook WhatsApp",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [240, 300],
+      "webhookId": "essenza-prime-webhook"
+    },
+    {
+      "parameters": {
+        "jsCode": "const body = $input.item.json.body;\nconst phone = body.entry?.[0]?.changes?.[0]?.value?.messages?.[0]?.from || '';\nconst messageText = body.entry?.[0]?.changes?.[0]?.value?.messages?.[0]?.text?.body || '';\nconst messageId = body.entry?.[0]?.changes?.[0]?.value?.messages?.[0]?.id || '';\n\nif (!phone || !messageText) {\n  return { json: { skip: true, reason: 'No valid message' } };\n}\n\nreturn {\n  json: {\n    skip: false,\n    phone: phone,\n    message: messageText,\n    messageId: messageId,\n    timestamp: new Date().toISOString()\n  }\n};"
+      },
+      "id": "code-parse",
+      "name": "Parse Message",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [460, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{$json.skip}}",
+              "value2": false
+            }
+          ]
+        }
+      },
+      "id": "if-valid",
+      "name": "Valid Message?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [680, 300]
+    },
+    {
+      "parameters": {
+        "operation": "getMany",
+        "tableId": "clients",
+        "returnAll": false,
+        "limit": 1,
+        "filterType": "manual",
+        "matchType": "allFilters",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "phone",
+              "condition": "equals",
+              "keyValue": "={{ $json.phone }}"
+            }
+          ]
+        }
+      },
+      "id": "supabase-get-client",
+      "name": "Get Client",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [900, 300],
+      "credentials": {
+        "supabaseApi": {
+          "id": "5FmNwSU32HCxPptn",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{$json.length > 0}}",
+              "value2": true
+            }
+          ]
+        }
+      },
+      "id": "if-client-exists",
+      "name": "Client Exists?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [1120, 300]
+    },
+    {
+      "parameters": {
+        "operation": "create",
+        "tableId": "clients",
+        "dataMode": "defineBelow",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "phone",
+              "fieldValue": "={{ $('Parse Message').item.json.phone }}"
+            }
+          ]
+        }
+      },
+      "id": "supabase-create-client",
+      "name": "Create Client",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [1340, 400],
+      "credentials": {
+        "supabaseApi": {
+          "id": "5FmNwSU32HCxPptn",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const parseData = $('Parse Message').first().json;\nconst clientData = $input.first().json;\n\nreturn {\n  json: {\n    phone: parseData.phone,\n    message: parseData.message,\n    messageId: parseData.messageId,\n    clientId: clientData.id || clientData[0]?.id,\n    clientName: clientData.name || clientData[0]?.name || 'Cliente',\n    timestamp: parseData.timestamp\n  }\n};"
+      },
+      "id": "code-merge",
+      "name": "Merge Data",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1560, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "const data = $input.first().json;\n\nreturn {\n  json: {\n    responseText: `✅ Olá ${data.clientName}!\\n\\nRecebi a tua mensagem: \"${data.message}\"\\n\\n⚠️ Este é um backend de teste. O AI Agent será adicionado em breve!`,\n    phone: data.phone\n  }\n};"
+      },
+      "id": "code-response",
+      "name": "Generate Response",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1780, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://graph.facebook.com/v18.0/803198829554410/messages",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"messaging_product\": \"whatsapp\",\n  \"to\": \"{{ $json.phone }}\",\n  \"type\": \"text\",\n  \"text\": {\n    \"body\": \"{{ $json.responseText }}\"\n  }\n}",
+        "options": {}
+      },
+      "id": "http-whatsapp",
+      "name": "Send WhatsApp",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [2000, 300],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "msDucOJHTeBau1zJ",
+          "name": "Header Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\"status\": \"success\"}",
+        "options": {}
+      },
+      "id": "respond-webhook",
+      "name": "Respond",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [2220, 300]
+    }
+  ],
+  "connections": {
+    "Webhook WhatsApp": {
+      "main": [[{"node": "Parse Message", "type": "main", "index": 0}]]
+    },
+    "Parse Message": {
+      "main": [[{"node": "Valid Message?", "type": "main", "index": 0}]]
+    },
+    "Valid Message?": {
+      "main": [[{"node": "Get Client", "type": "main", "index": 0}]]
+    },
+    "Get Client": {
+      "main": [[{"node": "Client Exists?", "type": "main", "index": 0}]]
+    },
+    "Client Exists?": {
+      "main": [
+        [{"node": "Merge Data", "type": "main", "index": 0}],
+        [{"node": "Create Client", "type": "main", "index": 0}]
+      ]
+    },
+    "Create Client": {
+      "main": [[{"node": "Merge Data", "type": "main", "index": 0}]]
+    },
+    "Merge Data": {
+      "main": [[{"node": "Generate Response", "type": "main", "index": 0}]]
+    },
+    "Generate Response": {
+      "main": [[{"node": "Send WhatsApp", "type": "main", "index": 0}]]
+    },
+    "Send WhatsApp": {
+      "main": [[{"node": "Respond", "type": "main", "index": 0}]]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

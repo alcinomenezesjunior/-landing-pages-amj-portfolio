@@ -1,0 +1,54 @@
+{
+  "name": "META VERIFY FINAL",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "GET",
+        "path": "testar-bot-whatsapp",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "webhook-1",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [250, 300],
+      "webhookId": "meta-verify-final"
+    },
+    {
+      "parameters": {
+        "jsCode": "const query = $input.item.json.query || {};\nconst challenge = query['hub.challenge'] || '';\nconst token = query['hub.verify_token'] || '';\n\nreturn {\n  json: {\n    challenge: challenge,\n    valid: token === 'WHATSAPICLOUD_AMJ_2025'\n  }\n};"
+      },
+      "id": "code-1",
+      "name": "Extract Challenge",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [470, 300]
+    },
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "={{ $json.challenge }}",
+        "options": {
+          "responseCode": 200
+        }
+      },
+      "id": "respond-1",
+      "name": "Respond Challenge",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [690, 300]
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [[{"node": "Extract Challenge", "type": "main", "index": 0}]]
+    },
+    "Extract Challenge": {
+      "main": [[{"node": "Respond Challenge", "type": "main", "index": 0}]]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}
