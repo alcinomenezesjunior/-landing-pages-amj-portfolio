@@ -85,7 +85,7 @@
           "conditions": [
             {
               "leftValue": "={{ Object.keys($json).length }}",
-              "rightValue": 0,
+              "rightValue": "={{ 0 }}",
               "operator": {
                 "type": "number",
                 "operation": "gt"
@@ -112,7 +112,7 @@
           "fieldValues": [
             {
               "fieldId": "phone",
-              "fieldValue": "={{ $('Parse Message').first().json.phone }}"
+              "fieldValue": "={{ $node[\"Parse Message\"].json[\"phone\"] }}"
             }
           ]
         }
@@ -166,7 +166,7 @@
           "conditions": [
             {
               "leftValue": "={{ Object.keys($json).length }}",
-              "rightValue": 0,
+              "rightValue": "={{ 0 }}",
               "operator": {
                 "type": "number",
                 "operation": "gt"
@@ -193,11 +193,11 @@
           "fieldValues": [
             {
               "fieldId": "phone",
-              "fieldValue": "={{ $('Parse Message').first().json.phone }}"
+              "fieldValue": "={{ $node[\"Parse Message\"].json[\"phone\"] }}"
             },
             {
               "fieldId": "client_id",
-              "fieldValue": "={{ Object.keys($('Get Client').first().json || {}).length ? $('Get Client').first().json.id : $('Create Client').first().json.id }}"
+              "fieldValue": "={{ Object.keys($node[\"Get Client\"].json || {}).length ? $node[\"Get Client\"].json[\"id\"] : $node[\"Create Client\"].json[\"id\"] }}"
             },
             {
               "fieldId": "current_state",
@@ -261,7 +261,7 @@
     },
     {
       "parameters": {
-        "jsCode": "const parseData = $('Parse Message').first().json;\n\nconst getClient = $('Get Client').first().json || {};\nconst createdClient = $('Create Client').first()?.json || {};\n\nconst hasExistingClient = Object.keys(getClient).length > 0;\nconst clientData = hasExistingClient ? getClient : createdClient;\n\nconst conversationData = $input.first().json || {};\n\nreturn {\n  json: {\n    phone: parseData.phone,\n    message: parseData.message,\n    messageId: parseData.messageId,\n    clientId: clientData?.id || null,\n    clientName: clientData?.name || 'Cliente',\n    conversationId: conversationData.id || null,\n    timestamp: parseData.timestamp\n  }\n};"
+        "jsCode": "const parseData = $node[\"Parse Message\"].json;\n\nconst getClient = $node[\"Get Client\"].json || {};\nconst createdClient = $node[\"Create Client\"].json || {};\n\nconst hasExistingClient = Object.keys(getClient).length > 0;\nconst clientData = hasExistingClient ? getClient : createdClient;\n\nconst conversationData = $input.first().json || {};\n\nreturn {\n  json: {\n    phone: parseData.phone,\n    message: parseData.message,\n    messageId: parseData.messageId,\n    clientId: clientData?.id || null,\n    clientName: clientData?.name || 'Cliente',\n    conversationId: conversationData.id || null,\n    timestamp: parseData.timestamp\n  }\n};"
       },
       "id": "code-merge",
       "name": "Merge Data",
@@ -274,7 +274,7 @@
     },
     {
       "parameters": {
-        "jsCode": "const data = $input.first().json;\n\nreturn {\n  json: {\n    responseText: `\u2705 Ol\u00e1 ${data.clientName}!\\n\\nRecebi a tua mensagem: \"${data.message}\"\\n\\n\u26a0\ufe0f Este \u00e9 um backend de teste. O AI Agent ser\u00e1 adicionado em breve!`,\n    phone: data.phone\n  }\n};"
+        "jsCode": "const data = $input.first().json;\n\nreturn {\n  json: {\n    responseText: `✅ Olá ${data.clientName}!\\n\\nRecebi a tua mensagem: \"${data.message}\"\\n\\n⚠️ Este é um backend de teste. O AI Agent será adicionado em breve!`,\n    phone: data.phone\n  }\n};"
       },
       "id": "code-response",
       "name": "Generate Response",
