@@ -77,7 +77,7 @@
     },
     {
       "parameters": {
-        "jsCode": "const clientResults = $node.GetClient1.json; \n\nlet output = {\n  clientExists: false,\n  clientData: null \n};\n\n// Se o array tiver itens (o cliente existe), atualiza o objeto de saída\nif (clientResults.length > 0) {\n  output.clientExists = true;\n  output.clientData = clientResults[0]; // Guarda o primeiro cliente encontrado\n}\n\n// Retorna o novo objeto para o nó seguinte (Client Exists?1)\nreturn [{ json: output }];"
+        "jsCode": "const clientResults = $node['Get Client1'].json; \n\nlet output = {\n  clientExists: false,\n  clientData: null \n};\n\n// Se o array tiver itens (o cliente existe), atualiza o objeto de saída\nif (clientResults.length > 0) {\n  output.clientExists = true;\n  output.clientData = clientResults[0]; // Guarda o primeiro cliente encontrado\n}\n\n// Retorna o novo objeto para o nó seguinte (Client Exists?1)\nreturn [{ json: output }];"
       },
       "id": "c8691515-5103-4f11-923f-42245e95668b",
       "name": "Check Client Array",
