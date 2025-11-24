@@ -12,7 +12,10 @@
       "name": "Webhook WhatsApp",
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2,
-      "position": [240, 300],
+      "position": [
+        240,
+        300
+      ],
       "webhookId": "essenza-prime-webhook"
     },
     {
@@ -23,7 +26,10 @@
       "name": "Parse Message",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [460, 300]
+      "position": [
+        460,
+        300
+      ]
     },
     {
       "parameters": {
@@ -40,7 +46,10 @@
       "name": "Valid Message?",
       "type": "n8n-nodes-base.if",
       "typeVersion": 2,
-      "position": [680, 300]
+      "position": [
+        680,
+        300
+      ]
     },
     {
       "parameters": {
@@ -53,7 +62,10 @@
       "name": "Get Client",
       "type": "n8n-nodes-base.supabase",
       "typeVersion": 1,
-      "position": [900, 300],
+      "position": [
+        900,
+        300
+      ],
       "alwaysOutputData": true,
       "credentials": {
         "supabaseApi": {
@@ -72,8 +84,8 @@
           },
           "conditions": [
             {
-              "leftValue": "={{ $json.length }}",
-              "rightValue": "0",
+              "leftValue": "={{ Object.keys($json).length }}",
+              "rightValue": 0,
               "operator": {
                 "type": "number",
                 "operation": "gt"
@@ -87,7 +99,10 @@
       "name": "Client Exists?",
       "type": "n8n-nodes-base.if",
       "typeVersion": 2,
-      "position": [1120, 300]
+      "position": [
+        1120,
+        300
+      ]
     },
     {
       "parameters": {
@@ -106,7 +121,10 @@
       "name": "Create Client",
       "type": "n8n-nodes-base.supabase",
       "typeVersion": 1,
-      "position": [1340, 400],
+      "position": [
+        1340,
+        400
+      ],
       "credentials": {
         "supabaseApi": {
           "id": "5FmNwSU32HCxPptn",
@@ -125,7 +143,10 @@
       "name": "Get Conversation",
       "type": "n8n-nodes-base.supabase",
       "typeVersion": 1,
-      "position": [1560, 300],
+      "position": [
+        1560,
+        300
+      ],
       "alwaysOutputData": true,
       "credentials": {
         "supabaseApi": {
@@ -144,8 +165,8 @@
           },
           "conditions": [
             {
-              "leftValue": "={{ $json.length }}",
-              "rightValue": "0",
+              "leftValue": "={{ Object.keys($json).length }}",
+              "rightValue": 0,
               "operator": {
                 "type": "number",
                 "operation": "gt"
@@ -159,7 +180,10 @@
       "name": "Conversation Exists?",
       "type": "n8n-nodes-base.if",
       "typeVersion": 2,
-      "position": [1780, 300]
+      "position": [
+        1780,
+        300
+      ]
     },
     {
       "parameters": {
@@ -173,7 +197,7 @@
             },
             {
               "fieldId": "client_id",
-              "fieldValue": "={{ $('Get Client').first().json[0]?.id || $('Create Client').first().json.id }}"
+              "fieldValue": "={{ Object.keys($('Get Client').first().json || {}).length ? $('Get Client').first().json.id : $('Create Client').first().json.id }}"
             },
             {
               "fieldId": "current_state",
@@ -194,7 +218,10 @@
       "name": "Create Conversation",
       "type": "n8n-nodes-base.supabase",
       "typeVersion": 1,
-      "position": [2000, 400],
+      "position": [
+        2000,
+        400
+      ],
       "credentials": {
         "supabaseApi": {
           "id": "5FmNwSU32HCxPptn",
@@ -221,7 +248,10 @@
       "name": "Update Conversation",
       "type": "n8n-nodes-base.supabase",
       "typeVersion": 1,
-      "position": [2000, 200],
+      "position": [
+        2000,
+        200
+      ],
       "credentials": {
         "supabaseApi": {
           "id": "5FmNwSU32HCxPptn",
@@ -231,23 +261,29 @@
     },
     {
       "parameters": {
-        "jsCode": "const parseData = $('Parse Message').first().json;\nconst clientData = $('Get Client').first().json[0] || $('Create Client').first().json;\nconst conversationData = $input.first().json;\n\nreturn {\n  json: {\n    phone: parseData.phone,\n    message: parseData.message,\n    messageId: parseData.messageId,\n    clientId: clientData.id,\n    clientName: clientData.name || 'Cliente',\n    conversationId: conversationData.id || conversationData[0]?.id,\n    timestamp: parseData.timestamp\n  }\n};"
+        "jsCode": "const parseData = $('Parse Message').first().json;\n\nconst getClient = $('Get Client').first().json || {};\nconst createdClient = $('Create Client').first()?.json || {};\n\nconst hasExistingClient = Object.keys(getClient).length > 0;\nconst clientData = hasExistingClient ? getClient : createdClient;\n\nconst conversationData = $input.first().json || {};\n\nreturn {\n  json: {\n    phone: parseData.phone,\n    message: parseData.message,\n    messageId: parseData.messageId,\n    clientId: clientData?.id || null,\n    clientName: clientData?.name || 'Cliente',\n    conversationId: conversationData.id || null,\n    timestamp: parseData.timestamp\n  }\n};"
       },
       "id": "code-merge",
       "name": "Merge Data",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [2220, 300]
+      "position": [
+        2220,
+        300
+      ]
     },
     {
       "parameters": {
-        "jsCode": "const data = $input.first().json;\n\nreturn {\n  json: {\n    responseText: `✅ Olá ${data.clientName}!\\n\\nRecebi a tua mensagem: \"${data.message}\"\\n\\n⚠️ Este é um backend de teste. O AI Agent será adicionado em breve!`,\n    phone: data.phone\n  }\n};"
+        "jsCode": "const data = $input.first().json;\n\nreturn {\n  json: {\n    responseText: `\u2705 Ol\u00e1 ${data.clientName}!\\n\\nRecebi a tua mensagem: \"${data.message}\"\\n\\n\u26a0\ufe0f Este \u00e9 um backend de teste. O AI Agent ser\u00e1 adicionado em breve!`,\n    phone: data.phone\n  }\n};"
       },
       "id": "code-response",
       "name": "Generate Response",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [2440, 300]
+      "position": [
+        2440,
+        300
+      ]
     },
     {
       "parameters": {
@@ -264,7 +300,10 @@
       "name": "Send WhatsApp",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
-      "position": [2660, 300],
+      "position": [
+        2660,
+        300
+      ],
       "credentials": {
         "httpHeaderAuth": {
           "id": "msDucOJHTeBau1zJ",
@@ -282,7 +321,10 @@
       "name": "Respond",
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1.1,
-      "position": [2880, 300]
+      "position": [
+        2880,
+        300
+      ]
     }
   ],
   "connections": {
