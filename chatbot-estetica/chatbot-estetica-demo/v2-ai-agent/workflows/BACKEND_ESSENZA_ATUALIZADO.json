@@ -77,6 +77,19 @@
     },
     {
       "parameters": {
+        "jsCode": "const clientResults = $node.GetClient1.json; \n\nlet output = {\n  clientExists: false,\n  clientData: null \n};\n\n// Se o array tiver itens (o cliente existe), atualiza o objeto de saída\nif (clientResults.length > 0) {\n  output.clientExists = true;\n  output.clientData = clientResults[0]; // Guarda o primeiro cliente encontrado\n}\n\n// Retorna o novo objeto para o nó seguinte (Client Exists?1)\nreturn [{ json: output }];"
+      },
+      "id": "c8691515-5103-4f11-923f-42245e95668b",
+      "name": "Check Client Array",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -48,
+        1264
+      ]
+    },
+    {
+      "parameters": {
         "conditions": {
           "options": {
             "caseSensitive": true,
@@ -86,11 +99,11 @@
           },
           "conditions": [
             {
-              "leftValue": "={{ $node[\"Get Client1\"].json.length }}",
-              "rightValue": 0,
+              "leftValue": "={{ $json.clientExists }}",
+              "rightValue": true,
               "operator": {
-                "type": "number",
-                "operation": "greaterThan"
+                "type": "boolean",
+                "operation": "isTrue"
               }
             }
           ],
@@ -103,7 +116,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2,
       "position": [
-        48,
+        200,
         1264
       ],
       "alwaysOutputData": false
@@ -126,7 +139,7 @@
       "type": "n8n-nodes-base.supabase",
       "typeVersion": 1,
       "position": [
-        272,
+        424,
         1336
       ],
       "credentials": {
@@ -155,7 +168,7 @@
       "type": "n8n-nodes-base.supabase",
       "typeVersion": 1,
       "position": [
-        496,
+        648,
         1264
       ],
       "alwaysOutputData": true,
@@ -168,14 +181,14 @@
     },
     {
       "parameters": {
-        "jsCode": "const parseData = $('Parse Message1').first().json;\n\n// Pega os dados do cliente: do Get Client1 se encontrou, ou do Create Client1 se criou.\nconst getClientResult = $('Get Client1').first().json;\nconst clientData = getClientResult.length > 0 ? getClientResult[0] : $('Create Client1').first().json;\n\n// Pega dados da conversa (pode vir de Create ou Update)\nconst conversationData = $input.first().json;\n\nreturn {\n  json: {\n    phone: parseData.phone,\n    message: parseData.message,\n    messageId: parseData.messageId,\n    clientId: clientData.id,\n    clientName: clientData.name || 'Cliente',\n    conversationId: conversationData.id,\n    timestamp: parseData.timestamp\n  }\n};"
+        "jsCode": "const parseData = $('Parse Message1').first().json;\n\n// Pega os dados do cliente: Se o nó Code indicou que existe (TRUE), usa os dados de lá.\n// Se foi FALSE, o fluxo passou pelo Create Client1 e usamos a saída dele.\n\nconst clientCheck = $('Check Client Array').first().json;\n\nlet clientData;\n\nif (clientCheck.clientExists) {\n  clientData = clientCheck.clientData; // Cliente já existia\n} else {\n  clientData = $('Create Client1').first().json; // Cliente foi criado\n}\n\n// Pega dados da conversa (pode vir de Create ou Update)\nconst conversationData = $input.first().json;\n\nreturn {\n  json: {\n    phone: parseData.phone,\n    message: parseData.message,\n    messageId: parseData.messageId,\n    clientId: clientData.id,\n    clientName: clientData.name || 'Cliente',\n    conversationId: conversationData.id,\n    timestamp: parseData.timestamp\n  }\n};"
       },
       "id": "f1cfd968-e393-469c-8f43-00ad74a09e03",
       "name": "Merge Data1",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1168,
+        1320,
         1264
       ]
     },
@@ -188,7 +201,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1392,
+        1544,
         1264
       ]
     },
@@ -208,7 +221,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        1616,
+        1768,
         1264
       ],
       "credentials": {
@@ -229,7 +242,7 @@
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1.1,
       "position": [
-        1840,
+        1992,
         1264
       ]
     },
@@ -258,7 +271,7 @@
       "type": "n8n-nodes-base.supabase",
       "typeVersion": 1,
       "position": [
-        944,
+        1096,
         1168
       ],
       "id": "446f4dcf-6926-4b27-802a-0ecbd4204ed3",
@@ -299,7 +312,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        720,
+        872,
         1264
       ],
       "id": "bb6c4a65-6711-4930-92c2-40dcf35e183d",
@@ -313,7 +326,7 @@
           "fieldValues": [
             {
               "fieldId": "client_id",
-              "fieldValue": "=={{ $('Merge Data1').item.json.clientId }}"
+              "fieldValue": "=={{ $node[\"Check Client Array\"].json.clientData.id }}"
             },
             {
               "fieldId": "phone",
@@ -337,7 +350,7 @@
       "type": "n8n-nodes-base.supabase",
       "typeVersion": 1,
       "position": [
-        944,
+        1096,
         1360
       ],
       "id": "529246f1-6934-4fa7-953f-01bed627c316",
@@ -390,7 +403,7 @@
       "main": [
         [
           {
-            "node": "Client Exists?1",
+            "node": "Check Client Array",
             "type": "main",
             "index": 0
           }
@@ -504,6 +517,17 @@
         [
           {
             "node": "Merge Data1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Client Array": {
+      "main": [
+        [
+          {
+            "node": "Client Exists?1",
             "type": "main",
             "index": 0
           }
