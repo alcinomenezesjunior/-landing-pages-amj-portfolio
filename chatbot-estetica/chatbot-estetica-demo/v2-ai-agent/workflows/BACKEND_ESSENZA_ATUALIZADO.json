@@ -91,6 +91,16 @@
     },
     {
       "parameters": {
+        "jsCode": "// Busca os dados do nó Parse Message\nconst parseData = $('Parse Message').first().json;\n\n// Retorna os dados no formato esperado pelo Create Client\nreturn {\n  json: {\n    phone: parseData.phone\n  }\n};"
+      },
+      "id": "code-prepare-client",
+      "name": "Prepare Client Data",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1340, 500]
+    },
+    {
+      "parameters": {
         "operation": "create",
         "tableId": "clients",
         "dataMode": "defineBelow",
@@ -98,7 +108,7 @@
           "fieldValues": [
             {
               "fieldId": "phone",
-              "fieldValue": "={{ $('Parse Message').item.json.phone }}"
+              "fieldValue": "={{ $json.phone }}"
             }
           ]
         }
@@ -107,7 +117,7 @@
       "name": "Create Client",
       "type": "n8n-nodes-base.supabase",
       "typeVersion": 1,
-      "position": [1340, 400],
+      "position": [1560, 500],
       "credentials": {
         "supabaseApi": {
           "id": "5FmNwSU32HCxPptn",
@@ -128,7 +138,7 @@
             {
               "keyName": "phone",
               "condition": "equals",
-              "keyValue": "={{ $('Parse Message').item.json.phone }}"
+              "keyValue": "={{ $('Parse Message').first().json.phone }}"
             }
           ]
         }
@@ -266,8 +276,11 @@
     "Client Exists?": {
       "main": [
         [{"node": "Get Conversation", "type": "main", "index": 0}],
-        [{"node": "Create Client", "type": "main", "index": 0}]
+        [{"node": "Prepare Client Data", "type": "main", "index": 0}]
       ]
+    },
+    "Prepare Client Data": {
+      "main": [[{"node": "Create Client", "type": "main", "index": 0}]]
     },
     "Create Client": {
       "main": [[{"node": "Get Conversation", "type": "main", "index": 0}]]
