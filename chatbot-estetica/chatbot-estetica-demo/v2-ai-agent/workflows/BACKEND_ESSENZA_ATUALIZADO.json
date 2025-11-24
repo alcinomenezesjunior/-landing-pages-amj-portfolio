@@ -110,12 +110,27 @@
     },
     {
       "parameters": {
+        "jsCode": "// Busca os dados do nó Parse Message\nconst parseData = $('Parse Message').first().json;\n\n// Retorna os dados no formato esperado pelo Create Client\nreturn {\n  json: {\n    phone: parseData.phone\n  }\n};"
+      },
+      "id": "code-prepare-client",
+      "name": "Prepare Client Data",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1340, 500]
+    },
+    {
+      "parameters": {
+        "operation": "create",
         "tableId": "clients",
         "fieldsUi": {
           "fieldValues": [
             {
               "fieldId": "phone",
+<<<<<<< HEAD
               "fieldValue": "=={{ $node[\"Parse Message1\"].json.phone }}"
+=======
+              "fieldValue": "={{ $json.phone }}"
+>>>>>>> 3104e163df8f1608c12a1c2f0d5bee47dfbfbfbf
             }
           ]
         }
@@ -124,10 +139,14 @@
       "name": "Create Client1",
       "type": "n8n-nodes-base.supabase",
       "typeVersion": 1,
+<<<<<<< HEAD
       "position": [
         272,
         1336
       ],
+=======
+      "position": [1560, 500],
+>>>>>>> 3104e163df8f1608c12a1c2f0d5bee47dfbfbfbf
       "credentials": {
         "supabaseApi": {
           "id": "5FmNwSU32HCxPptn",
@@ -143,8 +162,13 @@
           "conditions": [
             {
               "keyName": "phone",
+<<<<<<< HEAD
               "condition": "eq",
               "keyValue": "=={{ $('Parse Message1').item.json.phone }}"
+=======
+              "condition": "equals",
+              "keyValue": "={{ $('Parse Message').first().json.phone }}"
+>>>>>>> 3104e163df8f1608c12a1c2f0d5bee47dfbfbfbf
             }
           ]
         }
