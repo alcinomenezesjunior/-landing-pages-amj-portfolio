@@ -1,5 +1,5 @@
 {
-  "name": "BACKEND - Essenza Prime (FINAL CORRIGIDO)",
+  "name": "BACKEND_ESSENZA_ATUALIZADO",
   "nodes": [
     {
       "parameters": {
@@ -87,7 +87,7 @@
           "conditions": [
             {
               "leftValue": "={{ $node[\"Get Client1\"].json.length }}",
-              "rightValue": "0",
+              "rightValue": 0,
               "operator": {
                 "type": "number",
                 "operation": "greaterThan"
