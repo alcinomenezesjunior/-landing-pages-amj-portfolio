@@ -1,5 +1,5 @@
 {
-  "name": "BACKEND_ESSENZA_ATUALIZADO",
+  "name": "BACKEND - Essenza Prime (CORRIGIDO)",
   "nodes": [
     {
       "parameters": {
@@ -8,28 +8,22 @@
         "responseMode": "responseNode",
         "options": {}
       },
-      "id": "98a051aa-49cf-4161-b07d-d0dcfdc2e588",
+      "id": "webhook-1",
       "name": "Webhook WhatsApp",
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2,
-      "position": [
-        -848,
-        1264
-      ],
+      "position": [240, 300],
       "webhookId": "essenza-prime-webhook"
     },
     {
       "parameters": {
         "jsCode": "const body = $input.item.json.body;\nconst phone = body.entry?.[0]?.changes?.[0]?.value?.messages?.[0]?.from || '';\nconst messageText = body.entry?.[0]?.changes?.[0]?.value?.messages?.[0]?.text?.body || '';\nconst messageId = body.entry?.[0]?.changes?.[0]?.value?.messages?.[0]?.id || '';\n\nif (!phone || !messageText) {\n  return { json: { skip: true, reason: 'No valid message' } };\n}\n\nreturn {\n  json: {\n    skip: false,\n    phone: phone,\n    message: messageText,\n    messageId: messageId,\n    timestamp: new Date().toISOString()\n  }\n};"
       },
-      "id": "275fdb77-5c99-4831-bcc5-7d456f5f5f11",
+      "id": "code-parse",
       "name": "Parse Message",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [
-        -624,
-        1264
-      ]
+      "position": [460, 300]
     },
     {
       "parameters": {
@@ -40,33 +34,26 @@
               "value2": false
             }
           ]
-        },
-        "options": {}
+        }
       },
-      "id": "86c3e7ac-3fde-4131-84a4-fdf57e0c2fc8",
+      "id": "if-valid",
       "name": "Valid Message?",
       "type": "n8n-nodes-base.if",
       "typeVersion": 2,
-      "position": [
-        -400,
-        1264
-      ]
+      "position": [680, 300]
     },
     {
       "parameters": {
         "operation": "getAll",
         "tableId": "clients",
         "filterType": "string",
-        "filterString": "=phone=eq.{{ $('Parse Message').item.json.phone }}"
+        "filterString": "=phone=eq.{{ $('Parse Message').first().json.phone }}"
       },
-      "id": "8b82c5f1-af39-4ab9-9e61-e1e40f28529c",
+      "id": "supabase-get-client",
       "name": "Get Client",
       "type": "n8n-nodes-base.supabase",
       "typeVersion": 1,
-      "position": [
-        -176,
-        1264
-      ],
+      "position": [900, 300],
       "alwaysOutputData": true,
       "credentials": {
         "supabaseApi": {
@@ -77,49 +64,30 @@
     },
     {
       "parameters": {
-        "jsCode": "const clientResults = $node['Get Client'].json; \n\nlet output = {\n  clientExists: false,\n  clientData: null \n};\n\n// Se o array tiver itens (o cliente existe), atualiza o objeto de saída\nif (clientResults.length > 0) {\n  output.clientExists = true;\n  output.clientData = clientResults[0]; // Guarda o primeiro cliente encontrado\n}\n\n// Retorna o novo objeto para o nó seguinte (Client Exists?)\nreturn [{ json: output }];"
-      },
-      "id": "c8691515-5103-4f11-923f-42245e95668b",
-      "name": "Check Client Array",
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        -48,
-        1264
-      ]
-    },
-    {
-      "parameters": {
         "conditions": {
           "options": {
             "caseSensitive": true,
             "leftValue": "",
-            "typeValidation": "strict",
-            "version": 2
+            "typeValidation": "strict"
           },
           "conditions": [
             {
-              "leftValue": "={{ $json.clientExists }}",
-              "rightValue": true,
+              "leftValue": "={{ $json.length }}",
+              "rightValue": "0",
               "operator": {
-                "type": "boolean",
-                "operation": "isTrue"
+                "type": "number",
+                "operation": "gt"
               }
             }
           ],
           "combinator": "and"
-        },
-        "options": {}
+        }
       },
-      "id": "dd0e38b2-294b-404b-be8a-d7bb06d9df23",
+      "id": "if-client-exists",
       "name": "Client Exists?",
       "type": "n8n-nodes-base.if",
       "typeVersion": 2,
-      "position": [
-        200,
-        1264
-      ],
-      "alwaysOutputData": false
+      "position": [1120, 300]
     },
     {
       "parameters": {
@@ -129,19 +97,16 @@
           "fieldValues": [
             {
               "fieldId": "phone",
-              "fieldValue": "=={{ $node[\"Parse Message\"].json.phone }}"
+              "fieldValue": "={{ $('Parse Message').first().json.phone }}"
             }
           ]
         }
       },
-      "id": "bb161a4e-9a4c-450f-f949-23752a06987c",
+      "id": "supabase-create-client",
       "name": "Create Client",
       "type": "n8n-nodes-base.supabase",
       "typeVersion": 1,
-      "position": [
-        424,
-        1336
-      ],
+      "position": [1340, 400],
       "credentials": {
         "supabaseApi": {
           "id": "5FmNwSU32HCxPptn",
@@ -153,24 +118,14 @@
       "parameters": {
         "operation": "getAll",
         "tableId": "conversations",
-        "filters": {
-          "conditions": [
-            {
-              "keyName": "phone",
-              "condition": "eq",
-              "keyValue": "=={{ $('Parse Message').item.json.phone }}"
-            }
-          ]
-        }
+        "filterType": "string",
+        "filterString": "=phone=eq.{{ $('Parse Message').first().json.phone }}"
       },
-      "id": "7bc0187a-4921-48a0-b6ad-7e16168e0b07",
+      "id": "supabase-get-conversation",
       "name": "Get Conversation",
       "type": "n8n-nodes-base.supabase",
       "typeVersion": 1,
-      "position": [
-        648,
-        1264
-      ],
+      "position": [1560, 300],
       "alwaysOutputData": true,
       "credentials": {
         "supabaseApi": {
@@ -181,29 +136,118 @@
     },
     {
       "parameters": {
-        "jsCode": "const parseData = $('Parse Message').first().json;\n\n// Pega os dados do cliente: Se o nó Code indicou que existe (TRUE), usa os dados de lá.\n// Se foi FALSE, o fluxo passou pelo Create Client e usamos a saída dele.\n\nconst clientCheck = $('Check Client Array').first().json;\n\nlet clientData;\n\nif (clientCheck.clientExists) {\n  clientData = clientCheck.clientData; // Cliente já existia\n} else {\n  clientData = $('Create Client').first().json; // Cliente foi criado\n}\n\n// Pega dados da conversa (pode vir de Create ou Update)\nconst conversationData = $input.first().json;\n\nreturn {\n  json: {\n    phone: parseData.phone,\n    message: parseData.message,\n    messageId: parseData.messageId,\n    clientId: clientData.id,\n    clientName: clientData.name || 'Cliente',\n    conversationId: conversationData.id,\n    timestamp: parseData.timestamp\n  }\n};"
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "leftValue": "={{ $json.length }}",
+              "rightValue": "0",
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            }
+          ],
+          "combinator": "and"
+        }
       },
-      "id": "f1cfd968-e393-469c-8f43-00ad74a09e03",
-      "name": "Merge Data",
-      "type": "n8n-nodes-base.code",
+      "id": "if-conversation-exists",
+      "name": "Conversation Exists?",
+      "type": "n8n-nodes-base.if",
       "typeVersion": 2,
-      "position": [
-        1320,
-        1264
-      ]
+      "position": [1780, 300]
     },
     {
       "parameters": {
-        "jsCode": "const data = $input.first().json;\n\nreturn {\n  json: {\n    responseText: `✅ Olá ${data.clientName}!\\n\\nRecebi a tua mensagem: \"${data.message}\"\\n\\n⚠️ Este é um backend de teste. O AI Agent será adicionado em breve!`,\n    phone: data.phone,\n    clientId: data.clientId\n  }\n};"
+        "operation": "create",
+        "tableId": "conversations",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "phone",
+              "fieldValue": "={{ $('Parse Message').first().json.phone }}"
+            },
+            {
+              "fieldId": "client_id",
+              "fieldValue": "={{ $('Get Client').first().json[0]?.id || $('Create Client').first().json.id }}"
+            },
+            {
+              "fieldId": "current_state",
+              "fieldValue": "inicio"
+            },
+            {
+              "fieldId": "messages",
+              "fieldValue": "[]"
+            },
+            {
+              "fieldId": "context",
+              "fieldValue": "{}"
+            }
+          ]
+        }
       },
-      "id": "b5ae3b11-0c06-4d4c-b3e8-255f1abe8612",
+      "id": "supabase-create-conversation",
+      "name": "Create Conversation",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [2000, 400],
+      "credentials": {
+        "supabaseApi": {
+          "id": "5FmNwSU32HCxPptn",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "conversations",
+        "filterType": "string",
+        "filterString": "=phone=eq.{{ $('Parse Message').first().json.phone }}",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "updated_at",
+              "fieldValue": "={{ new Date().toISOString() }}"
+            }
+          ]
+        }
+      },
+      "id": "supabase-update-conversation",
+      "name": "Update Conversation",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [2000, 200],
+      "credentials": {
+        "supabaseApi": {
+          "id": "5FmNwSU32HCxPptn",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const parseData = $('Parse Message').first().json;\nconst clientData = $('Get Client').first().json[0] || $('Create Client').first().json;\nconst conversationData = $input.first().json;\n\nreturn {\n  json: {\n    phone: parseData.phone,\n    message: parseData.message,\n    messageId: parseData.messageId,\n    clientId: clientData.id,\n    clientName: clientData.name || 'Cliente',\n    conversationId: conversationData.id || conversationData[0]?.id,\n    timestamp: parseData.timestamp\n  }\n};"
+      },
+      "id": "code-merge",
+      "name": "Merge Data",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [2220, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "const data = $input.first().json;\n\nreturn {\n  json: {\n    responseText: `✅ Olá ${data.clientName}!\\n\\nRecebi a tua mensagem: \"${data.message}\"\\n\\n⚠️ Este é um backend de teste. O AI Agent será adicionado em breve!`,\n    phone: data.phone\n  }\n};"
+      },
+      "id": "code-response",
       "name": "Generate Response",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [
-        1544,
-        1264
-      ]
+      "position": [2440, 300]
     },
     {
       "parameters": {
@@ -216,14 +260,11 @@
         "jsonBody": "={\n  \"messaging_product\": \"whatsapp\",\n  \"to\": \"{{ $json.phone }}\",\n  \"type\": \"text\",\n  \"text\": {\n    \"body\": \"{{ $json.responseText }}\"\n  }\n}",
         "options": {}
       },
-      "id": "66963c8f-32a8-454b-bfa0-568abbdadd0b",
+      "id": "http-whatsapp",
       "name": "Send WhatsApp",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
-      "position": [
-        1768,
-        1264
-      ],
+      "position": [2660, 300],
       "credentials": {
         "httpHeaderAuth": {
           "id": "msDucOJHTeBau1zJ",
@@ -237,213 +278,179 @@
         "responseBody": "={\"status\": \"success\"}",
         "options": {}
       },
-      "id": "2249ff24-117e-4985-b45d-7e08c34bef37",
+      "id": "respond-webhook",
       "name": "Respond",
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1.1,
-      "position": [
-        1992,
-        1264
+      "position": [2880, 300]
+    }
+  ],
+  "connections": {
+    "Webhook WhatsApp": {
+      "main": [
+        [
+          {
+            "node": "Parse Message",
+            "type": "main",
+            "index": 0
+          }
+        ]
       ]
     },
-    {
-      "parameters": {
-        "operation": "update",
-        "tableId": "conversations",
-        "filters": {
-          "conditions": [
-            {
-              "keyName": "phone",
-              "condition": "eq",
-              "keyValue": "=={{ $('Parse Message').item.json.phone }}"
-            }
-          ]
-        },
-        "fieldsUi": {
-          "fieldValues": [
-            {
-              "fieldId": "updated_at",
-              "fieldValue": "=={{ new Date().toISOString() }}"
-            }
-          ]
-        }
-      },
-      "type": "n8n-nodes-base.supabase",
-      "typeVersion": 1,
-      "position": [
-        1096,
-        1168
-      ],
-      "id": "446f4dcf-6926-4b27-802a-0ecbd4204ed3",
-      "name": "Update Conversation",
-      "alwaysOutputData": true,
-      "credentials": {
-        "supabaseApi": {
-          "id": "5FmNwSU32HCxPptn",
-          "name": "Supabase account"
-        }
-      }
+    "Parse Message": {
+      "main": [
+        [
+          {
+            "node": "Valid Message?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
-    {
-      "parameters": {
-        "conditions": {
-          "options": {
-            "caseSensitive": true,
-            "leftValue": "",
-            "typeValidation": "strict",
-            "version": 2
-          },
-          "conditions": [
-            {
-              "id": "5a597b0b-444e-47c2-8db8-0bb318c9d894",
-              "leftValue": "={{ $json.id }}",
-              "rightValue": "",
-              "operator": {
-                "type": "string",
-                "operation": "exists",
-                "singleValue": true
-              }
-            }
-          ],
-          "combinator": "and"
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 2.2,
-      "position": [
-        872,
-        1264
-      ],
-      "id": "bb6c4a65-6711-4930-92c2-40dcf35e183d",
-      "name": "Conversation Exists?",
-      "alwaysOutputData": true
+    "Valid Message?": {
+      "main": [
+        [
+          {
+            "node": "Get Client",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
-    {
-      "parameters": {
-        "operation": "create",
-        "tableId": "conversations",
-        "fieldsUi": {
-          "fieldValues": [
-            {
-              "fieldId": "phone",
-              "fieldValue": "=={{ $('Parse Message').item.json.phone }}"
-            },
-            {
-              "fieldId": "client_id",
-              "fieldValue": "=={{ $('Check Client Array').item.json.clientData.id }}"
-            },
-            {
-              "fieldId": "created_at",
-              "fieldValue": "=={{ new Date().toISOString() }}"
-            },
-            {
-              "fieldId": "updated_at",
-              "fieldValue": "=={{ new Date().toISOString() }}"
-            }
-          ]
-        }
-      },
-      "type": "n8n-nodes-base.supabase",
-      "typeVersion": 1,
-      "position": [
-        1096,
-        1360
-      ],
-      "id": "446f4dcf-6926-4b27-802a-0ecbd4204ed3_copy",
-      "name": "Create Conversation",
-      "alwaysOutputData": true,
-      "credentials": {
-        "supabaseApi": {
-          "id": "5FmNwSU32HCxPptn",
-          "name": "Supabase account"
-        }
-      }
+    "Get Client": {
+      "main": [
+        [
+          {
+            "node": "Client Exists?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Client Exists?": {
+      "main": [
+        [
+          {
+            "node": "Get Conversation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Create Client",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Client": {
+      "main": [
+        [
+          {
+            "node": "Get Conversation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Conversation": {
+      "main": [
+        [
+          {
+            "node": "Conversation Exists?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Conversation Exists?": {
+      "main": [
+        [
+          {
+            "node": "Update Conversation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Create Conversation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Conversation": {
+      "main": [
+        [
+          {
+            "node": "Merge Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Conversation": {
+      "main": [
+        [
+          {
+            "node": "Merge Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge Data": {
+      "main": [
+        [
+          {
+            "node": "Generate Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate Response": {
+      "main": [
+        [
+          {
+            "node": "Send WhatsApp",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send WhatsApp": {
+      "main": [
+        [
+          {
+            "node": "Respond",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
-  ],
-  "connections": [
-    {
-      "from": "98a051aa-49cf-4161-b07d-d0dcfdc2e588",
-      "to": "275fdb77-5c99-4831-bcc5-7d456f5f5f11"
-    },
-    {
-      "from": "275fdb77-5c99-4831-bcc5-7d456f5f5f11",
-      "to": "86c3e7ac-3fde-4131-84a4-fdf57e0c2fc8"
-    },
-    {
-      "from": "86c3e7ac-3fde-4131-84a4-fdf57e0c2fc8",
-      "to": "8b82c5f1-af39-4ab9-9e61-e1e40f28529c",
-      "type": "main"
-    },
-    {
-      "from": "8b82c5f1-af39-4ab9-9e61-e1e40f28529c",
-      "to": "c8691515-5103-4f11-923f-42245e95668b",
-      "type": "main"
-    },
-    {
-      "from": "c8691515-5103-4f11-923f-42245e95668b",
-      "to": "dd0e38b2-294b-404b-be8a-d7bb06d9df23",
-      "type": "main"
-    },
-    {
-      "from": "dd0e38b2-294b-404b-be8a-d7bb06d9df23",
-      "to": "7bc0187a-4921-48a0-b6ad-7e16168e0b07",
-      "type": "main"
-    },
-    {
-      "from": "dd0e38b2-294b-404b-be8a-d7bb06d9df23",
-      "to": "bb161a4e-9a4c-450f-f949-23752a06987c",
-      "type": "false"
-    },
-    {
-      "from": "bb161a4e-9a4c-450f-f949-23752a06987c",
-      "to": "7bc0187a-4921-48a0-b6ad-7e16168e0b07",
-      "type": "main"
-    },
-    {
-      "from": "7bc0187a-4921-48a0-b6ad-7e16168e0b07",
-      "to": "bb6c4a65-6711-4930-92c2-40dcf35e183d",
-      "type": "main"
-    },
-    {
-      "from": "bb6c4a65-6711-4930-92c2-40dcf35e183d",
-      "to": "446f4dcf-6926-4b27-802a-0ecbd4204ed3",
-      "type": "main"
-    },
-    {
-      "from": "bb6c4a65-6711-4930-92c2-40dcf35e183d",
-      "to": "446f4dcf-6926-4b27-802a-0ecbd4204ed3_copy",
-      "type": "false"
-    },
-    {
-      "from": "446f4dcf-6926-4b27-802a-0ecbd4204ed3",
-      "to": "f1cfd968-e393-469c-8f43-00ad74a09e03",
-      "type": "main"
-    },
-    {
-      "from": "446f4dcf-6926-4b27-802a-0ecbd4204ed3_copy",
-      "to": "f1cfd968-e393-469c-8f43-00ad74a09e03",
-      "type": "main"
-    },
-    {
-      "from": "f1cfd968-e393-469c-8f43-00ad74a09e03",
-      "to": "b5ae3b11-0c06-4d4c-b3e8-255f1abe8612",
-      "type": "main"
-    },
-    {
-      "from": "b5ae3b11-0c06-4d4c-b3e8-255f1abe8612",
-      "to": "66963c8f-32a8-454b-bfa0-568abbdadd0b",
-      "type": "main"
-    },
-    {
-      "from": "66963c8f-32a8-454b-bfa0-568abbdadd0b",
-      "to": "2249ff24-117e-4985-b45d-7e08c34bef37",
-      "type": "main"
-    }
-  ],
-  "active": false,
+  },
+  "pinData": {},
   "settings": {
     "executionOrder": "v1"
   },
-  "versionId": "24982441-3837-4742-9388-372138923719"
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2025-11-24T00:00:00.000Z",
+  "versionId": "1"
 }
